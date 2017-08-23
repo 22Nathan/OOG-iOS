@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform:ios,'8.0'
+use_frameworks!
+target 'OOG-iOS' do
+	pod 'Alamofire','~> 4.4.0'
+	pod 'SwiftyJSON'
+	pod 'SVProgressHUD'
+	pod 'SwiftDate', '~> 4.0'
+	pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+	pod 'Moya'
+end
