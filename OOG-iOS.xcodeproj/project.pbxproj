@@ -13,6 +13,15 @@
 		5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5310EEA91F4DCD0A00486589 /* LaunchScreen.storyboard */; };
 		53BC50C81F572BAC00BE76B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */; };
 		53BC50CC1F572BF200BE76B8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50CB1F572BF200BE76B8 /* User.swift */; };
+		53BC50D11F57901900BE76B8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50D01F57901900BE76B8 /* Cache.swift */; };
+		53BC50D41F57904B00BE76B8 /* ApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50D31F57904B00BE76B8 /* ApiConfig.swift */; };
+		53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50D51F57A13B00BE76B8 /* ExtString.swift */; };
+		53BC50D81F57A23400BE76B8 /* AppCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50D71F57A23400BE76B8 /* AppCache.swift */; };
+		53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50D91F57A84200BE76B8 /* TelLoginViewController.swift */; };
+		53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50DD1F57F61A00BE76B8 /* ApiHelper.swift */; };
+		53BC50E31F5821F200BE76B8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E21F5821F200BE76B8 /* RegisterViewController.swift */; };
+		53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E41F58429900BE76B8 /* CompleteInfoViewController.swift */; };
+		53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E61F5843A900BE76B8 /* ExtViewController.swift */; };
 		BA8945D2181CB8116D43A4BE /* Pods_OOG_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7846A2D5413E6A4C85493785 /* Pods_OOG_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +34,15 @@
 		5310EEAC1F4DCD0A00486589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		53BC50CB1F572BF200BE76B8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		53BC50D01F57901900BE76B8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		53BC50D31F57904B00BE76B8 /* ApiConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiConfig.swift; sourceTree = "<group>"; };
+		53BC50D51F57A13B00BE76B8 /* ExtString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtString.swift; sourceTree = "<group>"; };
+		53BC50D71F57A23400BE76B8 /* AppCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCache.swift; sourceTree = "<group>"; };
+		53BC50D91F57A84200BE76B8 /* TelLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelLoginViewController.swift; sourceTree = "<group>"; };
+		53BC50DD1F57F61A00BE76B8 /* ApiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiHelper.swift; sourceTree = "<group>"; };
+		53BC50E21F5821F200BE76B8 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		53BC50E41F58429900BE76B8 /* CompleteInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteInfoViewController.swift; sourceTree = "<group>"; };
+		53BC50E61F5843A900BE76B8 /* ExtViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtViewController.swift; sourceTree = "<group>"; };
 		7846A2D5413E6A4C85493785 /* Pods_OOG_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OOG_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BC7E30828E48D9641450F7 /* Pods-OOG-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OOG-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-OOG-iOS/Pods-OOG-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		F4EF3DDFB7567F930C84339F /* Pods-OOG-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OOG-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OOG-iOS/Pods-OOG-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -103,6 +121,7 @@
 		53BC50C11F572ACF00BE76B8 /* Kit */ = {
 			isa = PBXGroup;
 			children = (
+				53BC50D21F57902D00BE76B8 /* Utils */,
 			);
 			name = Kit;
 			sourceTree = "<group>";
@@ -117,7 +136,6 @@
 		53BC50C41F572B5C00BE76B8 /* ProfileModule */ = {
 			isa = PBXGroup;
 			children = (
-				53BC50C51F572B7A00BE76B8 /* LoginModule */,
 			);
 			name = ProfileModule;
 			sourceTree = "<group>";
@@ -126,6 +144,9 @@
 			isa = PBXGroup;
 			children = (
 				53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */,
+				53BC50D91F57A84200BE76B8 /* TelLoginViewController.swift */,
+				53BC50E21F5821F200BE76B8 /* RegisterViewController.swift */,
+				53BC50E41F58429900BE76B8 /* CompleteInfoViewController.swift */,
 			);
 			name = LoginModule;
 			sourceTree = "<group>";
@@ -133,6 +154,7 @@
 		53BC50C61F572B8900BE76B8 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				53BC50C51F572B7A00BE76B8 /* LoginModule */,
 				53BC50C41F572B5C00BE76B8 /* ProfileModule */,
 			);
 			name = Module;
@@ -141,6 +163,8 @@
 		53BC50C91F572BCA00BE76B8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				53BC50DF1F57F63F00BE76B8 /* Helper */,
+				53BC50CF1F57900700BE76B8 /* Consts */,
 				53BC50CA1F572BE400BE76B8 /* Models */,
 			);
 			name = Common;
@@ -152,6 +176,33 @@
 				53BC50CB1F572BF200BE76B8 /* User.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		53BC50CF1F57900700BE76B8 /* Consts */ = {
+			isa = PBXGroup;
+			children = (
+				53BC50D01F57901900BE76B8 /* Cache.swift */,
+			);
+			name = Consts;
+			sourceTree = "<group>";
+		};
+		53BC50D21F57902D00BE76B8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				53BC50D71F57A23400BE76B8 /* AppCache.swift */,
+				53BC50D31F57904B00BE76B8 /* ApiConfig.swift */,
+				53BC50D51F57A13B00BE76B8 /* ExtString.swift */,
+				53BC50E61F5843A900BE76B8 /* ExtViewController.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		53BC50DF1F57F63F00BE76B8 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				53BC50DD1F57F61A00BE76B8 /* ApiHelper.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		BC0911667DD6A721066B681E /* Frameworks */ = {
@@ -294,9 +345,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53BC50D41F57904B00BE76B8 /* ApiConfig.swift in Sources */,
+				53BC50E31F5821F200BE76B8 /* RegisterViewController.swift in Sources */,
 				53BC50C81F572BAC00BE76B8 /* LoginViewController.swift in Sources */,
 				5310EEA11F4DCD0A00486589 /* AppDelegate.swift in Sources */,
+				53BC50D11F57901900BE76B8 /* Cache.swift in Sources */,
+				53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */,
+				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
+				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,
+				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,
+				53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */,
 				53BC50CC1F572BF200BE76B8 /* User.swift in Sources */,
+				53BC50D81F57A23400BE76B8 /* AppCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

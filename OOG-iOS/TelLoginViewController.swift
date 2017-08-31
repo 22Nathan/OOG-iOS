@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  TelLoginViewController.swift
 //  OOG-iOS
 //
 //  Created by Nathan on 31/08/2017.
@@ -7,20 +7,26 @@
 //
 
 import UIKit
-import ChameleonFramework
 
-class LoginViewController: UIViewController {
+class TelLoginViewController: UIViewController,UITextFieldDelegate {
 
-    // MARK: - Life Cycle
+    //Mark: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        telLoginButton.backgroundColor = UIColor.flatBlue
-        
     }
     
-    @IBOutlet weak var telLoginButton: UIButton!
-    @IBOutlet weak var backGroundImage: UIImageView!
-
+    @IBOutlet weak var cellPhoneTextField: UITextField!{
+        didSet{
+            cellPhoneTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var passwordTextField: UITextField!{
+        didSet{
+            passwordTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var RegisterButton: UIButton!
     /*
     // MARK: - Navigation
 
