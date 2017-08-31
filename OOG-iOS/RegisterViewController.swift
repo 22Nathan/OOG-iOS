@@ -62,7 +62,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
     private func requestAuthCode(_ tel : String ,completionHandler: @escaping () -> ()){
         var parameters = [String : String]()
         parameters["tel"] = tel
-        Alamofire.request(ApiHelper.API_Root + "/register/validation",
+        Alamofire.request(ApiHelper.API_Root + "/users/register/validation/",
                           method: .post,
                           parameters: ["tel":tel],
                           encoding: URLEncoding.default).responseJSON {response in

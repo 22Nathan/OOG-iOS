@@ -9,6 +9,6 @@
 import Foundation
 
 class ApiHelper{
-    static let API_Root : String = "http://127.0.0.1:8000/oog"
+    static let API_Root : String = "http://127.0.0.1:8000"
     
 }

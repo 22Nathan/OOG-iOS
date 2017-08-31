@@ -16,7 +16,7 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
     //Mark: -LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        completeButton.addTarget(self, action: #selector(completeUserInfo), for: <#T##UIControlEvents#>)
+        completeButton.addTarget(self, action: #selector(completeUserInfo), for: .touchDown)
     }
     
     //Mark: - Model
@@ -56,7 +56,9 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
         parameters["username"] = user.username
         parameters["password"] = user.password
         parameters["tel"] = user.tel
-        Alamofire.request(ApiHelper.API_Root + "/register", method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+        print(parameters)
+        Alamofire.request(ApiHelper.API_Root + "/users/register/",
+                          method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
             switch response.result.isSuccess {
             case true:
                 if let value = response.result.value {
@@ -65,12 +67,11 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
                     print(json)
                     let uuid = json["uuid"].stringValue
                     user.uuid = uuid
-                    ApiHelper.currentUser = user
                 }
             case false:
                 print(response.result.error!)
             }
-
+        }
     }
     
     /*
