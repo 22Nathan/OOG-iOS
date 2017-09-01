@@ -71,6 +71,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
                 if let value = response.result.value {
                     let json = SwiftyJSON.JSON(value)
                     //Mark: - print
+                    print("response authCode")
                     print(json)
                     let result = json["result"].stringValue
                     if result == "no"{

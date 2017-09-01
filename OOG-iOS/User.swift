@@ -32,8 +32,7 @@ class User{
         self.init(json["username"].stringValue,
                   json["tel"].stringValue,
                   json["password"].stringValue,
-                  json["uuid"].stringValue,
-                  json["authCode"].stringValue)
+                  json["uuid"].stringValue)
     }
     
     func toJSON() -> JSON {
@@ -41,6 +40,7 @@ class User{
             "username" : username,
             "tel" : tel,
             "password" : password,
+            "uuid" : uuid,
             ])
     }
 }

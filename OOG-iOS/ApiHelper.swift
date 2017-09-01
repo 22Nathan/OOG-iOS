@@ -7,8 +7,19 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class ApiHelper{
     static let API_Root : String = "http://127.0.0.1:8000"
+    
+    static var uuid : String = ""
+    static var currentUser: User{
+        get{
+            return User(SwiftyJSON.JSON.parse(Cache.currentUserCache.value))
+        }
+        set{
+            Cache.currentUserCache.value = (newValue.toJSON().rawString()!)
+        }
+    }
     
 }

@@ -48,7 +48,10 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
     }
     
     func completionHandler(){
-        
+        ApiHelper.currentUser = user
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let tarBarController = sb.instantiateViewController(withIdentifier: "mainTarBarController")
+        self.present(tarBarController, animated: true)
     }
     
     func requestRegister(_ user : User , completionHandler: @escaping () -> ()){
@@ -57,6 +60,7 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
         parameters["password"] = user.password
         parameters["tel"] = user.tel
         print(parameters)
+        
         Alamofire.request(ApiHelper.API_Root + "/users/register/",
                           method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
             switch response.result.isSuccess {
@@ -64,9 +68,11 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
                 if let value = response.result.value {
                     let json = SwiftyJSON.JSON(value)
                     //Mark: - print
+                    print("response register")
                     print(json)
                     let uuid = json["uuid"].stringValue
-                    user.uuid = uuid
+                    self.user.uuid = uuid
+                    completionHandler()
                 }
             case false:
                 print(response.result.error!)
@@ -74,14 +80,8 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
-
 }

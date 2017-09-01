@@ -14,7 +14,7 @@ enum ApiConfig{
 }
 
 extension ApiConfig: TargetType{
-    var baseURL: URL { return URL(string: "http://127.0.0.1:8000/oog")! }
+    var baseURL: URL { return URL(string: "http://127.0.0.1:8000")! }
     
     var path: String{
         switch self {

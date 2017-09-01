@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         telLoginButton.backgroundColor = UIColor.flatBlue
-        
     }
     
     @IBOutlet weak var telLoginButton: UIButton!
