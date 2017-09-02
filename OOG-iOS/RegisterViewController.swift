@@ -42,6 +42,8 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
             if nsTel.length == 11{
                 user.tel = tel
                 requestAuthCode(tel, completionHandler: completionHandler)
+            }else{
+                SVProgressHUD.showInfo(withStatus: "非法手机号")
             }
         }
     }
@@ -71,7 +73,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
                 if let value = response.result.value {
                     let json = SwiftyJSON.JSON(value)
                     //Mark: - print
-                    print("response authCode")
+                    print("################### Response authCode ###################")
                     print(json)
                     let result = json["result"].stringValue
                     if result == "no"{

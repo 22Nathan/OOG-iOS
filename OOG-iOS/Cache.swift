@@ -10,12 +10,12 @@ import Foundation
 import Moya
 
 class Cache{
+    
+    
     //Mark: - currentUser
     static let currentUserKey = "currentUser"
     static let currentUserCache = AppCache(currentUserKey){
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }
-    
-    
 }

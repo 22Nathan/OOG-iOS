@@ -27,6 +27,11 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
             usernameTextField.delegate = self
         }
     }
+    @IBOutlet weak var positionTextField: UITextField!{
+        didSet{
+            positionTextField.delegate = self
+        }
+    }
     @IBOutlet weak var passwordTextField: UITextField!{
         didSet{
             passwordTextField.delegate = self
@@ -38,10 +43,14 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
         if usernameTextField.text == ""{
             SVProgressHUD.showInfo(withStatus: "昵称为空")
         }
+        else if positionTextField.text == ""{
+            SVProgressHUD.showInfo(withStatus: "位置为空")
+        }
         else if passwordTextField.text == ""{
             SVProgressHUD.showInfo(withStatus: "密码为空")
         }else{
             user.username = usernameTextField.text!
+            user.position = positionTextField.text!
             user.password = passwordTextField.text!
             requestRegister(self.user, completionHandler: completionHandler)
         }
@@ -58,6 +67,7 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
         var parameters = [String : String]()
         parameters["username"] = user.username
         parameters["password"] = user.password
+        parameters["position"] = user.position
         parameters["tel"] = user.tel
         print(parameters)
         
@@ -71,7 +81,9 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
                     print("response register")
                     print(json)
                     let uuid = json["uuid"].stringValue
+                    let position = json["position"].stringValue
                     self.user.uuid = uuid
+                    self.user.position = position
                     completionHandler()
                 }
             case false:

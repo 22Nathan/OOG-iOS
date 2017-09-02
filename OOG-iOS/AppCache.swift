@@ -48,6 +48,23 @@ class AppCache{
         self.providerCreator = provider
     }
     
+    
+    //MARK: - Request
+    func userInfoRequest(_ username : String, completionHandler: @escaping ()->() ){
+        provider.request(.userInfo(username: username)) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户详情失败###########################")
+                print(error)
+            }
+        }
+    }
+    
     func set(_ key : String, _ value : String) {
         AppCache.myCache.set(value, forKey: key)
     }

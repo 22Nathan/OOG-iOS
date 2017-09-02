@@ -11,6 +11,8 @@
 		5310EEA61F4DCD0A00486589 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5310EEA41F4DCD0A00486589 /* Main.storyboard */; };
 		5310EEA81F4DCD0A00486589 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5310EEA71F4DCD0A00486589 /* Assets.xcassets */; };
 		5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5310EEA91F4DCD0A00486589 /* LaunchScreen.storyboard */; };
+		53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */; };
+		53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53237F581F5A7FE100B33AAA /* TitleModel.swift */; };
 		53BC50C81F572BAC00BE76B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */; };
 		53BC50CC1F572BF200BE76B8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50CB1F572BF200BE76B8 /* User.swift */; };
 		53BC50D11F57901900BE76B8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50D01F57901900BE76B8 /* Cache.swift */; };
@@ -37,6 +39,8 @@
 		5310EEA71F4DCD0A00486589 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5310EEAA1F4DCD0A00486589 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5310EEAC1F4DCD0A00486589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
+		53237F581F5A7FE100B33AAA /* TitleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleModel.swift; sourceTree = "<group>"; };
 		53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		53BC50CB1F572BF200BE76B8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		53BC50D01F57901900BE76B8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */,
+				53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */,
+				53237F581F5A7FE100B33AAA /* TitleModel.swift */,
 			);
 			name = ProfileModule;
 			sourceTree = "<group>";
@@ -386,6 +392,8 @@
 				53BC50D11F57901900BE76B8 /* Cache.swift in Sources */,
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
 				53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */,
+				53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */,
+				53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */,
 				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
 				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,
 				53D2C8371F593A0B00CD2CB1 /* HomeTableViewController.swift in Sources */,

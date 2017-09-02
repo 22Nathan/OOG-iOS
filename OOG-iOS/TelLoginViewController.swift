@@ -60,7 +60,6 @@ class TelLoginViewController: UIViewController,UITextFieldDelegate {
         var parameters = [String : String]()
         parameters["password"] = user.password
         parameters["tel"] = user.tel
-        print(parameters)
         
         Alamofire.request(ApiHelper.API_Root + "/users/login/",
                           method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
@@ -69,12 +68,24 @@ class TelLoginViewController: UIViewController,UITextFieldDelegate {
                 if let value = response.result.value {
                     let json = SwiftyJSON.JSON(value)
                     //Mark: - print
-                    print("response login")
+                    print("################### Response login #####################")
                     print(json)
                     let result = json["result"]
                     if result == "ok"{
                         let uuid = json["uuid"].stringValue
+                        let username = json["username"].stringValue
+                        let avator_Url = json["avator_url"].stringValue
+                        let followers = json["followers"].stringValue
+                        let followings = json["followings"].stringValue
+                        let likes = json["likes"].stringValue
+                        let position = json["position"].stringValue
                         self.user.uuid = uuid
+                        self.user.followers = followers
+                        self.user.followings = followings
+                        self.user.likes = likes
+                        self.user.position = position
+                        self.user.username = username
+                        self.user.avator_Url = avator_Url
                         completionHandler()
                     }
                     else{

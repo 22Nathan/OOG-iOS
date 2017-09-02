@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum ApiConfig{
-    case registerAuth(tel: String, password: String, authCode: String)
+    case userInfo(username: String)
 }
 
 extension ApiConfig: TargetType{
@@ -18,42 +18,42 @@ extension ApiConfig: TargetType{
     
     var path: String{
         switch self {
-        case .registerAuth(_,_,_):
-            return "/register/auth"
+        case .userInfo(let username):
+            return "/users/infos/" + username
         }
     }
     
     var method: Moya.Method{
         switch self {
-        case .registerAuth:
+        case .userInfo:
             return .post
         }
     }
     
     var parameters: [String: Any]? {
         switch self {
-        case .registerAuth(let tel, let password, let authCode):
-            return ["tel" : tel, "password" : password, "authCode" : authCode]
+        case .userInfo(let username):
+            return ["username" : username]
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .registerAuth:
+        case .userInfo:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .registerAuth(let tel, let password, let authCode):
-            return "{\"Tel\": \(tel) , \"Password\": \(password) , \"AuthCode\": \(authCode)}".utf8Encoded
+        case .userInfo(let username):
+            return "{\"Username\": \(username)}".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .registerAuth:
+        case .userInfo:
             return .request
         }
     }
