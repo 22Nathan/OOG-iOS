@@ -16,15 +16,25 @@ class MainTarBarViewController: UITabBarController {
         self.tabBar.barTintColor = UIColor.flatWhite
         
         let homeImage = #imageLiteral(resourceName: "home.png").withRenderingMode(.alwaysOriginal)
-        let homeTabBarItem = UITabBarItem(title: "Home", image: homeImage,selectedImage: nil)
+        let homeTabBarItem = UITabBarItem(title: "首页", image: homeImage,selectedImage: nil)
         homeTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
         //        homeTabBarItem.selectedImage = homeImage.
         self.viewControllers?[0].tabBarItem = homeTabBarItem
 
+        let gameImage = #imageLiteral(resourceName: "game.png").withRenderingMode(.alwaysOriginal)
+        let gameTabBarItem = UITabBarItem(title: "比赛", image: gameImage,selectedImage: nil)
+        gameTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
+        self.viewControllers?[1].tabBarItem = gameTabBarItem
+        
+        let discoverImage = #imageLiteral(resourceName: "discover.png").withRenderingMode(.alwaysOriginal)
+        let discoverTabBarItem = UITabBarItem(title: "发现", image: discoverImage,selectedImage: nil)
+        discoverTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
+        self.viewControllers?[2].tabBarItem = discoverTabBarItem
+        
         let profileImage = #imageLiteral(resourceName: "profile.png").withRenderingMode(.alwaysOriginal)
-        let profileTabBarItem = UITabBarItem(title: "Me", image: profileImage,selectedImage: nil)
+        let profileTabBarItem = UITabBarItem(title: "我的", image: profileImage,selectedImage: nil)
         profileTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
-        self.viewControllers?[1].tabBarItem = profileTabBarItem
+        self.viewControllers?[3].tabBarItem = profileTabBarItem
     }
 
     override func didReceiveMemoryWarning() {

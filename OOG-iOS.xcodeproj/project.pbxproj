@@ -29,6 +29,10 @@
 		53D2C8341F59309900CD2CB1 /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D2C8331F59309900CD2CB1 /* profile.png */; };
 		53D2C8371F593A0B00CD2CB1 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C8361F593A0B00CD2CB1 /* HomeTableViewController.swift */; };
 		53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */; };
+		53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */; };
+		53FCA7441F5AE446008B34BB /* game.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FCA7431F5AE446008B34BB /* game.png */; };
+		53FCA7461F5AE715008B34BB /* discover.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FCA7451F5AE715008B34BB /* discover.png */; };
+		53FCA7491F5AE7CE008B34BB /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FCA7481F5AE7CE008B34BB /* DiscoveryViewController.swift */; };
 		BA8945D2181CB8116D43A4BE /* Pods_OOG_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7846A2D5413E6A4C85493785 /* Pods_OOG_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +61,10 @@
 		53D2C8331F59309900CD2CB1 /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
 		53D2C8361F593A0B00CD2CB1 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTabViewController.swift; sourceTree = "<group>"; };
+		53FCA7431F5AE446008B34BB /* game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game.png; sourceTree = "<group>"; };
+		53FCA7451F5AE715008B34BB /* discover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discover.png; sourceTree = "<group>"; };
+		53FCA7481F5AE7CE008B34BB /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
 		7846A2D5413E6A4C85493785 /* Pods_OOG_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OOG_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BC7E30828E48D9641450F7 /* Pods-OOG-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OOG-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-OOG-iOS/Pods-OOG-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		F4EF3DDFB7567F930C84339F /* Pods-OOG-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OOG-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OOG-iOS/Pods-OOG-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -143,7 +151,9 @@
 		53BC50C31F572AE500BE76B8 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				53FCA7451F5AE715008B34BB /* discover.png */,
 				53D2C8311F59309500CD2CB1 /* home.png */,
+				53FCA7431F5AE446008B34BB /* game.png */,
 				53D2C8331F59309900CD2CB1 /* profile.png */,
 			);
 			name = Resourses;
@@ -173,6 +183,8 @@
 		53BC50C61F572B8900BE76B8 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				53FCA7471F5AE73A008B34BB /* DiscoverModule */,
+				53FCA7401F5AE3AB008B34BB /* GameModule */,
 				53D2C8351F5939EB00CD2CB1 /* HomeModule */,
 				53BC50C51F572B7A00BE76B8 /* LoginModule */,
 				53BC50C41F572B5C00BE76B8 /* ProfileModule */,
@@ -240,6 +252,22 @@
 				53D2C8361F593A0B00CD2CB1 /* HomeTableViewController.swift */,
 			);
 			name = HomeModule;
+			sourceTree = "<group>";
+		};
+		53FCA7401F5AE3AB008B34BB /* GameModule */ = {
+			isa = PBXGroup;
+			children = (
+				53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */,
+			);
+			name = GameModule;
+			sourceTree = "<group>";
+		};
+		53FCA7471F5AE73A008B34BB /* DiscoverModule */ = {
+			isa = PBXGroup;
+			children = (
+				53FCA7481F5AE7CE008B34BB /* DiscoveryViewController.swift */,
+			);
+			name = DiscoverModule;
 			sourceTree = "<group>";
 		};
 		BC0911667DD6A721066B681E /* Frameworks */ = {
@@ -323,9 +351,11 @@
 			files = (
 				53D2C8321F59309500CD2CB1 /* home.png in Resources */,
 				5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */,
+				53FCA7461F5AE715008B34BB /* discover.png in Resources */,
 				5310EEA81F4DCD0A00486589 /* Assets.xcassets in Resources */,
 				53D2C8341F59309900CD2CB1 /* profile.png in Resources */,
 				5310EEA61F4DCD0A00486589 /* Main.storyboard in Resources */,
+				53FCA7441F5AE446008B34BB /* game.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +416,7 @@
 			files = (
 				53BC50D41F57904B00BE76B8 /* ApiConfig.swift in Sources */,
 				53BC50E31F5821F200BE76B8 /* RegisterViewController.swift in Sources */,
+				53FCA7491F5AE7CE008B34BB /* DiscoveryViewController.swift in Sources */,
 				53BC50C81F572BAC00BE76B8 /* LoginViewController.swift in Sources */,
 				53D2C8301F592F8100CD2CB1 /* MainTarBarViewController.swift in Sources */,
 				5310EEA11F4DCD0A00486589 /* AppDelegate.swift in Sources */,
@@ -400,6 +431,7 @@
 				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,
 				53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */,
 				53BC50CC1F572BF200BE76B8 /* User.swift in Sources */,
+				53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */,
 				53BC50D81F57A23400BE76B8 /* AppCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

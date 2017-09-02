@@ -21,11 +21,18 @@ class TitleTableViewCell: UITableViewCell {
     private func updateUI(){
         //avator image
         avatorImage.contentMode = UIViewContentMode.scaleAspectFit
+//        avatorImage.layer.masksToBounds = true
+//        avatorImage.clipsToBounds = true
+//        avatorImage.layer.cornerRadius = 35.0
+//        
+//        avatorImage.layer.borderWidth = 2.0
+//        avatorImage.layer.borderColor = UIColor.white.cgColor
+
         
         let profileImageKey = "ProfileImageKey" + (title?.username)!
-        if let imageData = Cache.imageCache.data(forKey: profileImageKey){
-            avatorImage.image = UIImage(data: imageData)
-        }else{
+//        if let imageData = Cache.imageCache.data(forKey: profileImageKey){
+//            avatorImage.image = UIImage(data: imageData)
+//        }else{
             if let imageUrl = URL(string: (title?.avator_Url)!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
@@ -39,7 +46,7 @@ class TitleTableViewCell: UITableViewCell {
             }else{
                 avatorImage.image = nil
             }
-        }
+//        }
         
         //Button
         followingButton.titleLabel?.numberOfLines = 0
