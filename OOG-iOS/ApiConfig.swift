@@ -26,7 +26,7 @@ extension ApiConfig: TargetType{
     var method: Moya.Method{
         switch self {
         case .userInfo:
-            return .post
+            return .get
         }
     }
     

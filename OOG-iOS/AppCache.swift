@@ -56,6 +56,8 @@ class AppCache{
             case let .success(moyaResponse):
                 let data = moyaResponse.data
                 let json = JSON(data)
+                print("##################Request User Info###########################")
+                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):

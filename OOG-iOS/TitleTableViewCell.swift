@@ -30,9 +30,9 @@ class TitleTableViewCell: UITableViewCell {
 
         
         let profileImageKey = "ProfileImageKey" + (title?.username)!
-//        if let imageData = Cache.imageCache.data(forKey: profileImageKey){
-//            avatorImage.image = UIImage(data: imageData)
-//        }else{
+        if let imageData = Cache.imageCache.data(forKey: profileImageKey){
+            avatorImage.image = UIImage(data: imageData)
+        }else{
             if let imageUrl = URL(string: (title?.avator_Url)!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
@@ -46,7 +46,7 @@ class TitleTableViewCell: UITableViewCell {
             }else{
                 avatorImage.image = nil
             }
-//        }
+        }
         
         //Button
         followingButton.titleLabel?.numberOfLines = 0
