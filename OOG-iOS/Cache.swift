@@ -10,7 +10,11 @@ import Foundation
 import Moya
 
 class Cache{
-    
+    //MARK: - image
+    static let imageCache = UserDefaults.standard
+    static func set(_ key : String , _ value : Any?){
+        Cache.imageCache.set(value,forKey: key)
+    }
     
     //Mark: - currentUser
     static let currentUserKey = "currentUser"

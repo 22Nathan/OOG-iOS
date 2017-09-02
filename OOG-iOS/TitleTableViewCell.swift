@@ -22,17 +22,23 @@ class TitleTableViewCell: UITableViewCell {
         //avator image
         avatorImage.contentMode = UIViewContentMode.scaleAspectFit
         
-        if let imageUrl = URL(string: (title?.avator_Url)!){
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
-                let urlContents = try? Data(contentsOf: imageUrl)
-                if let imageData = urlContents{
-                    DispatchQueue.main.async {
-                        self?.avatorImage.image = UIImage(data: imageData)
+        let profileImageKey = "ProfileImageKey" + (title?.username)!
+        if let imageData = Cache.imageCache.data(forKey: profileImageKey){
+            avatorImage.image = UIImage(data: imageData)
+        }else{
+            if let imageUrl = URL(string: (title?.avator_Url)!){
+                DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
+                    let urlContents = try? Data(contentsOf: imageUrl)
+                    Cache.set(profileImageKey, urlContents)
+                    if let imageData = urlContents{
+                        DispatchQueue.main.async {
+                            self?.avatorImage.image = UIImage(data: imageData)
+                        }
                     }
                 }
+            }else{
+                avatorImage.image = nil
             }
-        }else{
-            avatorImage.image = nil
         }
         
         //Button

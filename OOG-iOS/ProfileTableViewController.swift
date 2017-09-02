@@ -15,6 +15,8 @@ class ProfileTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCache()
+        let seconds = 60 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 60)
+        perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -25,6 +27,13 @@ class ProfileTableViewController: UITableViewController {
     var profileUserName : String = ApiHelper.currentUser.username
     
     //MARK: - Logic
+    func timeChanged() {
+        refreshCache()
+        // 到下一分钟的剩余秒数，这里虽然接近 60，但是不写死，防止误差累积
+        let seconds = 60 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 60)
+        perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
+    }
+    
     private func loadCache(){
         if(Cache.currentUserCache.isEmpty){
             refreshCache()
