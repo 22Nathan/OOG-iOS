@@ -57,6 +57,9 @@ class ProfileTableViewController: UITableViewController {
         let title = TitleModel(username,tel,position,avator_Url,followings,followers,likes)
         titleProfiles.append(title)
         
+        //parse MovementModel
+        
+        
         //finish
         profiles.append(titleProfiles)
         tableView.reloadData()

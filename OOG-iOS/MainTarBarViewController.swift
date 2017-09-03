@@ -26,15 +26,20 @@ class MainTarBarViewController: UITabBarController {
         gameTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
         self.viewControllers?[1].tabBarItem = gameTabBarItem
         
-        let discoverImage = #imageLiteral(resourceName: "discover.png").withRenderingMode(.alwaysOriginal)
+        let discoverImage = #imageLiteral(resourceName: "discovery.png").withRenderingMode(.alwaysOriginal)
         let discoverTabBarItem = UITabBarItem(title: "发现", image: discoverImage,selectedImage: nil)
         discoverTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
         self.viewControllers?[2].tabBarItem = discoverTabBarItem
         
-        let profileImage = #imageLiteral(resourceName: "profile.png").withRenderingMode(.alwaysOriginal)
+        let messageImage = #imageLiteral(resourceName: "message.png").withRenderingMode(.alwaysOriginal)
+        let messageTabBarItem = UITabBarItem(title: "聊天", image: messageImage,selectedImage: nil)
+        messageTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
+        self.viewControllers?[3].tabBarItem = messageTabBarItem
+        
+        let profileImage = #imageLiteral(resourceName: "me.png").withRenderingMode(.alwaysOriginal)
         let profileTabBarItem = UITabBarItem(title: "我的", image: profileImage,selectedImage: nil)
         profileTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
-        self.viewControllers?[3].tabBarItem = profileTabBarItem
+        self.viewControllers?[4].tabBarItem = profileTabBarItem
     }
 
     override func didReceiveMemoryWarning() {
