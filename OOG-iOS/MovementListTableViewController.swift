@@ -1,45 +1,38 @@
 //
-//  HomeTableViewController.swift
+//  MovementListTableViewController.swift
 //  OOG-iOS
 //
-//  Created by Nathan on 01/09/2017.
+//  Created by Nathan on 04/09/2017.
 //  Copyright © 2017 Nathan. All rights reserved.
 //
 
 import UIKit
 
-class HomeTableViewController: UITableViewController {
+class MovementListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tableView.isScrollEnabled = false
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 50
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "myTable", for: indexPath) as! MovementTableViewCell
+        cell.testtect.text = "dsadewdweqdqwqdwqdqwd"
         return cell
     }
-    */
+ 
 
     /*
     // MARK: - Navigation
