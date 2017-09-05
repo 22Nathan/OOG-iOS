@@ -75,7 +75,6 @@ class HomeViewController: UIViewController,UITableViewDataSource {
     
     @IBAction func tabChanged(_ sender: Any) {
         let index = (sender as! UISegmentedControl).selectedSegmentIndex
-        // b. 设置scrollview的内容偏移量
         offset = CGFloat(index) * self.view.frame.width
     }
     
@@ -172,16 +171,4 @@ class HomeViewController: UIViewController,UITableViewDataSource {
             return cell
         }
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
