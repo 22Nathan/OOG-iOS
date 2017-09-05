@@ -11,6 +11,7 @@ import Moya
 
 enum ApiConfig{
     case userInfo(username: String)
+    case homeMovement
 }
 
 extension ApiConfig: TargetType{
@@ -20,12 +21,14 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo(let username):
             return "/users/infos/" + username
+        case .homeMovement:
+            return "/movements/all/"
         }
     }
     
     var method: Moya.Method{
         switch self {
-        case .userInfo:
+        case .userInfo, .homeMovement:
             return .get
         }
     }
@@ -34,12 +37,14 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo(let username):
             return ["username" : username]
+        case .homeMovement:
+            return nil
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo:
+        case .userInfo, .homeMovement:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -48,12 +53,14 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo(let username):
             return "{\"Username\": \(username)}".utf8Encoded
+        case .homeMovement:
+            return "HomeMovements".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .userInfo:
+        case .userInfo , .homeMovement:
             return .request
         }
     }

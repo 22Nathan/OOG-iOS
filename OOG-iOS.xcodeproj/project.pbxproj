@@ -28,6 +28,10 @@
 		53608D271F5BB81600B3442E /* discovery.png in Resources */ = {isa = PBXBuildFile; fileRef = 53608D261F5BB81600B3442E /* discovery.png */; };
 		53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53608D2A1F5BD95B00B3442E /* Movement.swift */; };
 		53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */; };
+		53B2D0BC1F5E4AED00DDB826 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BB1F5E4AED00DDB826 /* like.png */; };
+		53B2D0BE1F5E4AF000DDB826 /* site.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BD1F5E4AF000DDB826 /* site.png */; };
+		53B2D0C01F5E4AF300DDB826 /* repost.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BF1F5E4AF300DDB826 /* repost.png */; };
+		53B2D0C21F5E4C2400DDB826 /* HomeMovementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2D0C11F5E4C2400DDB826 /* HomeMovementTableViewCell.swift */; };
 		53BC50C81F572BAC00BE76B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */; };
 		53BC50CC1F572BF200BE76B8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50CB1F572BF200BE76B8 /* User.swift */; };
 		53BC50D11F57901900BE76B8 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50D01F57901900BE76B8 /* Cache.swift */; };
@@ -71,6 +75,10 @@
 		53608D261F5BB81600B3442E /* discovery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discovery.png; sourceTree = "<group>"; };
 		53608D2A1F5BD95B00B3442E /* Movement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
 		53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		53B2D0BB1F5E4AED00DDB826 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
+		53B2D0BD1F5E4AF000DDB826 /* site.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = site.png; sourceTree = "<group>"; };
+		53B2D0BF1F5E4AF300DDB826 /* repost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = repost.png; sourceTree = "<group>"; };
+		53B2D0C11F5E4C2400DDB826 /* HomeMovementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMovementTableViewCell.swift; sourceTree = "<group>"; };
 		53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		53BC50CB1F572BF200BE76B8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		53BC50D01F57901900BE76B8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -125,10 +133,10 @@
 		5310EE9F1F4DCD0A00486589 /* OOG-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				53BC50BF1F572AAE00BE76B8 /* Storyboards */,
 				53BC50C01F572AC800BE76B8 /* Classes */,
 				53BC50C11F572ACF00BE76B8 /* Kit */,
 				53BC50C31F572AE500BE76B8 /* Resourses */,
-				53BC50BF1F572AAE00BE76B8 /* Storyboards */,
 				53BC50BE1F572A7B00BE76B8 /* Supporting Files */,
 			);
 			path = "OOG-iOS";
@@ -218,9 +226,12 @@
 			children = (
 				533758CF1F5D457300DCA48A /* detail.png */,
 				533758CD1F5D457000DCA48A /* display.png */,
+				53B2D0BF1F5E4AF300DDB826 /* repost.png */,
 				53608D201F5BB80D00B3442E /* home.png */,
 				53608D261F5BB81600B3442E /* discovery.png */,
 				53608D141F5BB58E00B3442E /* settings.png */,
+				53B2D0BB1F5E4AED00DDB826 /* like.png */,
+				53B2D0BD1F5E4AF000DDB826 /* site.png */,
 				53608D241F5BB81300B3442E /* me.png */,
 				53608D221F5BB81000B3442E /* message.png */,
 				53FCA7431F5AE446008B34BB /* game.png */,
@@ -231,10 +242,10 @@
 		53BC50C41F572B5C00BE76B8 /* ProfileModule */ = {
 			isa = PBXGroup;
 			children = (
-				533758BF1F5C3FC500DCA48A /* Previous */,
+				533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */,
 				533758BC1F5C3AE400DCA48A /* MovementDisplayModule */,
 				533758BB1F5C3ACA00DCA48A /* MovementListModule */,
-				533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */,
+				533758BF1F5C3FC500DCA48A /* Previous */,
 			);
 			name = ProfileModule;
 			sourceTree = "<group>";
@@ -253,12 +264,12 @@
 		53BC50C61F572B8900BE76B8 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				53608D0F1F5BB34C00B3442E /* ChatModule */,
-				53FCA7471F5AE73A008B34BB /* DiscoverModule */,
-				53FCA7401F5AE3AB008B34BB /* GameModule */,
 				53D2C8351F5939EB00CD2CB1 /* HomeModule */,
-				53BC50C51F572B7A00BE76B8 /* LoginModule */,
+				53FCA7401F5AE3AB008B34BB /* GameModule */,
+				53FCA7471F5AE73A008B34BB /* DiscoverModule */,
+				53608D0F1F5BB34C00B3442E /* ChatModule */,
 				53BC50C41F572B5C00BE76B8 /* ProfileModule */,
+				53BC50C51F572B7A00BE76B8 /* LoginModule */,
 			);
 			name = Module;
 			sourceTree = "<group>";
@@ -323,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */,
+				53B2D0C11F5E4C2400DDB826 /* HomeMovementTableViewCell.swift */,
 			);
 			name = HomeModule;
 			sourceTree = "<group>";
@@ -430,6 +442,9 @@
 				533758CE1F5D457000DCA48A /* display.png in Resources */,
 				53608D271F5BB81600B3442E /* discovery.png in Resources */,
 				53608D211F5BB80D00B3442E /* home.png in Resources */,
+				53B2D0C01F5E4AF300DDB826 /* repost.png in Resources */,
+				53B2D0BC1F5E4AED00DDB826 /* like.png in Resources */,
+				53B2D0BE1F5E4AF000DDB826 /* site.png in Resources */,
 				5310EEA81F4DCD0A00486589 /* Assets.xcassets in Resources */,
 				5310EEA61F4DCD0A00486589 /* Main.storyboard in Resources */,
 				53FCA7441F5AE446008B34BB /* game.png in Resources */,
@@ -516,6 +531,7 @@
 				53608D111F5BB37500B3442E /* ChatListTableViewController.swift in Sources */,
 				53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */,
 				533758BA1F5C2D9C00DCA48A /* MovementTableViewCell.swift in Sources */,
+				53B2D0C21F5E4C2400DDB826 /* HomeMovementTableViewCell.swift in Sources */,
 				53BC50D81F57A23400BE76B8 /* AppCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

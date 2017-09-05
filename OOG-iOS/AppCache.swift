@@ -67,6 +67,23 @@ class AppCache{
         }
     }
     
+    func homeMovementRequest(completionHandler: @escaping ()->()) {
+        provider.request(.homeMovement ) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request Home Movements###########################")
+//                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求首页动态失败###########################")
+                print(error)
+            }
+        }
+    }
+    
     func set(_ key : String, _ value : String) {
         AppCache.myCache.set(value, forKey: key)
     }

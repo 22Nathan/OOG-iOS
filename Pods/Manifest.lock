@@ -3,6 +3,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
+  - DGElasticPullToRefresh (1.1)
   - Moya (8.0.3):
     - Moya/Core (= 8.0.3)
   - Moya/Core (8.0.3):
@@ -16,6 +17,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.4.0)
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - DGElasticPullToRefresh
   - Moya
   - SVProgressHUD
   - SwiftDate (~> 4.0)
@@ -33,12 +35,13 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   Moya: d3721622e3cc0cc2f038d69a258686f0b66e7252
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 0483a0532e6a30063f08f5ed945875280914d8d3
+PODFILE CHECKSUM: d77d319e0d1fbc2854a76efec7206adc58dcfeea
 
 COCOAPODS: 1.2.1

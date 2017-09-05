@@ -9,6 +9,5 @@
 import UIKit
 
 class MovementTableViewCell: UITableViewCell {
-    
     @IBOutlet weak var testtect: UILabel!
 }

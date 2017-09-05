@@ -12,10 +12,15 @@ class MovementListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.isScrollEnabled = false
+//        let sb = UIStoryboard(name: "Main", bundle: nil)
+//        let profileViewController = sb.instantiateViewController(withIdentifier: "Profile")
+//        profileVCDelegate = (profileViewController as! ProfileViewControllerDelegate)
+        tableView.isScrollEnabled = false
     }
+//    var profileVCDelegate : ProfileViewControllerDelegate?
 
-
+//    dynamic var tapDistance = NSNumber()
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -25,23 +30,18 @@ class MovementListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 50
     }
-
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myTable", for: indexPath) as! MovementTableViewCell
-        cell.testtect.text = "dsadewdweqdqwqdwqdqwd"
+        cell.testtect.text = "详细动态"
+//        tapDistance.setValue(NSNumber(integerLiteral: 10), forKey: "tapDistance")
+//        tapDistance.setValue(NSNumber(integerLiteral: 10) , forKey: "tapDistance")
+//        profileVCDelegate?.addScrollViewContentSizeY(CGFloat(50))
         return cell
     }
- 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

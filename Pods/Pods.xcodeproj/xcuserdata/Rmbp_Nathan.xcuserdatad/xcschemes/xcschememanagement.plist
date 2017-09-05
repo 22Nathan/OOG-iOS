@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DGElasticPullToRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Moya.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,7 +57,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>49137FD802EA4D40A1EF19C0CB2E2D41</key>
+		<key>2ECC6CBA1148287153F6FEAAFC339A3C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4666EA031680AB15FE22FB50F1074A1A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47D07B436D82BB983C8429FF84F919A3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,12 +77,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>637DCA0B1FE17E217BA09CBB14734819</key>
+		<key>76BD4592010354D6C23D6ECCA20D83A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>76BD4592010354D6C23D6ECCA20D83A8</key>
+		<key>795F19F58BE3B45193DDE743E2CD38FA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +92,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BAF2D7084E2B5261DF0C4423FA752A5D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C956DEEB57B0B997B8BDE354F43574C7</key>
+		<key>EE8AA6941F2CC4329CBBE21786331BFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
