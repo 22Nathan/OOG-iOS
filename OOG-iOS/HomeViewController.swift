@@ -10,24 +10,34 @@ import UIKit
 import SwiftyJSON
 import DGElasticPullToRefresh
 
-class HomeViewController: UIViewController,UITableViewDataSource {
+class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 //        segmented.backgroundColor = UIColor.flatBlack
         
-        // 设置delegate
+        // 设置delegate和dataSource
+        MovementsTableView.delegate = self
+        HotTableView.delegate = self
         MovementsTableView.dataSource = self
         HotTableView.dataSource = self
         
+        
         // Refresh stuff
-        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        loadingView_1.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        loadingView_2.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         MovementsTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            //logic here
             Cache.homeMovementsCache.homeMovementRequest {
                 self?.loadCache()
+                self?.MovementsTableView.dg_stopLoading()
             }
-        }, loadingView: loadingView)
+        }, loadingView: loadingView_1)
+        HotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            Cache.homeMovementsCache.homeMovementRequest {
+                self?.loadCache()
+                self?.HotTableView.dg_stopLoading()
+            }
+            }, loadingView: loadingView_2)
         
         // 设置左滑和右滑手势
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
@@ -50,7 +60,8 @@ class HomeViewController: UIViewController,UITableViewDataSource {
     @IBOutlet weak var MovementsTableView: UITableView!
     @IBOutlet weak var HotTableView: UITableView!
     
-    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+    let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
+    let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
     
     //Mark: - Action
     var offset: CGFloat = 0.0 {
@@ -136,7 +147,6 @@ class HomeViewController: UIViewController,UITableViewDataSource {
         MovementsTableView.reloadData()
         HotTableView.reloadData()
         hideProgressDialog()
-        MovementsTableView.dg_stopLoading()
     }
     
     private func refreshCache(){
