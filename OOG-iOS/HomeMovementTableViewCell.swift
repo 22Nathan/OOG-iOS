@@ -27,7 +27,6 @@ class HomeMovementTableViewCell: UITableViewCell {
     private func updateUI(){
         //hook up avator avatar image
         ownerAvatarImgae.contentMode = UIViewContentMode.scaleAspectFit
-        
         let profileImageKey = "ProfileImage" + (movement?.owner_userName)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
             ownerAvatarImgae.image = UIImage(data: imageData)

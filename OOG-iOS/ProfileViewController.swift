@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController ,UIScrollViewDelegate,ProfileViewControllerDelegate {
+class ProfileViewController: UIViewController ,UIScrollViewDelegate {
 
     //Mark : - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.decelerationRate = 0
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let myTableViewController = sb.instantiateViewController(withIdentifier: "myTable")
+        delegate = myTableViewController as? MovementListTableViewControllerDelegate
         let myCollectionViewController = sb.instantiateViewController(withIdentifier: "myCollection")
         myTableViewController.view.tag = 100
         myCollectionViewController.view.tag = 200
@@ -24,44 +26,18 @@ class ProfileViewController: UIViewController ,UIScrollViewDelegate,ProfileViewC
         addChildViewController(myCollectionViewController)
         displayButton.addTarget(self, action: #selector(changeView), for: .touchDown)
         DetailButton.addTarget(self, action: #selector(changeView), for: .touchDown)
-        
-//        self.addObserver(self, forKeyPath: "tapDistance", options: NSKeyValueObservingOptions.new, context: &self.mycontext)
+        delegate?.changeScrollEnabled(false)
         updateUI()
     }
     
-//    private var mycontext = 0
-//    
-//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//        if context == &mycontext{
-//            print("dsadsadas")
-//        }
-//    }
-//    
-//    deinit {
-//        removeObserver(self, forKeyPath: "tapDistance")
-//    }
-    
+    var delegate : MovementListTableViewControllerDelegate?
+
     //手动设置contentSize
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.scrollView.contentSize = CGSize(width: 375, height: 1000)
     }
-    
-    //滑动Model
-//    var offset: CGFloat = 0.0 {
-//        didSet {
-//            UIView.animate(withDuration: 0.3) { () -> Void in
-//                self.scrollView.contentOffset = CGPoint(x: 0, y: self.offset)
-//            }
-//        }
-//    }
 
-//    var contentSizeY : CGFloat = 0.0{
-//        didSet{
-//            print(self.scrollView.contentSize)
-//            self.scrollView.contentSize = CGSize(width: 375, height: self.scrollView.contentSize.height+contentSizeY)
-//        }
-//    }
     @IBOutlet weak var displayButton: UIButton!
     @IBOutlet weak var DetailButton: UIButton!
     @IBOutlet weak var containerView: UIView!
@@ -74,24 +50,34 @@ class ProfileViewController: UIViewController ,UIScrollViewDelegate,ProfileViewC
         }
     }
     
-    func addScrollViewContentSizeY(_ addSizeY: CGFloat) {
-//        contentSizeY += addSizeY
-    }
-    
+    var mainCanScroll = true
+    var containerCanScroll = false
     
     func changeView(){
         containerView.exchangeSubview(at: 0, withSubviewAt: 1)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print(scrollView.contentOffset)
+        if(scrollView.contentOffset.y >= 199){
+            scrollView.contentOffset.y = 199
+            if self.mainCanScroll{
+                self.mainCanScroll = false
+                self.containerCanScroll = true
+                delegate?.changeScrollEnabled(true)
+            }
+        }else{
+            if self.containerCanScroll{
+                self.mainCanScroll = true
+                self.containerCanScroll = false
+                delegate?.changeScrollEnabled(false)
+            }
+        }
+        self.scrollView.showsVerticalScrollIndicator = mainCanScroll
+        
     }
-
+    
     private func updateUI(){
         userNameLabel.text = ApiHelper.currentUser.username
     }
 }
 
-protocol ProfileViewControllerDelegate {
-    func addScrollViewContentSizeY(_ addSizeY : CGFloat)
-}

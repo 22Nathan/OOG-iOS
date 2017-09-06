@@ -68,7 +68,6 @@ class GameTabViewController: UIViewController,UITableViewDataSource {
     }
     
     
-    
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -83,13 +82,11 @@ class GameTabViewController: UIViewController,UITableViewDataSource {
         if tableView.tag == 201 {
             reusedID = "To start"
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath)
-            cell.textLabel?.text = "dsadasdsa"
             return cell
         }
         else{
             reusedID = "To start"
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath)
-            cell.textLabel?.text = "dsadasdsa"
             return cell
         }
     }

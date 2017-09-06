@@ -14,7 +14,7 @@ class MovmentDisplayCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.isScrollEnabled = false
+//        collectionView?.isScrollEnabled = false
     }
 
 

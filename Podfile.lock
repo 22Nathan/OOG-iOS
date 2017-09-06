@@ -1,5 +1,12 @@
 PODS:
   - Alamofire (4.4.0)
+  - AMap3DMap (5.0.0):
+    - AMapFoundation (~> 1.3)
+  - AMapFoundation (1.4.0)
+  - AMapLocation (2.3.1):
+    - AMapFoundation (~> 1.3)
+  - AMapSearch (5.0.0):
+    - AMapFoundation (~> 1.2)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
@@ -16,6 +23,9 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.4.0)
+  - AMap3DMap
+  - AMapLocation
+  - AMapSearch
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - DGElasticPullToRefresh
   - Moya
@@ -34,6 +44,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  AMap3DMap: 4d0a53d0e57c7c758560225dfdaf593b306bd468
+  AMapFoundation: 458974f46a39df8407fd818ab83d2630d494c726
+  AMapLocation: 6016f0e09c127461c9c8e36945f34c0f037ad962
+  AMapSearch: cf7fd100d533995822d92c22586abfaf7cdf6eef
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   Moya: d3721622e3cc0cc2f038d69a258686f0b66e7252
@@ -42,6 +56,6 @@ SPEC CHECKSUMS:
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: d77d319e0d1fbc2854a76efec7206adc58dcfeea
+PODFILE CHECKSUM: ee0abeeaa276657b4425564808e42ad967d48f7c
 
 COCOAPODS: 1.2.1

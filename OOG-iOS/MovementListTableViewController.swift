@@ -8,21 +8,29 @@
 
 import UIKit
 
-class MovementListTableViewController: UITableViewController {
+class MovementListTableViewController: UITableViewController,MovementListTableViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let sb = UIStoryboard(name: "Main", bundle: nil)
-//        let profileViewController = sb.instantiateViewController(withIdentifier: "Profile")
-//        profileVCDelegate = (profileViewController as! ProfileViewControllerDelegate)
-        tableView.isScrollEnabled = false
+        self.tableView.decelerationRate = 0
     }
-//    var profileVCDelegate : ProfileViewControllerDelegate?
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//    }
+    
+    func changeScrollEnabled(_ value: Bool) {
+        if(value == true){
+            print("true")
+        }else{
+            print("false")
+        }
+        self.tableView.isScrollEnabled = value
+//        self.tableView.showsVerticalScrollIndicator = value
+    }
 
-//    dynamic var tapDistance = NSNumber()
     
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -39,9 +47,10 @@ class MovementListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myTable", for: indexPath) as! MovementTableViewCell
         cell.testtect.text = "详细动态"
-//        tapDistance.setValue(NSNumber(integerLiteral: 10), forKey: "tapDistance")
-//        tapDistance.setValue(NSNumber(integerLiteral: 10) , forKey: "tapDistance")
-//        profileVCDelegate?.addScrollViewContentSizeY(CGFloat(50))
         return cell
     }
+}
+
+protocol MovementListTableViewControllerDelegate {
+    func changeScrollEnabled(_ value : Bool)
 }

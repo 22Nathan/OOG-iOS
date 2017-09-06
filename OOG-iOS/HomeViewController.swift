@@ -181,4 +181,22 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             return cell
         }
     }
+    
+    
+     // MARK: - Navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destinationViewController = segue.destination
+        if let navigationController = destinationViewController as? UINavigationController{
+            destinationViewController = navigationController.visibleViewController ?? destinationViewController
+        }
+        if let movementDetailController = destinationViewController as? MovementDetailViewController{
+            if segue.identifier == "movementDetail"{
+                if let cell = sender as? HomeMovementTableViewCell{
+                    movementDetailController.movement = cell.movement
+                    movementDetailController.navigationItem.title = "Post"
+                    movementDetailController.navigationItem.leftBarButtonItem?.title = "返回首页"
+                }
+            }
+        }
+    }
 }

@@ -9,4 +9,7 @@ target 'OOG-iOS' do
 	pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
 	pod 'Moya'
 	pod 'DGElasticPullToRefresh'
+	pod 'AMap3DMap'
+	pod 'AMapSearch'
+	pod 'AMapLocation'
 end

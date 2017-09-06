@@ -27,6 +27,7 @@
 		53608D251F5BB81400B3442E /* me.png in Resources */ = {isa = PBXBuildFile; fileRef = 53608D241F5BB81300B3442E /* me.png */; };
 		53608D271F5BB81600B3442E /* discovery.png in Resources */ = {isa = PBXBuildFile; fileRef = 53608D261F5BB81600B3442E /* discovery.png */; };
 		53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53608D2A1F5BD95B00B3442E /* Movement.swift */; };
+		539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */; };
 		53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */; };
 		53B2D0BC1F5E4AED00DDB826 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BB1F5E4AED00DDB826 /* like.png */; };
 		53B2D0BE1F5E4AF000DDB826 /* site.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BD1F5E4AF000DDB826 /* site.png */; };
@@ -74,11 +75,13 @@
 		53608D241F5BB81300B3442E /* me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = me.png; sourceTree = "<group>"; };
 		53608D261F5BB81600B3442E /* discovery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discovery.png; sourceTree = "<group>"; };
 		53608D2A1F5BD95B00B3442E /* Movement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
+		539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementDetailViewController.swift; sourceTree = "<group>"; };
 		53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		53B2D0BB1F5E4AED00DDB826 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
 		53B2D0BD1F5E4AF000DDB826 /* site.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = site.png; sourceTree = "<group>"; };
 		53B2D0BF1F5E4AF300DDB826 /* repost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = repost.png; sourceTree = "<group>"; };
 		53B2D0C11F5E4C2400DDB826 /* HomeMovementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMovementTableViewCell.swift; sourceTree = "<group>"; };
+		53B2D0C31F5ECBBF00DDB826 /* Map-Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Map-Bridging.h"; sourceTree = "<group>"; };
 		53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		53BC50CB1F572BF200BE76B8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		53BC50D01F57901900BE76B8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -188,6 +191,7 @@
 		53BC50BE1F572A7B00BE76B8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				53B2D0C31F5ECBBF00DDB826 /* Map-Bridging.h */,
 				5310EEA01F4DCD0A00486589 /* AppDelegate.swift */,
 				5310EEAC1F4DCD0A00486589 /* Info.plist */,
 				5310EEA71F4DCD0A00486589 /* Assets.xcassets */,
@@ -326,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */,
+				539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -524,6 +529,7 @@
 				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,
 				533758C71F5CF90700DCA48A /* MovementListTableViewController.swift in Sources */,
 				533758CC1F5D2CE500DCA48A /* MovmentDisplayCollectionViewController.swift in Sources */,
+				539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */,
 				533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */,
 				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,
 				53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */,
@@ -660,6 +666,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "nathan.OOG-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./OOG-iOS/Map-Bridging.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -673,6 +680,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "nathan.OOG-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./OOG-iOS/Map-Bridging.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
