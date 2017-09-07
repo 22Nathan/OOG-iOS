@@ -22,7 +22,7 @@ class ProfileTableViewController: UITableViewController {
         self.tableView.showsVerticalScrollIndicator = false
         //动态设置用户Cache
         Cache.userMovementCache.setKeysuffix(userID)
-        Cache.userMovementCache.value = ""
+//        Cache.userMovementCache.value = ""
         loadCache()
         let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)

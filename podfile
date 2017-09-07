@@ -12,4 +12,5 @@ target 'OOG-iOS' do
 	pod 'AMap3DMap'
 	pod 'AMapSearch'
 	pod 'AMapLocation'
+    pod ‘Qiniu’, ‘~> 7.1’
 end
