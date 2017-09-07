@@ -29,4 +29,11 @@ class Cache{
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }
+    
+    //Mark: - userMovements
+    static let userMovementsKey = "userMovements"
+    static let userMovementCache = AppCache(userMovementsKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
 }

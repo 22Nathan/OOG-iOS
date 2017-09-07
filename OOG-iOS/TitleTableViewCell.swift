@@ -13,9 +13,13 @@ class TitleTableViewCell: UITableViewCell {
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followerButton: UIButton!
     @IBOutlet weak var likesButton: UIButton!
-    @IBOutlet weak var usernameLabel: UILabel!
+
+    @IBOutlet weak var usernameButton: UIButton!
     @IBOutlet weak var settingButton: UIButton!
-    @IBOutlet weak var positionLabel: UILabel!
+    @IBOutlet weak var positionButton: UIButton!
+    
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
     var title : TitleModel?{ didSet{ updateUI() } }
     
     private func updateUI(){
@@ -28,12 +32,11 @@ class TitleTableViewCell: UITableViewCell {
 //        avatorImage.layer.borderWidth = 2.0
 //        avatorImage.layer.borderColor = UIColor.white.cgColor
 
-        
         let profileImageKey = "ProfileImageKey" + (title?.username)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
             avatorImage.image = UIImage(data: imageData)
         }else{
-            if let imageUrl = URL(string: (title?.avator_Url)!){
+            if let imageUrl = URL(string: (title?.avatar_url)!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
                     Cache.set(profileImageKey, urlContents)
@@ -61,8 +64,10 @@ class TitleTableViewCell: UITableViewCell {
         likesButton.titleLabel?.textAlignment = .center
         likesButton.setTitle("喜欢\n" + (title?.likes)!, for: UIControlState(rawValue: 0))
         
+        positionButton.setTitle(title?.position, for: UIControlState(rawValue: 0))
+        usernameButton.setTitle(title?.username, for: UIControlState(rawValue: 0))
         //Label
-        usernameLabel.text = title?.username
-        positionLabel.text = title?.position
+        descriptionLabel.text = title?.description
+        
     }
 }

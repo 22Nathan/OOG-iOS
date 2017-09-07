@@ -12,6 +12,7 @@ import Moya
 enum ApiConfig{
     case userInfo(username: String)
     case homeMovement
+    case userMovement(userID: String)
 }
 
 extension ApiConfig: TargetType{
@@ -23,12 +24,14 @@ extension ApiConfig: TargetType{
             return "/users/infos/" + username
         case .homeMovement:
             return "/movements/all/"
+        case .userMovement(let userID):
+            return "/users/" + userID + "/movements/"
         }
     }
     
     var method: Moya.Method{
         switch self {
-        case .userInfo, .homeMovement:
+        case .userInfo, .homeMovement, .userMovement:
             return .get
         }
     }
@@ -39,12 +42,14 @@ extension ApiConfig: TargetType{
             return ["username" : username]
         case .homeMovement:
             return nil
+        case .userMovement(let _):
+            return nil
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo, .homeMovement:
+        case .userInfo, .homeMovement, .userMovement:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -55,12 +60,14 @@ extension ApiConfig: TargetType{
             return "{\"Username\": \(username)}".utf8Encoded
         case .homeMovement:
             return "HomeMovements".utf8Encoded
+        case .userMovement:
+            return "userMovemennts".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .userInfo , .homeMovement:
+        case .userInfo , .homeMovement, .userMovement:
             return .request
         }
     }

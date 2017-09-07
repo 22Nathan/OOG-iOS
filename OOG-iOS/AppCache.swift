@@ -57,7 +57,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Info###########################")
-                print(json)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
@@ -79,6 +79,23 @@ class AppCache{
                 completionHandler()
             case let .failure(error):
                 print("##################请求首页动态失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    func userMovementsRequest(_ userID : String, completionHandler: @escaping ()->() ){
+        provider.request(.userMovement(userID: userID)) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Movements###########################")
+//                                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户动态失败###########################")
                 print(error)
             }
         }

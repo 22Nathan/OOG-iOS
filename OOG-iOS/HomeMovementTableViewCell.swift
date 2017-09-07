@@ -20,7 +20,7 @@ class HomeMovementTableViewCell: UITableViewCell {
     @IBOutlet weak var createdAtLabel: UILabel!
     @IBOutlet weak var siteButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
-    
+    @IBOutlet weak var likesNumberLabel: UILabel!
     //Model
     var movement : Movement?{ didSet{updateUI()} }
     
@@ -71,6 +71,7 @@ class HomeMovementTableViewCell: UITableViewCell {
         //hook up label
         username.text = movement?.owner_userName
         createdAtLabel.text = movement?.created_at
+        likesNumberLabel.text = (movement?.likesNumber)! + "人喜欢"
         
     }
 }

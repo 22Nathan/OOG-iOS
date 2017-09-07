@@ -10,12 +10,21 @@ import UIKit
 import SwiftyJSON
 
 class ProfileTableViewController: UITableViewController {
+    enum profileItem{
+        case Title(TitleModel)
+        case Info(String)
+        case MovementItem([Movement])
+    }
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.showsVerticalScrollIndicator = false
+        //动态设置用户Cache
+        Cache.userMovementCache.setKeysuffix(userID)
+        Cache.userMovementCache.value = ""
         loadCache()
-        let seconds = 60 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 60)
+        let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -23,45 +32,104 @@ class ProfileTableViewController: UITableViewController {
     }
     
     //MARK: - Model
-    var profiles : [[TitleModel]] = []
+    var profiles : [[profileItem]] = []
     var profileUserName : String = ApiHelper.currentUser.username
+    var userID : String = ApiHelper.currentUser.uuid
     
     //MARK: - Logic
     func timeChanged() {
         refreshCache()
         // 到下一分钟的剩余秒数，这里虽然接近 60，但是不写死，防止误差累积
-        let seconds = 60 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 60)
+        let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
     }
     
     private func loadCache(){
-        if(Cache.currentUserCache.isEmpty){
+        if(Cache.currentUserCache.isEmpty || Cache.userMovementCache.isEmpty){
             refreshCache()
             return
         }
         
-        var titleProfiles : [TitleModel] = []
+        var titleProfiles : [profileItem] = []
+        var infoProfiles : [profileItem] = []
+        var movementProfilesList : [Movement] = []
+        var movemntProfiles : [profileItem] = []
+        titleProfiles.removeAll()
+        infoProfiles.removeAll()
+        movemntProfiles.removeAll()
         profiles.removeAll()
-        let value = Cache.currentUserCache.value
-        let json = JSON.parse(value)
+        let userValue = Cache.currentUserCache.value
+        var json = JSON.parse(userValue)
         
         //parse TitleModel
         let username = json["username"].stringValue
         let tel = json["tel"].stringValue
         let position = json["position"].stringValue
-        let avator_Url = json["avator_Url"].stringValue
-        let followings = json["followings"].stringValue
-        let followers = json["followers"].stringValue
+        let avatar_url = json["avatar_url"].stringValue
+        let followings = json["followingNumber"].intValue
+        let followingsString = String(followings)
+        let followers = json["followedNumber"].intValue
+        let followersString = String(followers)
         let likes = json["likes"].stringValue
+        let description = json["description"].stringValue
         
-        let title = TitleModel(username,tel,position,avator_Url,followings,followers,likes)
+        let title = profileItem.Title(TitleModel(username,tel,position,avatar_url,followingsString,followersString,likes,description))
         titleProfiles.append(title)
         
-        //parse MovementModel
+        //parse Info
+        let firstLabelText = "我的动态"
+        let secondLabelText = "我的评分"
+        infoProfiles.append(profileItem.Info(firstLabelText))
+        infoProfiles.append(profileItem.Info(secondLabelText))
         
+        //parse userMovemnt
+        let movementValue = Cache.userMovementCache.value
+        json = JSON.parse(movementValue)
+        let movements = json["movements"].arrayValue
+        for movementJSON in movements{
+            //parse basic info
+            //            print(movementJSON)
+            let movment_ID = movementJSON["movement_ID"].stringValue
+            let content = movementJSON["content"].stringValue
+            let created_at = movementJSON["created_at"].stringValue
+            let likesNumber = movementJSON["likesNumber"].stringValue
+            let repostsNumber = movementJSON["repostsNumber"].stringValue
+            let commentsNumber = movementJSON["commentsNumber"].stringValue
+            
+            //parse imageUrl
+            var imageNumber = 0
+            let imageUrlsJSON = movementJSON["image_url"].arrayValue
+            var imageUrls : [String] = []
+            for imageUrl in imageUrlsJSON{
+                imageUrls.append(imageUrl.stringValue)
+                imageNumber += 1
+            }
+            let imageNumber_literal = String(imageNumber)
+            
+            //parse owner info
+            let owner_avatar = movementJSON["owner"]["avatar_url"].stringValue
+            let owner_userName = movementJSON["owner"]["username"].stringValue
+            let owner_position = movementJSON["owner"]["position"].stringValue
+            
+            let movement_Model = Movement(movment_ID,
+                                         content,
+                                         imageNumber_literal,
+                                         imageUrls,
+                                         owner_avatar,
+                                         owner_userName,
+                                         owner_position,
+                                         created_at,
+                                         likesNumber,
+                                         repostsNumber,
+                                         commentsNumber)
+            movementProfilesList.append(movement_Model)
+        }
+        movemntProfiles.append(profileItem.MovementItem(movementProfilesList))
         
         //finish
         profiles.append(titleProfiles)
+//        profiles.append(infoProfiles)
+        profiles.append(movemntProfiles)
         tableView.reloadData()
         hideProgressDialog()
     }
@@ -69,7 +137,9 @@ class ProfileTableViewController: UITableViewController {
     private func refreshCache(){
         showProgressDialog()
         Cache.currentUserCache.userInfoRequest(profileUserName) { 
-            self.loadCache()
+            Cache.userMovementCache.userMovementsRequest(self.userID) {
+                self.loadCache()
+            }
         }
     }
 
@@ -83,14 +153,37 @@ class ProfileTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 15
+        return 10
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let profile = profiles[indexPath.section][indexPath.row]
+        switch profile{
+        case .Title( _):
+            return 240
+        case .Info( _):
+            return 50
+        case .MovementItem( _):
+            return 375
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let titleModel = profiles[indexPath.section][indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Title Cell", for: indexPath) as! TitleTableViewCell
-        cell.title = titleModel
-        return cell
+        let profile = profiles[indexPath.section][indexPath.row]
+        switch profile {
+        case .Title(let tempTitle):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Title Cell", for: indexPath) as! TitleTableViewCell
+            cell.title = tempTitle
+            return cell
+        case .Info(let text):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Info Cell", for: indexPath) as! InfoTableViewCell
+            cell.infoLabel.text = text
+            return cell
+        case .MovementItem(let movements):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MovementDisplay", for: indexPath) as! MovementDisplayTableViewCell
+            cell.movements = movements
+            return cell
+        }
     }
  
     /*

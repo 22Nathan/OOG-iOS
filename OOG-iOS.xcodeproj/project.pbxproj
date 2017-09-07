@@ -28,6 +28,13 @@
 		53608D271F5BB81600B3442E /* discovery.png in Resources */ = {isa = PBXBuildFile; fileRef = 53608D261F5BB81600B3442E /* discovery.png */; };
 		53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53608D2A1F5BD95B00B3442E /* Movement.swift */; };
 		539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */; };
+		539BE58D1F5FECEA00CB6E95 /* myScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE58C1F5FECEA00CB6E95 /* myScrollView.swift */; };
+		539BE58F1F60067000CB6E95 /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE58E1F60067000CB6E95 /* Synchronized.swift */; };
+		539BE5911F60240B00CB6E95 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE5901F60240B00CB6E95 /* ContainerView.swift */; };
+		539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */; };
+		539BE5951F60DC9800CB6E95 /* MovementPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE5941F60DC9800CB6E95 /* MovementPublishViewController.swift */; };
+		539BE5971F60E27500CB6E95 /* MovementDisplayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */; };
+		539BE59C1F61265200CB6E95 /* ButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE59B1F61265200CB6E95 /* ButtonCollectionViewCell.swift */; };
 		53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */; };
 		53B2D0BC1F5E4AED00DDB826 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BB1F5E4AED00DDB826 /* like.png */; };
 		53B2D0BE1F5E4AF000DDB826 /* site.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BD1F5E4AF000DDB826 /* site.png */; };
@@ -76,6 +83,13 @@
 		53608D261F5BB81600B3442E /* discovery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discovery.png; sourceTree = "<group>"; };
 		53608D2A1F5BD95B00B3442E /* Movement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
 		539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementDetailViewController.swift; sourceTree = "<group>"; };
+		539BE58C1F5FECEA00CB6E95 /* myScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myScrollView.swift; sourceTree = "<group>"; };
+		539BE58E1F60067000CB6E95 /* Synchronized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronized.swift; sourceTree = "<group>"; };
+		539BE5901F60240B00CB6E95 /* ContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
+		539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
+		539BE5941F60DC9800CB6E95 /* MovementPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementPublishViewController.swift; sourceTree = "<group>"; };
+		539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementDisplayTableViewCell.swift; sourceTree = "<group>"; };
+		539BE59B1F61265200CB6E95 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCollectionViewCell.swift; sourceTree = "<group>"; };
 		53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		53B2D0BB1F5E4AED00DDB826 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
 		53B2D0BD1F5E4AF000DDB826 /* site.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = site.png; sourceTree = "<group>"; };
@@ -164,9 +178,9 @@
 		533758BF1F5C3FC500DCA48A /* Previous */ = {
 			isa = PBXGroup;
 			children = (
-				53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */,
-				53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */,
-				53237F581F5A7FE100B33AAA /* TitleModel.swift */,
+				533758BC1F5C3AE400DCA48A /* MovementDisplayModule */,
+				533758BB1F5C3ACA00DCA48A /* MovementListModule */,
+				533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */,
 			);
 			name = Previous;
 			sourceTree = "<group>";
@@ -175,7 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */,
-				533758C91F5D2CC900DCA48A /* MovementCollectionViewCell.swift */,
+				539BE58C1F5FECEA00CB6E95 /* myScrollView.swift */,
+				539BE5901F60240B00CB6E95 /* ContainerView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -186,6 +201,23 @@
 				53608D101F5BB37500B3442E /* ChatListTableViewController.swift */,
 			);
 			name = ChatModule;
+			sourceTree = "<group>";
+		};
+		539BE59A1F61260000CB6E95 /* MovementDisplayCell */ = {
+			isa = PBXGroup;
+			children = (
+				533758C91F5D2CC900DCA48A /* MovementCollectionViewCell.swift */,
+				539BE59B1F61265200CB6E95 /* ButtonCollectionViewCell.swift */,
+			);
+			name = MovementDisplayCell;
+			sourceTree = "<group>";
+		};
+		539BE59D1F61270D00CB6E95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53237F581F5A7FE100B33AAA /* TitleModel.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		53BC50BE1F572A7B00BE76B8 /* Supporting Files */ = {
@@ -246,9 +278,12 @@
 		53BC50C41F572B5C00BE76B8 /* ProfileModule */ = {
 			isa = PBXGroup;
 			children = (
-				533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */,
-				533758BC1F5C3AE400DCA48A /* MovementDisplayModule */,
-				533758BB1F5C3ACA00DCA48A /* MovementListModule */,
+				53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */,
+				53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */,
+				539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */,
+				539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */,
+				539BE59A1F61260000CB6E95 /* MovementDisplayCell */,
+				539BE59D1F61270D00CB6E95 /* Models */,
 				533758BF1F5C3FC500DCA48A /* Previous */,
 			);
 			name = ProfileModule;
@@ -314,6 +349,7 @@
 				53BC50D31F57904B00BE76B8 /* ApiConfig.swift */,
 				53BC50D51F57A13B00BE76B8 /* ExtString.swift */,
 				53BC50E61F5843A900BE76B8 /* ExtViewController.swift */,
+				539BE58E1F60067000CB6E95 /* Synchronized.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -331,6 +367,7 @@
 			children = (
 				53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */,
 				539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */,
+				539BE5941F60DC9800CB6E95 /* MovementPublishViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -511,6 +548,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				539BE5911F60240B00CB6E95 /* ContainerView.swift in Sources */,
+				539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */,
 				53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */,
 				53BC50D41F57904B00BE76B8 /* ApiConfig.swift in Sources */,
 				53BC50E31F5821F200BE76B8 /* RegisterViewController.swift in Sources */,
@@ -520,15 +559,20 @@
 				5310EEA11F4DCD0A00486589 /* AppDelegate.swift in Sources */,
 				53BC50D11F57901900BE76B8 /* Cache.swift in Sources */,
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
+				539BE5971F60E27500CB6E95 /* MovementDisplayTableViewCell.swift in Sources */,
 				53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */,
 				53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */,
+				539BE58F1F60067000CB6E95 /* Synchronized.swift in Sources */,
+				539BE59C1F61265200CB6E95 /* ButtonCollectionViewCell.swift in Sources */,
 				53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */,
 				53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */,
 				533758CA1F5D2CC900DCA48A /* MovementCollectionViewCell.swift in Sources */,
 				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
 				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,
 				533758C71F5CF90700DCA48A /* MovementListTableViewController.swift in Sources */,
+				539BE58D1F5FECEA00CB6E95 /* myScrollView.swift in Sources */,
 				533758CC1F5D2CE500DCA48A /* MovmentDisplayCollectionViewController.swift in Sources */,
+				539BE5951F60DC9800CB6E95 /* MovementPublishViewController.swift in Sources */,
 				539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */,
 				533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */,
 				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,

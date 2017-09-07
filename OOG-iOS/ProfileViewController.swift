@@ -13,13 +13,24 @@ class ProfileViewController: UIViewController ,UIScrollViewDelegate {
     //Mark : - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //ScrollView
         scrollView.decelerationRate = 0
+//        self.scrollView.showsVerticalScrollIndicator = false
+        
+        //Notification
+        let notificationName = "onTop"
+        NotificationCenter.default.addObserver(self, selector: #selector(changeScrollStatus), name: NSNotification.Name(rawValue: notificationName), object: nil)
+        
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let myTableViewController = sb.instantiateViewController(withIdentifier: "myTable")
+        
         delegate = myTableViewController as? MovementListTableViewControllerDelegate
+        
         let myCollectionViewController = sb.instantiateViewController(withIdentifier: "myCollection")
         myTableViewController.view.tag = 100
         myCollectionViewController.view.tag = 200
+        
         containerView.addSubview(myTableViewController.view)
         containerView.addSubview(myCollectionViewController.view)
         addChildViewController(myTableViewController)
@@ -27,10 +38,17 @@ class ProfileViewController: UIViewController ,UIScrollViewDelegate {
         displayButton.addTarget(self, action: #selector(changeView), for: .touchDown)
         DetailButton.addTarget(self, action: #selector(changeView), for: .touchDown)
         delegate?.changeScrollEnabled(false)
+        
         updateUI()
     }
     
     var delegate : MovementListTableViewControllerDelegate?
+    
+    func changeScrollStatus(){
+        print("收到通知思密达")
+        mainCanScroll = true
+        containerCanScroll = false
+    }
 
     //手动设置contentSize
     override func viewDidAppear(_ animated: Bool) {
@@ -58,6 +76,20 @@ class ProfileViewController: UIViewController ,UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if(scrollView.contentOffset.y >= 199){
+//            scrollView.contentOffset.y = 199
+//            if self.mainCanScroll{
+//                self.mainCanScroll = false
+//                self.containerCanScroll = true
+//                delegate?.changeScrollEnabled(true)
+//            }
+//        }else{
+//            if self.containerCanScroll{
+//                self.mainCanScroll = true
+//                self.containerCanScroll = false
+//                delegate?.changeScrollEnabled(false)
+//            }
+//        }
         if(scrollView.contentOffset.y >= 199){
             scrollView.contentOffset.y = 199
             if self.mainCanScroll{
@@ -66,14 +98,11 @@ class ProfileViewController: UIViewController ,UIScrollViewDelegate {
                 delegate?.changeScrollEnabled(true)
             }
         }else{
-            if self.containerCanScroll{
-                self.mainCanScroll = true
-                self.containerCanScroll = false
-                delegate?.changeScrollEnabled(false)
+            if !self.mainCanScroll{
+                self.scrollView.contentOffset.y = 199
             }
         }
         self.scrollView.showsVerticalScrollIndicator = mainCanScroll
-        
     }
     
     private func updateUI(){

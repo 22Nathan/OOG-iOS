@@ -15,20 +15,32 @@ class MovementListTableViewController: UITableViewController,MovementListTableVi
         self.tableView.decelerationRate = 0
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//
-//    }
+    var containerCanScroll = false
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !self.containerCanScroll{
+            self.tableView.contentOffset = CGPoint(x: 0, y: 0)
+        }
+        if (self.tableView.contentOffset.y <= 0){
+            self.containerCanScroll = false
+            self.tableView.contentOffset = CGPoint(x: 0, y: 0)
+            NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "onTop"), object: nil)
+        }
+        self.tableView.showsVerticalScrollIndicator = containerCanScroll
+    }
     
     func changeScrollEnabled(_ value: Bool) {
-        if(value == true){
-            print("true")
-        }else{
-            print("false")
-        }
-        self.tableView.isScrollEnabled = value
-//        self.tableView.showsVerticalScrollIndicator = value
+//        if(value == true){
+//            print("true")
+//        }else{
+//            print("false")
+//        }
+        containerCanScroll = value
+//        synchronized(self) {
+//            self.tableView.isScrollEnabled = value
+//            self.tableView.isUserInteractionEnabled = value
+//        }
     }
-
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -43,7 +55,6 @@ class MovementListTableViewController: UITableViewController,MovementListTableVi
         return 50
     }
     
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myTable", for: indexPath) as! MovementTableViewCell
         cell.testtect.text = "详细动态"
