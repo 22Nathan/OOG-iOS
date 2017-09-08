@@ -18,6 +18,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
 //        segmented.backgroundColor = UIColor.flatBlack
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
         
         // 设置delegate和dataSource
         MovementsTableView.delegate = self
@@ -210,7 +213,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 if let cell = sender as? HomeMovementTableViewCell{
                     movementDetailController.movement = cell.movement
                     movementDetailController.navigationItem.title = "Post"
-                    movementDetailController.navigationItem.leftBarButtonItem?.title = "返回首页"
                 }
             }
         }

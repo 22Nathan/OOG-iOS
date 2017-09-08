@@ -12,6 +12,11 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+//        item.tintColor = UIColor.black
+//        self.navigationItem.backBarButtonItem = item
+        
         updateUI()
     }
     @IBOutlet weak var scrollView: UIScrollView!{

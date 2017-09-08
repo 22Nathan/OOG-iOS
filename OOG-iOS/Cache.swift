@@ -36,4 +36,11 @@ class Cache{
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }
+    
+    //Mark: - userFollowers OR Follings list
+    static let userListKey = "userList"
+    static let userListCache = AppCache(userListKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
 }

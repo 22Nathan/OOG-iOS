@@ -40,10 +40,6 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
         }
     }
     
-    @IBAction func back(_ sender: Any) {
-        presentingViewController?.dismiss(animated: true)
-    }
-    
     @IBAction func postAction(_ sender: Any) {
         
     }

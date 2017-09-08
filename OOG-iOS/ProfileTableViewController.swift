@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import SwiftDate
+import DGElasticPullToRefresh
 
 class ProfileTableViewController: UITableViewController {
     enum profileItem{
@@ -16,11 +17,29 @@ class ProfileTableViewController: UITableViewController {
         case Info(String)
         case MovementItem([Movement])
     }
+    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //NavigationBar
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
+        self.navigationItem.title = profileUserName
+        
         self.tableView.showsVerticalScrollIndicator = false
+        // pull refresh
+        self.tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            Cache.currentUserCache.userInfoRequest((self?.profileUserName)!) {
+                Cache.userMovementCache.userMovementsRequest((self?.userID)!) {
+                    self?.loadCache()
+                    self?.tableView.dg_stopLoading()
+                }
+            }
+            }, loadingView: loadingView)
+        
         //动态设置用户Cache
         Cache.userMovementCache.setKeysuffix(userID)
 //        Cache.userMovementCache.value = ""
@@ -28,6 +47,7 @@ class ProfileTableViewController: UITableViewController {
         let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
@@ -198,14 +218,23 @@ class ProfileTableViewController: UITableViewController {
         }
     }
  
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let destinationViewController = segue.destination
+        if segue.identifier == "Following"{
+            if let userListVC = destinationViewController as? UsersTableViewController{
+                userListVC.ownerUserID = userID
+                userListVC.listType = "1"
+                userListVC.navigationItem.title = "关注"
+            }
+        }
+        if segue.identifier == "Follower"{
+            if let userListVC = destinationViewController as? UsersTableViewController{
+                userListVC.ownerUserID = userID
+                userListVC.listType = "2"
+                userListVC.navigationItem.title = "粉丝"
+            }
+        }
     }
-    */
-
 }
