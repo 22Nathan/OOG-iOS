@@ -32,6 +32,7 @@ class ProfileTableViewController: UITableViewController {
         self.tableView.showsVerticalScrollIndicator = false
         // pull refresh
         self.tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            print((self?.profileUserName)!)
             Cache.currentUserCache.userInfoRequest((self?.profileUserName)!) {
                 Cache.userMovementCache.userMovementsRequest((self?.userID)!) {
                     self?.loadCache()
@@ -42,7 +43,9 @@ class ProfileTableViewController: UITableViewController {
         
         //动态设置用户Cache
         Cache.userMovementCache.setKeysuffix(userID)
+//        Cache.currentUserCache.value = ""
 //        Cache.userMovementCache.value = ""
+        
         loadCache()
         let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
@@ -67,6 +70,7 @@ class ProfileTableViewController: UITableViewController {
     
     private func loadCache(){
         if(Cache.currentUserCache.isEmpty || Cache.userMovementCache.isEmpty){
+
             refreshCache()
             return
         }
@@ -234,6 +238,11 @@ class ProfileTableViewController: UITableViewController {
                 userListVC.ownerUserID = userID
                 userListVC.listType = "2"
                 userListVC.navigationItem.title = "粉丝"
+            }
+        }
+        if segue.identifier == "publishMovement"{
+            if let publishMovementVC = destinationViewController as? PublishMovementViewController{
+                publishMovementVC.userID = userID
             }
         }
     }

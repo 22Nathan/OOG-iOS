@@ -11,12 +11,7 @@ import UIKit
 class MovementDetailViewController: UIViewController,UIScrollViewDelegate {
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-//        item.tintColor = UIColor.black
-//        self.navigationItem.backBarButtonItem = item
-        
+        super.viewDidLoad()        
         updateUI()
     }
     @IBOutlet weak var scrollView: UIScrollView!{
@@ -29,10 +24,6 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var movementImage: UIImageView!
     @IBOutlet weak var created_atLabel: UILabel!
     @IBOutlet weak var likesNumber: UILabel!
-    
-    @IBAction func backAction(_ sender: Any) {
-        presentingViewController?.dismiss(animated: true)
-    }
     
     //Mark : - Model
     var movement : Movement?

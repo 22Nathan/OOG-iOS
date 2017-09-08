@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 import SVProgressHUD
 
-class HomeMovementTableViewCell: UITableViewCell {
+class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate {
 
     @IBOutlet weak var ownerAvatarImgae: UIImageView!
     @IBOutlet weak var movementImage: UIImageView!
@@ -19,24 +19,60 @@ class HomeMovementTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var messageButton: UIButton!
     @IBOutlet weak var repostButton: UIButton!
-    @IBOutlet weak var commentsTextView: UITextView!
+    @IBOutlet weak var commentsTextView: UITextView!{
+        didSet{
+            commentsTextView.delegate = self
+//            textViewDidChange(commentsTextView)
+            commentsTextView.isScrollEnabled = false
+        }
+    }
     @IBOutlet weak var createdAtLabel: UILabel!
     @IBOutlet weak var siteButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var likesNumberLabel: UILabel!
-    @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var contentTextView: UITextView!{
+        didSet{
+            contentTextView.delegate = self
+//            textViewDidChange(contentTextView)
+        }
+    }
     //Model
     var movement : Movement?{ didSet{updateUI()} }
     
     var isLike = false
     
+    func textViewDidChange(_ textView: UITextView) {
+        let maxHeight : CGFloat = CGFloat(300)
+        let nowframe = textView.frame
+        let constraintSize = CGSize(width: nowframe.size.width, height: 300)
+        var size = textView.sizeThatFits(constraintSize)
+        if (size.height <= nowframe.size.height) {
+            size.height = nowframe.size.height
+        }else{
+            if (size.height >= maxHeight)
+            {
+                size.height = maxHeight
+//                textView.isScrollEnabled = true   // 允许滚动
+            }
+            textView.isScrollEnabled = false
+//            else
+//            {
+//                textView.isScrollEnabled = false   // 不允许滚动
+////                contentTextView.isScrollEnabled = false
+//            }
+        }
+        textView.frame = CGRect(x: nowframe.origin.x, y: nowframe.origin.y, width: nowframe.size.width, height: size.height)
+    }
+    
     @IBAction func likesAction(_ sender: Any) {
         if isLike{
             //发请求取消
-            
             isLike = false
+            likeButton.isEnabled = false
+            requestDisLike((movement?.movement_ID)!, completionHandler: completionHandler)
         }else{
             isLike = true
+            likeButton.isEnabled = false
             requestLikes((movement?.movement_ID)!, completionHandler: completionHandler)
         }
     }
@@ -45,6 +81,7 @@ class HomeMovementTableViewCell: UITableViewCell {
         let previousNumber = Int((movement?.likesNumber)!)
         let newNumber = previousNumber! + number
         likesNumberLabel.text = String(newNumber) + "人喜欢"
+        likeButton.isEnabled = true
     }
     
     private func requestLikes(_ movementID : String ,completionHandler: @escaping (_ number : Int) -> ()){
@@ -75,6 +112,31 @@ class HomeMovementTableViewCell: UITableViewCell {
         }
     }
     
+    private func requestDisLike(_ movementID : String, completionHandler: @escaping (_ number : Int) -> ()){
+        Alamofire.request(ApiHelper.API_Root + "/movements/" + movementID + "/likes/",
+                          method: .delete,
+                          parameters: nil,
+                          encoding: URLEncoding.default).responseJSON{response in
+                            switch response.result.isSuccess{
+                            case true:
+                                if let value = response.value{
+                                    let json = SwiftyJSON.JSON(value)
+                                    print(json)
+                                    print("################### Response Dislikes ###################")
+                                    let result = json["result"].stringValue
+                                    if result == "no"{
+                                        SVProgressHUD.showInfo(withStatus: "操作失败")
+                                    }
+                                    if result == "ok"{
+                                        completionHandler(-1)
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+            }
+    }
+
     private func updateUI(){
         //hook up avator avatar image
         ownerAvatarImgae.contentMode = UIViewContentMode.scaleAspectFit
@@ -124,8 +186,47 @@ class HomeMovementTableViewCell: UITableViewCell {
         let displayTime = convertFrom((movement?.created_at)!)
         createdAtLabel.text = displayTime
         likesNumberLabel.text = (movement?.likesNumber)! + "人喜欢"
-        contentTextView.text = (movement?.owner_userName)! + " " + (movement?.content)!
         
+        //hook up textView
+        //hook up content
+        var para = movement?.owner_userName
+        let attributedContent = NSMutableAttributedString.init(string: para!)
+        let length = (para! as NSString).length
+        let userNameRange = NSRange(location: 0,length: length)
+        let colorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14) ]
+        attributedContent.addAttributes(colorAttribute, range: userNameRange)
+        attributedContent.addAttributes(boldFontAttribute, range: userNameRange)
         
+        para = " " +  (movement?.content)!
+        let secondlength = (para! as NSString).length
+        let contentRange = NSRange(location: 0,length: secondlength)
+        let attributedSuffix = NSMutableAttributedString(string: para!)
+        let fontAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: 14) ]
+        attributedSuffix.addAttributes(fontAttribute, range: contentRange)
+        attributedContent.append(attributedSuffix)
+        
+        contentTextView.attributedText = attributedContent
+        
+        //hook up comments
+        commentsTextView.text = ""
+        let finalAttributedString = NSMutableAttributedString.init(string: "")
+        for comment in (movement?.comments)!{
+            let attributedUserName = NSMutableAttributedString.init(string: comment.username)
+            let attributedComment = NSMutableAttributedString.init(string: " " + comment.content + "\n")
+            
+            let length_1 = (comment.username as NSString).length
+            let length_2 = (comment.content as NSString).length
+            let userNameRange = NSRange(location: 0,length: length_1)
+            let contentRange = NSRange(location: 0,length: length_2)
+            
+            attributedUserName.addAttributes(boldFontAttribute, range: userNameRange)
+            attributedComment.addAttributes(fontAttribute, range: contentRange)
+            
+            attributedUserName.append(attributedComment)
+            finalAttributedString.append(attributedUserName)
+        }
+        commentsTextView.attributedText = finalAttributedString
+//        commentsTextView.insertText(comment.username + " " + comment.content + "\n")
     }
 }

@@ -122,7 +122,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             
             //parse Date
             var created_at = movementJSON["created_at"].stringValue
-//            let removeIndex = created_at.index(created_at.startIndex,offsetBy: 18)
             let subRange = NSRange(location: 0,length: 19)
             var subCreated_at = created_at.substring(subRange)
             let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)
@@ -147,6 +146,25 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             let owner_userName = movementJSON["owner"]["username"].stringValue
             let owner_position = movementJSON["owner"]["position"].stringValue
             
+            //parse display comment
+            var displayComments : [Comment] = []
+            let comments = movementJSON["displayedComments"].arrayValue
+            for comment in comments{
+                let content = comment["comment_content"].stringValue
+                let created_at = comment["created_at"].stringValue
+                let username = comment["activeCommentUser"]["username"].stringValue
+                
+                let subRange = NSRange(location: 0,length: 19)
+                var subCreated_at = created_at.substring(subRange)
+                let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)
+                let toIndex = created_at.index(subCreated_at.startIndex,offsetBy: 11)
+                let range = fromIndex..<toIndex
+                subCreated_at.replaceSubrange(range, with: " ")
+                let createdDate = DateInRegion(string: subCreated_at, format: .custom("yyyy-MM-dd HH:mm:ss"), fromRegion: Region.Local())
+                let displayComment = Comment(content,username,createdDate!)
+                displayComments.append(displayComment)
+            }
+            
             let movment_Model = Movement(movment_ID,
                                          content,
                                          imageNumber_literal,
@@ -158,7 +176,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                                          likesNumber,
                                          repostsNumber,
                                          commentsNumber,
-                                         movementType)
+                                         movementType,
+                                         displayComments)
             
             movementList.append(movment_Model)
         }

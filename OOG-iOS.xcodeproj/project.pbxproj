@@ -54,6 +54,8 @@
 		53C94D261F6237B0007FD2B9 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D251F6237B0007FD2B9 /* Comment.swift */; };
 		53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D271F623D4F007FD2B9 /* UsersTableViewController.swift */; };
 		53C94D2B1F62578E007FD2B9 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D2A1F62578E007FD2B9 /* UserListTableViewCell.swift */; };
+		53C94D2E1F62B310007FD2B9 /* more-png.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C94D2C1F62B310007FD2B9 /* more-png.png */; };
+		53C94D2F1F62B310007FD2B9 /* window.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C94D2D1F62B310007FD2B9 /* window.png */; };
 		53D2C8301F592F8100CD2CB1 /* MainTarBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */; };
 		53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */; };
 		53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */; };
@@ -113,6 +115,8 @@
 		53C94D251F6237B0007FD2B9 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		53C94D271F623D4F007FD2B9 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		53C94D2A1F62578E007FD2B9 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
+		53C94D2C1F62B310007FD2B9 /* more-png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-png.png"; sourceTree = "<group>"; };
+		53C94D2D1F62B310007FD2B9 /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
 		53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTarBarViewController.swift; sourceTree = "<group>"; };
 		53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTabViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +272,8 @@
 				533758CD1F5D457000DCA48A /* display.png */,
 				53B2D0BF1F5E4AF300DDB826 /* repost.png */,
 				53608D201F5BB80D00B3442E /* home.png */,
+				53C94D2C1F62B310007FD2B9 /* more-png.png */,
+				53C94D2D1F62B310007FD2B9 /* window.png */,
 				53608D261F5BB81600B3442E /* discovery.png */,
 				53608D141F5BB58E00B3442E /* settings.png */,
 				53B2D0BB1F5E4AED00DDB826 /* like.png */,
@@ -513,6 +519,8 @@
 				53608D231F5BB81000B3442E /* message.png in Resources */,
 				5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */,
 				53608D251F5BB81400B3442E /* me.png in Resources */,
+				53C94D2E1F62B310007FD2B9 /* more-png.png in Resources */,
+				53C94D2F1F62B310007FD2B9 /* window.png in Resources */,
 				533758D01F5D457300DCA48A /* detail.png in Resources */,
 				533758CE1F5D457000DCA48A /* display.png in Resources */,
 				53608D271F5BB81600B3442E /* discovery.png in Resources */,
