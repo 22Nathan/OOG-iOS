@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftDate
 
 class Movement{
     var movement_ID : String
@@ -16,10 +17,13 @@ class Movement{
     var owner_avatar : String
     var owner_userName : String
     var owner_position : String
-    var created_at : String     //动态发布时间
+    var created_at : DateInRegion     //动态发布时间
     var likesNumber : String
     var repostsNumber : String
     var commentsNumber : String
+    var movementType : Int  // 用户关注的人的动态为1
+                            // 热门动态为2
+                            // 用户自己发的动态为0
     
     init(_ movement_ID : String,
          _ content : String,
@@ -28,10 +32,12 @@ class Movement{
          _ owner_avatar : String,
          _ owner_userName : String,
          _ owner_position : String,
-         _ created_at : String,
+         _ created_at : DateInRegion,
          _ likesNumber : String,
          _ repostsNumber : String,
-         _ commentsNumber : String) {
+         _ commentsNumber : String,
+         _ movementType : Int
+         ) {
         self.movement_ID = movement_ID
         self.content = content
         self.imageNumber = imageNumber
@@ -43,5 +49,6 @@ class Movement{
         self.likesNumber = likesNumber
         self.repostsNumber = repostsNumber
         self.commentsNumber = commentsNumber
+        self.movementType = movementType
     }
 }

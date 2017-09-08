@@ -22,7 +22,6 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
             imageButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
         }
     }
-
     
     @IBOutlet weak var contentTextView: UITextView!{
         didSet{

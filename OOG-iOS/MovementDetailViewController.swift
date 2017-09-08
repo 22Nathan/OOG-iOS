@@ -79,7 +79,8 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate {
         
         //hook up label
         usernameLabel.text = movement?.owner_userName
-        created_atLabel.text = movement?.created_at
+        let displayTime = convertFrom((movement?.created_at)!)
+        created_atLabel.text = displayTime
     }
 
     /*

@@ -67,8 +67,8 @@ class AppCache{
         }
     }
     
-    func homeMovementRequest(completionHandler: @escaping ()->()) {
-        provider.request(.homeMovement ) {result in
+    func homeMovementRequest(userID : String , completionHandler: @escaping ()->()) {
+        provider.request(.homeMovement(userID: userID) ) {result in
             switch result{
             case let .success(moyaResponse):
                 let data = moyaResponse.data
@@ -91,7 +91,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Movements###########################")
-//                                print(json)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):

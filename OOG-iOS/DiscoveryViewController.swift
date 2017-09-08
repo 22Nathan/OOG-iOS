@@ -14,7 +14,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AMapServices.shared().apiKey = ApiHelper.qiniuKey
+        AMapServices.shared().apiKey = ApiHelper.mapKey
         AMapServices.shared().enableHTTPS = true
         
         mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))

@@ -11,7 +11,7 @@ import Moya
 
 enum ApiConfig{
     case userInfo(username: String)
-    case homeMovement
+    case homeMovement(userID: String)
     case userMovement(userID: String)
 }
 
@@ -40,9 +40,9 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo(let username):
             return ["username" : username]
-        case .homeMovement:
-            return nil
-        case .userMovement(let _):
+        case .homeMovement(let userID):
+            return ["uuid" : userID]
+        case .userMovement( _):
             return nil
         }
     }

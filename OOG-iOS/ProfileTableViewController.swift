@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import SwiftDate
 
 class ProfileTableViewController: UITableViewController {
     enum profileItem{
@@ -91,10 +92,20 @@ class ProfileTableViewController: UITableViewController {
             //            print(movementJSON)
             let movment_ID = movementJSON["movement_ID"].stringValue
             let content = movementJSON["content"].stringValue
-            let created_at = movementJSON["created_at"].stringValue
             let likesNumber = movementJSON["likesNumber"].stringValue
             let repostsNumber = movementJSON["repostsNumber"].stringValue
             let commentsNumber = movementJSON["commentsNumber"].stringValue
+            let movementType = movementJSON["movementType"].intValue
+            
+            //parse date
+            let created_at = movementJSON["created_at"].stringValue
+            let subRange = NSRange(location: 0,length: 19)
+            var subCreated_at = created_at.substring(subRange)
+            let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)
+            let toIndex = created_at.index(subCreated_at.startIndex,offsetBy: 11)
+            let range = fromIndex..<toIndex
+            subCreated_at.replaceSubrange(range, with: " ")
+            let createdDate = DateInRegion(string: subCreated_at, format: .custom("yyyy-MM-dd HH:mm:ss"), fromRegion: Region.Local())
             
             //parse imageUrl
             var imageNumber = 0
@@ -118,10 +129,11 @@ class ProfileTableViewController: UITableViewController {
                                          owner_avatar,
                                          owner_userName,
                                          owner_position,
-                                         created_at,
+                                         createdDate!,
                                          likesNumber,
                                          repostsNumber,
-                                         commentsNumber)
+                                         commentsNumber,
+                                         movementType)
             movementProfilesList.append(movement_Model)
         }
         movemntProfiles.append(profileItem.MovementItem(movementProfilesList))

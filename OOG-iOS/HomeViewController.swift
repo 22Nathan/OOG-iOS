@@ -9,9 +9,12 @@
 import UIKit
 import SwiftyJSON
 import DGElasticPullToRefresh
+import SwiftDate
 
 class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
+    var userID : String = ApiHelper.currentUser.uuid
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        segmented.backgroundColor = UIColor.flatBlack
@@ -27,13 +30,13 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         loadingView_1.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         loadingView_2.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         MovementsTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            Cache.homeMovementsCache.homeMovementRequest {
+            Cache.homeMovementsCache.homeMovementRequest(userID: (self?.userID)!) {
                 self?.loadCache()
                 self?.MovementsTableView.dg_stopLoading()
             }
         }, loadingView: loadingView_1)
         HotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            Cache.homeMovementsCache.homeMovementRequest {
+            Cache.homeMovementsCache.homeMovementRequest(userID: (self?.userID)!) {
                 self?.loadCache()
                 self?.HotTableView.dg_stopLoading()
             }
@@ -109,10 +112,22 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //            print(movementJSON)
             let movment_ID = movementJSON["movement_ID"].stringValue
             let content = movementJSON["content"].stringValue
-            let created_at = movementJSON["created_at"].stringValue
             let likesNumber = movementJSON["likesNumber"].stringValue
             let repostsNumber = movementJSON["repostsNumber"].stringValue
             let commentsNumber = movementJSON["commentsNumber"].stringValue
+            let movementType = movementJSON["movementType"].intValue
+            
+            //parse Date
+            var created_at = movementJSON["created_at"].stringValue
+//            let removeIndex = created_at.index(created_at.startIndex,offsetBy: 18)
+            let subRange = NSRange(location: 0,length: 19)
+            var subCreated_at = created_at.substring(subRange)
+            let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)
+            let toIndex = created_at.index(subCreated_at.startIndex,offsetBy: 11)
+            let range = fromIndex..<toIndex
+            subCreated_at.replaceSubrange(range, with: " ")
+//            print(subCreated_at)
+            let createdDate = DateInRegion(string: subCreated_at, format: .custom("yyyy-MM-dd HH:mm:ss"), fromRegion: Region.Local())
             
             //parse imageUrl
             var imageNumber = 0
@@ -136,10 +151,11 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                                          owner_avatar,
                                          owner_userName,
                                          owner_position,
-                                         created_at,
+                                         createdDate!,
                                          likesNumber,
                                          repostsNumber,
-                                         commentsNumber)
+                                         commentsNumber,
+                                         movementType)
             
             movementList.append(movment_Model)
         }
@@ -151,7 +167,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     private func refreshCache(){
         showProgressDialog()
-        Cache.homeMovementsCache.homeMovementRequest {
+        Cache.homeMovementsCache.homeMovementRequest(userID: userID) {
             self.loadCache()
         }
     }

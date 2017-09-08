@@ -54,6 +54,7 @@
 		53C94D161F6130E0007FD2B9 /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D151F6130E0007FD2B9 /* ImagePickerViewController.swift */; };
 		53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */; };
 		53C94D221F617024007FD2B9 /* PublishMovementContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D211F617024007FD2B9 /* PublishMovementContent.swift */; };
+		53C94D241F622995007FD2B9 /* ConvertISOToDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */; };
 		53D2C8301F592F8100CD2CB1 /* MainTarBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */; };
 		53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */; };
 		53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */; };
@@ -113,6 +114,7 @@
 		53C94D151F6130E0007FD2B9 /* ImagePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
 		53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMovementViewController.swift; sourceTree = "<group>"; };
 		53C94D211F617024007FD2B9 /* PublishMovementContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMovementContent.swift; sourceTree = "<group>"; };
+		53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertISOToDisplay.swift; sourceTree = "<group>"; };
 		53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTarBarViewController.swift; sourceTree = "<group>"; };
 		53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTabViewController.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				53BC50D51F57A13B00BE76B8 /* ExtString.swift */,
 				53BC50E61F5843A900BE76B8 /* ExtViewController.swift */,
 				539BE58E1F60067000CB6E95 /* Synchronized.swift */,
+				53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
 				539BE5971F60E27500CB6E95 /* MovementDisplayTableViewCell.swift in Sources */,
 				53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */,
+				53C94D241F622995007FD2B9 /* ConvertISOToDisplay.swift in Sources */,
 				53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */,
 				539BE58F1F60067000CB6E95 /* Synchronized.swift in Sources */,
 				539BE59C1F61265200CB6E95 /* ButtonCollectionViewCell.swift in Sources */,
