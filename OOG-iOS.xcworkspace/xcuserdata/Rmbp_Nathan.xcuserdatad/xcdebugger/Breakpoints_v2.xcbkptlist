@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/HomeMovementTableViewCell.swift"
-            timestampString = "526587146.445879"
+            timestampString = "526634648.493523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "likesAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/HomeMovementTableViewCell.swift"
-            timestampString = "526587146.445879"
+            timestampString = "526634956.970301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "updateUI()"
             landmarkType = "7">
          </BreakpointContent>

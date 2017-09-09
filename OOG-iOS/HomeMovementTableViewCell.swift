@@ -11,8 +11,18 @@ import Alamofire
 import SwiftyJSON
 import SVProgressHUD
 
-class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate {
+class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollViewDelegate {
 
+    //Mark : initial
+    @IBOutlet weak var imageScrollView: UIScrollView!
+
+    @IBOutlet weak var pageControl: UIPageControl!{
+        didSet{
+            pageControl.currentPageIndicatorTintColor = UIColor.blue
+            pageControl.hidesForSinglePage = true
+            pageControl.addTarget(self, action: #selector(pageChanged(_:)), for: UIControlEvents.valueChanged)
+        }
+    }
     @IBOutlet weak var ownerAvatarImgae: UIImageView!
     @IBOutlet weak var movementImage: UIImageView!
     @IBOutlet weak var username: UILabel!
@@ -38,31 +48,7 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate {
     }
     //Model
     var movement : Movement?{ didSet{updateUI()} }
-    
     var isLike = false
-    
-    func textViewDidChange(_ textView: UITextView) {
-        let maxHeight : CGFloat = CGFloat(300)
-        let nowframe = textView.frame
-        let constraintSize = CGSize(width: nowframe.size.width, height: 300)
-        var size = textView.sizeThatFits(constraintSize)
-        if (size.height <= nowframe.size.height) {
-            size.height = nowframe.size.height
-        }else{
-            if (size.height >= maxHeight)
-            {
-                size.height = maxHeight
-//                textView.isScrollEnabled = true   // 允许滚动
-            }
-            textView.isScrollEnabled = false
-//            else
-//            {
-//                textView.isScrollEnabled = false   // 不允许滚动
-////                contentTextView.isScrollEnabled = false
-//            }
-        }
-        textView.frame = CGRect(x: nowframe.origin.x, y: nowframe.origin.y, width: nowframe.size.width, height: size.height)
-    }
     
     @IBAction func likesAction(_ sender: Any) {
         if isLike{
@@ -77,6 +63,43 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate {
         }
     }
     
+    //MarL : - delegate
+    func textViewDidChange(_ textView: UITextView) {
+        let maxHeight : CGFloat = CGFloat(300)
+        let nowframe = textView.frame
+        let constraintSize = CGSize(width: nowframe.size.width, height: 300)
+        var size = textView.sizeThatFits(constraintSize)
+        if (size.height <= nowframe.size.height) {
+            size.height = nowframe.size.height
+        }else{
+            if (size.height >= maxHeight)
+            {
+                size.height = maxHeight
+                //                textView.isScrollEnabled = true   // 允许滚动
+            }
+            textView.isScrollEnabled = false
+            //            else
+            //            {
+            //                textView.isScrollEnabled = false   // 不允许滚动
+            ////                contentTextView.isScrollEnabled = false
+            //            }
+        }
+        textView.frame = CGRect(x: nowframe.origin.x, y: nowframe.origin.y, width: nowframe.size.width, height: size.height)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let page = Int(imageScrollView.contentOffset.x / imageScrollView.frame.size.width)
+        pageControl.currentPage = page
+    }
+    
+    func pageChanged(_ sender:UIPageControl){
+        var frame = imageScrollView.frame
+        frame.origin.x = frame.size.width * CGFloat(sender.currentPage)
+        frame.origin.y = 0
+        imageScrollView.scrollRectToVisible(frame, animated: true)
+    }
+    
+    //Mark: - Logic
     func completionHandler(plus number: Int){
         let previousNumber = Int((movement?.likesNumber)!)
         let newNumber = previousNumber! + number
@@ -138,6 +161,52 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate {
     }
 
     private func updateUI(){
+        //hook up movement image
+        imageScrollView.delegate = self
+        let scrollViewFrame = imageScrollView.bounds
+        let numOfPages = (movement?.imageNumber)!
+        
+        //设置imageScrollView
+        imageScrollView.contentSize = CGSize(width: scrollViewFrame.size.width * CGFloat(numOfPages), height: scrollViewFrame.size.height)
+        imageScrollView.isPagingEnabled = true
+        imageScrollView.showsHorizontalScrollIndicator = false
+        imageScrollView.showsVerticalScrollIndicator = false
+        imageScrollView.scrollsToTop = false
+        imageScrollView.bounces = false
+        
+        let intFormat = Int(numOfPages)
+        //添加image
+        for index in 0..<intFormat{
+            let imageView = UIImageView(image: UIImage(named: "MovementImage\(index + 1)"))
+            imageView.frame = CGRect(x: scrollViewFrame.size.width * CGFloat(index), y: 0, width: scrollViewFrame.size.width, height: scrollViewFrame.size.height)
+            
+            imageView.contentMode = UIViewContentMode.scaleAspectFill
+            let movementImageKey = "MovementImage" + (movement?.movement_ID)! + String(index)
+            if let imageData = Cache.imageCache.data(forKey: movementImageKey){
+                imageView.image = UIImage(data: imageData)
+            }else{
+                if let imageUrl = URL(string: (movement?.imageUrls[index])!){
+                    DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
+                        let urlContents = try? Data(contentsOf: imageUrl)
+                        Cache.set(movementImageKey, urlContents)
+                        if let imageData = urlContents{
+                            DispatchQueue.main.async {
+                                self?.imageView?.image = UIImage(data: imageData)
+                            }
+                        }
+                    }
+                }else{
+                    imageView.image = nil
+                }
+            }
+            imageScrollView.addSubview(imageView)
+        }
+        
+        pageControl.numberOfPages = Int((movement?.imageNumber)!)
+        pageControl.currentPage = 0
+        pageControl.isHidden = false
+
+        
         //hook up avator avatar image
         ownerAvatarImgae.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "ProfileImage" + (movement?.owner_userName)!
@@ -156,28 +225,6 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate {
                 }
             }else{
                 ownerAvatarImgae.image = nil
-            }
-        }
-        
-        //hook up movement image
-        movementImage.contentMode = UIViewContentMode.scaleAspectFill
-        
-        let movementImageKey = "MovementImage" + (movement?.movement_ID)!
-        if let imageData = Cache.imageCache.data(forKey: movementImageKey){
-            movementImage.image = UIImage(data: imageData)
-        }else{
-            if let imageUrl = URL(string: (movement?.imageUrls[0])!){
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
-                    let urlContents = try? Data(contentsOf: imageUrl)
-                    Cache.set(movementImageKey, urlContents)
-                    if let imageData = urlContents{
-                        DispatchQueue.main.async {
-                            self?.movementImage.image = UIImage(data: imageData)
-                        }
-                    }
-                }
-            }else{
-                movementImage.image = nil
             }
         }
         

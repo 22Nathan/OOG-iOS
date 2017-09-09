@@ -986,7 +986,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pp7-HY-Btj" id="lLk-cR-yXG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableViewCellContentView>
                                             </tableViewCell>
@@ -996,7 +996,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="573"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeMovement" rowHeight="596" id="1Xe-PH-Vub" customClass="HomeMovementTableViewCell" customModule="OOG_iOS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HomeMovement" rowHeight="596" id="1Xe-PH-Vub" customClass="HomeMovementTableViewCell" customModule="OOG_iOS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="596"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Xe-PH-Vub" id="p9x-5E-ViY">
@@ -1021,10 +1021,6 @@
                                                             <color key="textColor" red="0.72868416878172582" green="0.72868416878172582" blue="0.72868416878172582" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f6B-pz-WU1">
-                                                            <rect key="frame" x="0.0" y="62" width="375" height="375"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BXY-K6-A2j">
                                                             <rect key="frame" x="8" y="439" width="26" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1049,7 +1045,7 @@
                                                             <state key="normal" title="Button" image="site.png"/>
                                                         </button>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="内容" translatesAutoresizingMaskIntoConstraints="NO" id="KZT-eE-9J2">
-                                                            <rect key="frame" x="8" y="465" width="359" height="25"/>
+                                                            <rect key="frame" x="8" y="468" width="359" height="25"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1069,17 +1065,29 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
+                                                        <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="WrZ-s9-Cam">
+                                                            <rect key="frame" x="144" y="432" width="64" height="37"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="pageIndicatorTintColor" red="0.69422192258883242" green="0.69422192258883242" blue="0.69422192258883242" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </pageControl>
+                                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvh-cI-D5V">
+                                                            <rect key="frame" x="0.0" y="56" width="375" height="375"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </scrollView>
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="commentsTextView" destination="xPJ-ZP-gF2" id="g8e-fY-7h3"/>
                                                     <outlet property="contentTextView" destination="KZT-eE-9J2" id="p54-We-aG5"/>
                                                     <outlet property="createdAtLabel" destination="xZN-SJ-Pef" id="BkA-Wu-ZKq"/>
+                                                    <outlet property="imageScrollView" destination="wvh-cI-D5V" id="y0p-hU-c2Q"/>
                                                     <outlet property="likeButton" destination="BXY-K6-A2j" id="G3e-k3-cba"/>
                                                     <outlet property="likesNumberLabel" destination="eHV-NS-mZI" id="WET-BM-zC5"/>
                                                     <outlet property="messageButton" destination="NFK-fc-KBl" id="5rE-V5-fZh"/>
-                                                    <outlet property="movementImage" destination="f6B-pz-WU1" id="yad-yy-pmN"/>
                                                     <outlet property="ownerAvatarImgae" destination="MYa-nT-KNW" id="Gs2-TP-MTg"/>
+                                                    <outlet property="pageControl" destination="WrZ-s9-Cam" id="ivZ-OI-zYa"/>
                                                     <outlet property="repostButton" destination="Phc-4g-bw3" id="wOV-9N-u4I"/>
                                                     <outlet property="siteButton" destination="hq0-XY-TCd" id="eLK-Rd-JHP"/>
                                                     <outlet property="username" destination="391-LJ-pCM" id="UBE-y6-BXs"/>
@@ -1199,7 +1207,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6r-YZ-PcA">
                                         <rect key="frame" x="8" y="500" width="115" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1211,7 +1219,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DYK-h9-RtQ">
-                                        <rect key="frame" x="8" y="529" width="325" height="26"/>
+                                        <rect key="frame" x="8" y="529" width="325" height="138"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1225,6 +1233,8 @@
                     <navigationItem key="navigationItem" id="Qjq-KF-7Md"/>
                     <connections>
                         <outlet property="avatarImage" destination="Mhk-6M-ItW" id="6Ra-ti-nly"/>
+                        <outlet property="commentsTextView" destination="DYK-h9-RtQ" id="qch-Mm-9LX"/>
+                        <outlet property="contentTextView" destination="hjc-MM-Saf" id="RFx-aP-Wr4"/>
                         <outlet property="created_atLabel" destination="o19-zS-Z2U" id="iOf-Jx-xry"/>
                         <outlet property="likesNumber" destination="u6r-YZ-PcA" id="vve-fT-mRK"/>
                         <outlet property="movementImage" destination="jEN-Mf-Vmx" id="IkK-bX-T84"/>

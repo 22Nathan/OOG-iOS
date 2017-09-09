@@ -139,7 +139,7 @@ class ProfileTableViewController: UITableViewController {
                 imageUrls.append(imageUrl.stringValue)
                 imageNumber += 1
             }
-            let imageNumber_literal = String(imageNumber)
+//            let imageNumber_literal = String(imageNumber)
             
             //parse owner info
             let owner_avatar = movementJSON["owner"]["avatar_url"].stringValue
@@ -148,7 +148,7 @@ class ProfileTableViewController: UITableViewController {
             
             let movement_Model = Movement(movment_ID,
                                          content,
-                                         imageNumber_literal,
+                                         Float(imageNumber),
                                          imageUrls,
                                          owner_avatar,
                                          owner_userName,

@@ -12,7 +12,7 @@ import SwiftDate
 class Movement{
     var movement_ID : String
     var content : String
-    var imageNumber : String
+    var imageNumber : Float
     var imageUrls : [String]
     var owner_avatar : String
     var owner_userName : String
@@ -28,7 +28,7 @@ class Movement{
     
     init(_ movement_ID : String,
          _ content : String,
-         _ imageNumber : String,
+         _ imageNumber : Float,
          _ imageUrls : [String],
          _ owner_avatar : String,
          _ owner_userName : String,
