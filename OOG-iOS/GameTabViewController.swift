@@ -14,9 +14,11 @@ class GameTabViewController: UIViewController,UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
+        
         toStartTableView.dataSource = self
-        
-        
         // 设置左滑和右滑手势
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
         swipeLeft.direction = .left
@@ -38,10 +40,9 @@ class GameTabViewController: UIViewController,UITableViewDataSource {
     @IBOutlet weak var toStartTableView: UITableView!
     @IBOutlet weak var segmented: UISegmentedControl!
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var containerView: UIView!
+
     //Mark: - Action
-    
     @IBAction func tapChanged(_ sender: Any) {
         let index = (sender as! UISegmentedControl).selectedSegmentIndex
         offset = CGFloat(index) * self.view.frame.width
@@ -68,7 +69,6 @@ class GameTabViewController: UIViewController,UITableViewDataSource {
     }
     
     
-    
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -83,14 +83,42 @@ class GameTabViewController: UIViewController,UITableViewDataSource {
         if tableView.tag == 201 {
             reusedID = "To start"
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath)
-            cell.textLabel?.text = "dsadasdsa"
             return cell
         }
         else{
             reusedID = "To start"
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath)
-            cell.textLabel?.text = "dsadasdsa"
             return cell
+        }
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destinationViewController = segue.destination
+        if segue.identifier == "1V1"{
+            if let findGameVC = destinationViewController as? FindGameViewController {
+                findGameVC.gameTypeArray = ["1V1" , "2V2" , "3V3" , "5V5" , "Free"]
+            }
+        }
+        if segue.identifier == "2V2"{
+            if let findGameVC = destinationViewController as? FindGameViewController {
+                findGameVC.gameTypeArray = ["2V2" , "1V1" , "3V3" , "5V5" , "Free"]
+            }
+        }
+        if segue.identifier == "Free"{
+            if let findGameVC = destinationViewController as? FindGameViewController {
+                findGameVC.gameTypeArray = ["Free" , "1V1" , "2V2" , "3V3" , "5V5"]
+            }
+        }
+        if segue.identifier == "3V3"{
+            if let findGameVC = destinationViewController as? FindGameViewController {
+                findGameVC.gameTypeArray = ["3V3" , "1V1" , "2V2" , "5V5" , "Free"]
+            }
+        }
+        if segue.identifier == "5V5"{
+            if let findGameVC = destinationViewController as? FindGameViewController {
+                findGameVC.gameTypeArray = ["5V5" , "1V1" , "2V2" , "3V3" , "Free"]
+            }
         }
     }
 

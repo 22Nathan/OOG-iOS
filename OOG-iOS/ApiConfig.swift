@@ -11,7 +11,10 @@ import Moya
 
 enum ApiConfig{
     case userInfo(username: String)
-    case homeMovement
+    case homeMovement(userID: String)
+    case userMovement(userID: String)
+    case movementComment(movementID: String)
+    case userFollowersOrFollowings(userID: String,listType : String)
 }
 
 extension ApiConfig: TargetType{
@@ -23,12 +26,18 @@ extension ApiConfig: TargetType{
             return "/users/infos/" + username
         case .homeMovement:
             return "/movements/all/"
+        case .userMovement(let userID):
+            return "/users/" + userID + "/movements/"
+        case .movementComment(let movementID):
+            return "/movements/" + movementID + "/comments/"
+        case .userFollowersOrFollowings(let userID , _):
+            return "/users/" + userID + "/followList/"
         }
     }
     
     var method: Moya.Method{
         switch self {
-        case .userInfo, .homeMovement:
+        case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings :
             return .get
         }
     }
@@ -37,14 +46,20 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo(let username):
             return ["username" : username]
-        case .homeMovement:
+        case .homeMovement(let userID):
+            return ["id" : userID]
+        case .userMovement( _):
             return nil
+        case .movementComment( _):
+            return nil
+        case .userFollowersOrFollowings( _,let listType):
+            return ["followListType" : listType]
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo, .homeMovement:
+        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -53,14 +68,16 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo(let username):
             return "{\"Username\": \(username)}".utf8Encoded
-        case .homeMovement:
+        case .homeMovement, .movementComment , .userMovement :
             return "HomeMovements".utf8Encoded
+        case .userFollowersOrFollowings(let userID, _):
+            return "{\"UserID\": \(userID)}".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .userInfo , .homeMovement:
+        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings :
             return .request
         }
     }

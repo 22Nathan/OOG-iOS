@@ -27,6 +27,11 @@
 		53608D251F5BB81400B3442E /* me.png in Resources */ = {isa = PBXBuildFile; fileRef = 53608D241F5BB81300B3442E /* me.png */; };
 		53608D271F5BB81600B3442E /* discovery.png in Resources */ = {isa = PBXBuildFile; fileRef = 53608D261F5BB81600B3442E /* discovery.png */; };
 		53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53608D2A1F5BD95B00B3442E /* Movement.swift */; };
+		539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */; };
+		539BE58F1F60067000CB6E95 /* Synchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE58E1F60067000CB6E95 /* Synchronized.swift */; };
+		539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */; };
+		539BE5971F60E27500CB6E95 /* MovementDisplayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */; };
+		539BE59C1F61265200CB6E95 /* ButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539BE59B1F61265200CB6E95 /* ButtonCollectionViewCell.swift */; };
 		53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */; };
 		53B2D0BC1F5E4AED00DDB826 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BB1F5E4AED00DDB826 /* like.png */; };
 		53B2D0BE1F5E4AF000DDB826 /* site.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B2D0BD1F5E4AF000DDB826 /* site.png */; };
@@ -43,6 +48,18 @@
 		53BC50E31F5821F200BE76B8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E21F5821F200BE76B8 /* RegisterViewController.swift */; };
 		53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E41F58429900BE76B8 /* CompleteInfoViewController.swift */; };
 		53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E61F5843A900BE76B8 /* ExtViewController.swift */; };
+		53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */; };
+		53C94D221F617024007FD2B9 /* PublishMovementContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D211F617024007FD2B9 /* PublishMovementContent.swift */; };
+		53C94D241F622995007FD2B9 /* ConvertISOToDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */; };
+		53C94D261F6237B0007FD2B9 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D251F6237B0007FD2B9 /* Comment.swift */; };
+		53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D271F623D4F007FD2B9 /* UsersTableViewController.swift */; };
+		53C94D2B1F62578E007FD2B9 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D2A1F62578E007FD2B9 /* UserListTableViewCell.swift */; };
+		53C94D2E1F62B310007FD2B9 /* more-png.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C94D2C1F62B310007FD2B9 /* more-png.png */; };
+		53C94D2F1F62B310007FD2B9 /* window.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C94D2D1F62B310007FD2B9 /* window.png */; };
+		53C94D321F63D547007FD2B9 /* FindGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D311F63D547007FD2B9 /* FindGameViewController.swift */; };
+		53C94D341F641636007FD2B9 /* HomePopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D331F641636007FD2B9 /* HomePopViewController.swift */; };
+		53C94D361F654657007FD2B9 /* PopTeamInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D351F654657007FD2B9 /* PopTeamInfoViewController.swift */; };
+		53C94D3A1F65501D007FD2B9 /* ModalStieInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D391F65501D007FD2B9 /* ModalStieInfoViewController.swift */; };
 		53D2C8301F592F8100CD2CB1 /* MainTarBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */; };
 		53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */; };
 		53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */; };
@@ -74,11 +91,17 @@
 		53608D241F5BB81300B3442E /* me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = me.png; sourceTree = "<group>"; };
 		53608D261F5BB81600B3442E /* discovery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discovery.png; sourceTree = "<group>"; };
 		53608D2A1F5BD95B00B3442E /* Movement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
+		539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementDetailViewController.swift; sourceTree = "<group>"; };
+		539BE58E1F60067000CB6E95 /* Synchronized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronized.swift; sourceTree = "<group>"; };
+		539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
+		539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementDisplayTableViewCell.swift; sourceTree = "<group>"; };
+		539BE59B1F61265200CB6E95 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCollectionViewCell.swift; sourceTree = "<group>"; };
 		53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		53B2D0BB1F5E4AED00DDB826 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
 		53B2D0BD1F5E4AF000DDB826 /* site.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = site.png; sourceTree = "<group>"; };
 		53B2D0BF1F5E4AF300DDB826 /* repost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = repost.png; sourceTree = "<group>"; };
 		53B2D0C11F5E4C2400DDB826 /* HomeMovementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMovementTableViewCell.swift; sourceTree = "<group>"; };
+		53B2D0C31F5ECBBF00DDB826 /* Map-Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Map-Bridging.h"; sourceTree = "<group>"; };
 		53BC50C71F572BAC00BE76B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		53BC50CB1F572BF200BE76B8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		53BC50D01F57901900BE76B8 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -90,6 +113,18 @@
 		53BC50E21F5821F200BE76B8 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		53BC50E41F58429900BE76B8 /* CompleteInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteInfoViewController.swift; sourceTree = "<group>"; };
 		53BC50E61F5843A900BE76B8 /* ExtViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtViewController.swift; sourceTree = "<group>"; };
+		53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMovementViewController.swift; sourceTree = "<group>"; };
+		53C94D211F617024007FD2B9 /* PublishMovementContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMovementContent.swift; sourceTree = "<group>"; };
+		53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertISOToDisplay.swift; sourceTree = "<group>"; };
+		53C94D251F6237B0007FD2B9 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		53C94D271F623D4F007FD2B9 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
+		53C94D2A1F62578E007FD2B9 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
+		53C94D2C1F62B310007FD2B9 /* more-png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-png.png"; sourceTree = "<group>"; };
+		53C94D2D1F62B310007FD2B9 /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
+		53C94D311F63D547007FD2B9 /* FindGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindGameViewController.swift; sourceTree = "<group>"; };
+		53C94D331F641636007FD2B9 /* HomePopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePopViewController.swift; sourceTree = "<group>"; };
+		53C94D351F654657007FD2B9 /* PopTeamInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopTeamInfoViewController.swift; sourceTree = "<group>"; };
+		53C94D391F65501D007FD2B9 /* ModalStieInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalStieInfoViewController.swift; sourceTree = "<group>"; };
 		53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTarBarViewController.swift; sourceTree = "<group>"; };
 		53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTabViewController.swift; sourceTree = "<group>"; };
@@ -161,9 +196,9 @@
 		533758BF1F5C3FC500DCA48A /* Previous */ = {
 			isa = PBXGroup;
 			children = (
-				53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */,
-				53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */,
-				53237F581F5A7FE100B33AAA /* TitleModel.swift */,
+				533758BC1F5C3AE400DCA48A /* MovementDisplayModule */,
+				533758BB1F5C3ACA00DCA48A /* MovementListModule */,
+				533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */,
 			);
 			name = Previous;
 			sourceTree = "<group>";
@@ -172,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */,
-				533758C91F5D2CC900DCA48A /* MovementCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -185,9 +219,27 @@
 			name = ChatModule;
 			sourceTree = "<group>";
 		};
+		539BE59A1F61260000CB6E95 /* MovementDisplayCell */ = {
+			isa = PBXGroup;
+			children = (
+				533758C91F5D2CC900DCA48A /* MovementCollectionViewCell.swift */,
+				539BE59B1F61265200CB6E95 /* ButtonCollectionViewCell.swift */,
+			);
+			name = MovementDisplayCell;
+			sourceTree = "<group>";
+		};
+		539BE59D1F61270D00CB6E95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53237F581F5A7FE100B33AAA /* TitleModel.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		53BC50BE1F572A7B00BE76B8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				53B2D0C31F5ECBBF00DDB826 /* Map-Bridging.h */,
 				5310EEA01F4DCD0A00486589 /* AppDelegate.swift */,
 				5310EEAC1F4DCD0A00486589 /* Info.plist */,
 				5310EEA71F4DCD0A00486589 /* Assets.xcassets */,
@@ -228,6 +280,8 @@
 				533758CD1F5D457000DCA48A /* display.png */,
 				53B2D0BF1F5E4AF300DDB826 /* repost.png */,
 				53608D201F5BB80D00B3442E /* home.png */,
+				53C94D2C1F62B310007FD2B9 /* more-png.png */,
+				53C94D2D1F62B310007FD2B9 /* window.png */,
 				53608D261F5BB81600B3442E /* discovery.png */,
 				53608D141F5BB58E00B3442E /* settings.png */,
 				53B2D0BB1F5E4AED00DDB826 /* like.png */,
@@ -242,9 +296,12 @@
 		53BC50C41F572B5C00BE76B8 /* ProfileModule */ = {
 			isa = PBXGroup;
 			children = (
-				533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */,
-				533758BC1F5C3AE400DCA48A /* MovementDisplayModule */,
-				533758BB1F5C3ACA00DCA48A /* MovementListModule */,
+				53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */,
+				53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */,
+				539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */,
+				539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */,
+				539BE59A1F61260000CB6E95 /* MovementDisplayCell */,
+				539BE59D1F61270D00CB6E95 /* Models */,
 				533758BF1F5C3FC500DCA48A /* Previous */,
 			);
 			name = ProfileModule;
@@ -277,6 +334,7 @@
 		53BC50C91F572BCA00BE76B8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				53C94D191F6157A6007FD2B9 /* Modules */,
 				533758C81F5CF99700DCA48A /* Views */,
 				53D2C82E1F592F1700CD2CB1 /* ViewControllers */,
 				53BC50DF1F57F63F00BE76B8 /* Helper */,
@@ -291,6 +349,7 @@
 			children = (
 				53BC50CB1F572BF200BE76B8 /* User.swift */,
 				53608D2A1F5BD95B00B3442E /* Movement.swift */,
+				53C94D251F6237B0007FD2B9 /* Comment.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -310,6 +369,8 @@
 				53BC50D31F57904B00BE76B8 /* ApiConfig.swift */,
 				53BC50D51F57A13B00BE76B8 /* ExtString.swift */,
 				53BC50E61F5843A900BE76B8 /* ExtViewController.swift */,
+				539BE58E1F60067000CB6E95 /* Synchronized.swift */,
+				53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -322,10 +383,48 @@
 			name = Helper;
 			sourceTree = "<group>";
 		};
+		53C94D191F6157A6007FD2B9 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				53C94D291F62574F007FD2B9 /* UserListModule */,
+				53C94D1C1F6157D1007FD2B9 /* MovementPublishModule */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		53C94D1C1F6157D1007FD2B9 /* MovementPublishModule */ = {
+			isa = PBXGroup;
+			children = (
+				53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */,
+				53C94D211F617024007FD2B9 /* PublishMovementContent.swift */,
+			);
+			name = MovementPublishModule;
+			sourceTree = "<group>";
+		};
+		53C94D291F62574F007FD2B9 /* UserListModule */ = {
+			isa = PBXGroup;
+			children = (
+				53C94D271F623D4F007FD2B9 /* UsersTableViewController.swift */,
+				53C94D2A1F62578E007FD2B9 /* UserListTableViewCell.swift */,
+			);
+			name = UserListModule;
+			sourceTree = "<group>";
+		};
+		53C94D301F63D525007FD2B9 /* FindGameModule */ = {
+			isa = PBXGroup;
+			children = (
+				53C94D311F63D547007FD2B9 /* FindGameViewController.swift */,
+				53C94D351F654657007FD2B9 /* PopTeamInfoViewController.swift */,
+				53C94D391F65501D007FD2B9 /* ModalStieInfoViewController.swift */,
+			);
+			name = FindGameModule;
+			sourceTree = "<group>";
+		};
 		53D2C82E1F592F1700CD2CB1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */,
+				539BE58A1F5F8BAB00CB6E95 /* MovementDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -335,6 +434,7 @@
 			children = (
 				53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */,
 				53B2D0C11F5E4C2400DDB826 /* HomeMovementTableViewCell.swift */,
+				53C94D331F641636007FD2B9 /* HomePopViewController.swift */,
 			);
 			name = HomeModule;
 			sourceTree = "<group>";
@@ -342,6 +442,7 @@
 		53FCA7401F5AE3AB008B34BB /* GameModule */ = {
 			isa = PBXGroup;
 			children = (
+				53C94D301F63D525007FD2B9 /* FindGameModule */,
 				53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */,
 			);
 			name = GameModule;
@@ -438,6 +539,8 @@
 				53608D231F5BB81000B3442E /* message.png in Resources */,
 				5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */,
 				53608D251F5BB81400B3442E /* me.png in Resources */,
+				53C94D2E1F62B310007FD2B9 /* more-png.png in Resources */,
+				53C94D2F1F62B310007FD2B9 /* window.png in Resources */,
 				533758D01F5D457300DCA48A /* detail.png in Resources */,
 				533758CE1F5D457000DCA48A /* display.png in Resources */,
 				53608D271F5BB81600B3442E /* discovery.png in Resources */,
@@ -506,6 +609,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */,
+				53C94D221F617024007FD2B9 /* PublishMovementContent.swift in Sources */,
+				53C94D321F63D547007FD2B9 /* FindGameViewController.swift in Sources */,
+				539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */,
 				53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */,
 				53BC50D41F57904B00BE76B8 /* ApiConfig.swift in Sources */,
 				53BC50E31F5821F200BE76B8 /* RegisterViewController.swift in Sources */,
@@ -515,20 +622,31 @@
 				5310EEA11F4DCD0A00486589 /* AppDelegate.swift in Sources */,
 				53BC50D11F57901900BE76B8 /* Cache.swift in Sources */,
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
+				53C94D341F641636007FD2B9 /* HomePopViewController.swift in Sources */,
+				539BE5971F60E27500CB6E95 /* MovementDisplayTableViewCell.swift in Sources */,
 				53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */,
+				53C94D241F622995007FD2B9 /* ConvertISOToDisplay.swift in Sources */,
 				53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */,
+				539BE58F1F60067000CB6E95 /* Synchronized.swift in Sources */,
+				539BE59C1F61265200CB6E95 /* ButtonCollectionViewCell.swift in Sources */,
 				53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */,
 				53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */,
+				53C94D2B1F62578E007FD2B9 /* UserListTableViewCell.swift in Sources */,
+				53C94D361F654657007FD2B9 /* PopTeamInfoViewController.swift in Sources */,
 				533758CA1F5D2CC900DCA48A /* MovementCollectionViewCell.swift in Sources */,
 				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
+				53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */,
 				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,
 				533758C71F5CF90700DCA48A /* MovementListTableViewController.swift in Sources */,
 				533758CC1F5D2CE500DCA48A /* MovmentDisplayCollectionViewController.swift in Sources */,
+				539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */,
+				53C94D3A1F65501D007FD2B9 /* ModalStieInfoViewController.swift in Sources */,
 				533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */,
 				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,
 				53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */,
 				53BC50CC1F572BF200BE76B8 /* User.swift in Sources */,
 				53608D111F5BB37500B3442E /* ChatListTableViewController.swift in Sources */,
+				53C94D261F6237B0007FD2B9 /* Comment.swift in Sources */,
 				53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */,
 				533758BA1F5C2D9C00DCA48A /* MovementTableViewCell.swift in Sources */,
 				53B2D0C21F5E4C2400DDB826 /* HomeMovementTableViewCell.swift in Sources */,
@@ -660,6 +778,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "nathan.OOG-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./OOG-iOS/Map-Bridging.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -673,6 +792,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "nathan.OOG-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./OOG-iOS/Map-Bridging.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -14,7 +14,7 @@ class MovmentDisplayCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.isScrollEnabled = false
+//        collectionView?.isScrollEnabled = false
     }
 
 
@@ -30,7 +30,7 @@ class MovmentDisplayCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MovementCollectionViewCell
-        cell.testlabel.text = "动态展览"
+//        cell.testlabel.text = "动态展览"
         return cell
     }
 }

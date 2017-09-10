@@ -9,25 +9,44 @@
 import UIKit
 import SwiftyJSON
 import DGElasticPullToRefresh
+import SwiftDate
 
-class HomeViewController: UIViewController,UITableViewDataSource {
-
+class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate {
+    let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
+    let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
+    var userID : String = ApiHelper.currentUser.userID
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 设置NavigationBar
 //        segmented.backgroundColor = UIColor.flatBlack
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
         
-        // 设置delegate
+        // 设置delegate和dataSource
+        MovementsTableView.delegate = self
+        HotTableView.delegate = self
         MovementsTableView.dataSource = self
         HotTableView.dataSource = self
         
+        
         // Refresh stuff
-        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        loadingView_1.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        loadingView_2.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         MovementsTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            //logic here
-            Cache.homeMovementsCache.homeMovementRequest {
+            Cache.homeMovementsCache.homeMovementRequest(userID: (self?.userID)!) {
+                print(self?.userID)
                 self?.loadCache()
+                self?.MovementsTableView.dg_stopLoading()
             }
-        }, loadingView: loadingView)
+        }, loadingView: loadingView_1)
+        HotTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            Cache.homeMovementsCache.homeMovementRequest(userID: (self?.userID)!) {
+                self?.loadCache()
+                self?.HotTableView.dg_stopLoading()
+            }
+            }, loadingView: loadingView_2)
         
         // 设置左滑和右滑手势
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
@@ -45,12 +64,14 @@ class HomeViewController: UIViewController,UITableViewDataSource {
         loadCache()
     }
 
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView!{
+        didSet{
+//            scrollView.isPagingEnabled = true
+        }
+    }
     @IBOutlet weak var segmented: UISegmentedControl!
     @IBOutlet weak var MovementsTableView: UITableView!
     @IBOutlet weak var HotTableView: UITableView!
-    
-    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     
     //Mark: - Action
     var offset: CGFloat = 0.0 {
@@ -78,6 +99,22 @@ class HomeViewController: UIViewController,UITableViewDataSource {
         offset = CGFloat(index) * self.view.frame.width
     }
     
+    @IBAction func postMovement(from segue : UIStoryboardSegue){
+        if let vc = segue.source as? HomePopViewController{
+            let seconds = 0.4
+            perform(#selector(self.performSegueToPost), with: nil, afterDelay: TimeInterval(seconds))
+        }
+    }
+    
+    func performSegueToPost(){
+        performSegue(withIdentifier: "postMovementFromHome", sender: self)
+    }
+    
+    //Mark : - delegate
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
     //Mark : -Model
     var movements : [[Movement]] = []
     
@@ -98,10 +135,21 @@ class HomeViewController: UIViewController,UITableViewDataSource {
 //            print(movementJSON)
             let movment_ID = movementJSON["movement_ID"].stringValue
             let content = movementJSON["content"].stringValue
-            let created_at = movementJSON["created_at"].stringValue
             let likesNumber = movementJSON["likesNumber"].stringValue
             let repostsNumber = movementJSON["repostsNumber"].stringValue
             let commentsNumber = movementJSON["commentsNumber"].stringValue
+            let movementType = movementJSON["movementType"].intValue
+            
+            //parse Date
+            var created_at = movementJSON["created_at"].stringValue
+            let subRange = NSRange(location: 0,length: 19)
+            var subCreated_at = created_at.substring(subRange)
+            let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)
+            let toIndex = created_at.index(subCreated_at.startIndex,offsetBy: 11)
+            let range = fromIndex..<toIndex
+            subCreated_at.replaceSubrange(range, with: " ")
+//            print(subCreated_at)
+            let createdDate = DateInRegion(string: subCreated_at, format: .custom("yyyy-MM-dd HH:mm:ss"), fromRegion: Region.Local())
             
             //parse imageUrl
             var imageNumber = 0
@@ -111,24 +159,45 @@ class HomeViewController: UIViewController,UITableViewDataSource {
                 imageUrls.append(imageUrl.stringValue)
                 imageNumber += 1
             }
-            let imageNumber_literal = String(imageNumber)
+//            let imageNumber_literal = String(imageNumber)
             
             //parse owner info
             let owner_avatar = movementJSON["owner"]["avatar_url"].stringValue
             let owner_userName = movementJSON["owner"]["username"].stringValue
             let owner_position = movementJSON["owner"]["position"].stringValue
             
+            //parse display comment
+            var displayComments : [Comment] = []
+            let comments = movementJSON["displayedComments"].arrayValue
+            for comment in comments{
+                let content = comment["comment_content"].stringValue
+                let created_at = comment["created_at"].stringValue
+                let username = comment["activeCommentUser"]["username"].stringValue
+                
+                let subRange = NSRange(location: 0,length: 19)
+                var subCreated_at = created_at.substring(subRange)
+                let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)
+                let toIndex = created_at.index(subCreated_at.startIndex,offsetBy: 11)
+                let range = fromIndex..<toIndex
+                subCreated_at.replaceSubrange(range, with: " ")
+                let createdDate = DateInRegion(string: subCreated_at, format: .custom("yyyy-MM-dd HH:mm:ss"), fromRegion: Region.Local())
+                let displayComment = Comment(content,username,createdDate!)
+                displayComments.append(displayComment)
+            }
+            
             let movment_Model = Movement(movment_ID,
                                          content,
-                                         imageNumber_literal,
+                                         Float(imageNumber),
                                          imageUrls,
                                          owner_avatar,
                                          owner_userName,
                                          owner_position,
-                                         created_at,
+                                         createdDate!,
                                          likesNumber,
                                          repostsNumber,
-                                         commentsNumber)
+                                         commentsNumber,
+                                         movementType,
+                                         displayComments)
             
             movementList.append(movment_Model)
         }
@@ -136,12 +205,11 @@ class HomeViewController: UIViewController,UITableViewDataSource {
         MovementsTableView.reloadData()
         HotTableView.reloadData()
         hideProgressDialog()
-        MovementsTableView.dg_stopLoading()
     }
     
     private func refreshCache(){
         showProgressDialog()
-        Cache.homeMovementsCache.homeMovementRequest {
+        Cache.homeMovementsCache.homeMovementRequest(userID: userID) {
             self.loadCache()
         }
     }
@@ -169,6 +237,35 @@ class HomeViewController: UIViewController,UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath)
             cell.textLabel!.text = "第二个TableView"
             return cell
+        }
+    }
+    
+    
+     // MARK: - Navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destinationViewController = segue.destination
+        if segue.identifier == "movementDetail"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let movementDetailController = destinationViewController as? MovementDetailViewController{
+                if let cell = sender as? HomeMovementTableViewCell{
+                    movementDetailController.movement = cell.movement
+                    movementDetailController.navigationItem.title = "Post"
+                }
+            }
+        }
+        if segue.identifier == "addMore"{
+            if let vc = destinationViewController as? HomePopViewController {
+                if let ppc = vc.popoverPresentationController{
+                    ppc.delegate = self
+                }
+            }
+        }
+        if segue.identifier == "postMovementFromHome"{
+            if let publishMovementVC = destinationViewController as? PublishMovementViewController{
+                publishMovementVC.userID = userID
+            }
         }
     }
 }

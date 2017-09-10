@@ -50,6 +50,8 @@ class AppCache{
     
     
     //MARK: - Request
+    
+    //获取用户个人信息
     func userInfoRequest(_ username : String, completionHandler: @escaping ()->() ){
         provider.request(.userInfo(username: username)) {result in
             switch result{
@@ -57,7 +59,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Info###########################")
-                print(json)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
@@ -67,18 +69,74 @@ class AppCache{
         }
     }
     
-    func homeMovementRequest(completionHandler: @escaping ()->()) {
-        provider.request(.homeMovement ) {result in
+    //获取首页动态列表
+    func homeMovementRequest(userID : String , completionHandler: @escaping ()->()) {
+        provider.request(.homeMovement(userID: userID) ) {result in
             switch result{
             case let .success(moyaResponse):
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request Home Movements###########################")
-//                print(json)
+                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
-                print("##################请求首页动态失败###########################")
+                print("##################请求首页动态列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获取个人动态列表
+    func userMovementsRequest(_ userID : String, completionHandler: @escaping ()->() ){
+        provider.request(.userMovement(userID: userID)) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Movements###########################")
+                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户动态列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获取动态评论列表
+    func movementComment(_ movementID : String, completionHandler: @escaping ()->()){
+        provider.request(.movementComment(movementID: movementID)){result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request Movement Comment###########################")
+                //                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求动态评论列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获取用户关注或粉丝列表
+    func userFollowersOrFollowings(_ userID: String,_ listType : String,completionHandler: @escaping ()->()){
+        provider.request(.userFollowersOrFollowings(userID: userID , listType: listType)){result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Followers OR Followings " + listType +  "###########################")
+//                                print(json)
+//                self.setKeysuffix(listType)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户关注或粉丝列表失败###########################")
                 print(error)
             }
         }

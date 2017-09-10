@@ -72,20 +72,22 @@ class TelLoginViewController: UIViewController,UITextFieldDelegate {
                     print(json)
                     let result = json["result"]
                     if result == "ok"{
+                        let userID = json["id"].stringValue
                         let uuid = json["uuid"].stringValue
                         let username = json["username"].stringValue
-                        let avator_Url = json["avator_url"].stringValue
+                        let avatar_url = json["avatar_url"].stringValue
                         let followers = json["followers"].stringValue
                         let followings = json["followings"].stringValue
                         let likes = json["likes"].stringValue
                         let position = json["position"].stringValue
-                        self.user.uuid = uuid
+                        self.user.userID = userID
+                        ApiHelper.uuid = uuid
                         self.user.followers = followers
                         self.user.followings = followings
                         self.user.likes = likes
                         self.user.position = position
                         self.user.username = username
-                        self.user.avator_Url = avator_Url
+                        self.user.avatar_url = avatar_url
                         completionHandler()
                     }
                     else{
