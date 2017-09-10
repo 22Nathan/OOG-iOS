@@ -27,11 +27,14 @@ PODS:
     - ChameleonFramework/Default
   - DGElasticPullToRefresh (1.1)
   - HappyDNS (0.3.10)
+  - JNDropDownMenu (0.1.6)
+  - MessageKit (0.6.0)
   - Moya (8.0.3):
     - Moya/Core (= 8.0.3)
   - Moya/Core (8.0.3):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
+  - PanelKit (1.0.0)
   - Qiniu (7.1.5):
     - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
@@ -47,7 +50,10 @@ DEPENDENCIES:
   - AMapSearch
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - DGElasticPullToRefresh
+  - JNDropDownMenu (from `https://github.com/javalnanda/JNDropDownMenu`)
+  - MessageKit (from `https://github.com/MessageKit/MessageKit.git`)
   - Moya
+  - PanelKit
   - Qiniu (~> 7.1)
   - SVProgressHUD
   - SwiftDate (~> 4.0)
@@ -56,11 +62,21 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   ChameleonFramework:
     :git: https://github.com/ViccAlexander/Chameleon.git
+  JNDropDownMenu:
+    :git: https://github.com/javalnanda/JNDropDownMenu
+  MessageKit:
+    :git: https://github.com/MessageKit/MessageKit.git
 
 CHECKOUT OPTIONS:
   ChameleonFramework:
     :commit: 6dd284bde21ea2e7f9fd89bc36f40df16e16369d
     :git: https://github.com/ViccAlexander/Chameleon.git
+  JNDropDownMenu:
+    :commit: faae8e83474c08e0aa8e09a8aa71557eed58c609
+    :git: https://github.com/javalnanda/JNDropDownMenu
+  MessageKit:
+    :commit: 03504934d5a61b98707124c2efa08fda9b0c5416
+    :git: https://github.com/MessageKit/MessageKit.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -72,13 +88,16 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
+  JNDropDownMenu: 1744134c23d97af7bd5afca53d17f5c80272c907
+  MessageKit: c6d6ac780731137ea9e2f24a4cc92f462ab192f7
   Moya: d3721622e3cc0cc2f038d69a258686f0b66e7252
+  PanelKit: 92b092db31574fed837025dcf96375c1a4afb303
   Qiniu: 77a3dba411556a383d72d17e842345a9d4c83252
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: f1104ebde0736c9bd72f3a745397bb65a33e8a88
+PODFILE CHECKSUM: 2435bff53980e5387e59152fab33cb4966053886
 
 COCOAPODS: 1.2.1

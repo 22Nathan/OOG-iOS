@@ -58,7 +58,7 @@ class ProfileTableViewController: UITableViewController {
     //MARK: - Model
     var profiles : [[profileItem]] = []
     var profileUserName : String = ApiHelper.currentUser.username
-    var userID : String = ApiHelper.currentUser.uuid
+    var userID : String = ApiHelper.currentUser.userID
     
     //MARK: - Logic
     func timeChanged() {
@@ -87,22 +87,23 @@ class ProfileTableViewController: UITableViewController {
         var json = JSON.parse(userValue)
         
         //parse TitleModel
-        let username = json["username"].stringValue
-        let tel = json["tel"].stringValue
-        let position = json["position"].stringValue
-        let avatar_url = json["avatar_url"].stringValue
-        let followings = json["followingNumber"].intValue
+        let username = json["user"]["username"].stringValue
+        let userID = json["user"]["userID"].stringValue
+        let tel = json["user"]["tel"].stringValue
+        let position = json["user"]["position"].stringValue
+        let avatar_url = json["user"]["avatar_url"].stringValue
+        let followings = json["user"]["followingNumber"].intValue
         let followingsString = String(followings)
-        let followers = json["followedNumber"].intValue
+        let followers = json["user"]["followedNumber"].intValue
         let followersString = String(followers)
-        let likes = json["likes"].stringValue
-        let description = json["description"].stringValue
+        let likes = json["user"]["likes"].stringValue
+        let description = json["user"]["description"].stringValue
         
-        let title = profileItem.Title(TitleModel(username,tel,position,avatar_url,followingsString,followersString,likes,description))
+        let title = profileItem.Title(TitleModel(username,userID,tel,position,avatar_url,followingsString,followersString,likes,description))
         titleProfiles.append(title)
         
         //parse Info
-        let firstLabelText = "我的动态"
+        let firstLabelText = "我的组队"
         let secondLabelText = "我的评分"
         infoProfiles.append(profileItem.Info(firstLabelText))
         infoProfiles.append(profileItem.Info(secondLabelText))
@@ -164,7 +165,7 @@ class ProfileTableViewController: UITableViewController {
         
         //finish
         profiles.append(titleProfiles)
-//        profiles.append(infoProfiles)
+        profiles.append(infoProfiles)
         profiles.append(movemntProfiles)
         tableView.reloadData()
         hideProgressDialog()

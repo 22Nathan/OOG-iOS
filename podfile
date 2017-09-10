@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform:ios,'8.0'
+platform:ios,'9.0'
 use_frameworks!
 target 'OOG-iOS' do
 	pod 'Alamofire','~> 4.4.0'
@@ -12,5 +12,8 @@ target 'OOG-iOS' do
 	pod 'AMap3DMap'
 	pod 'AMapSearch'
 	pod 'AMapLocation'
-    pod ‘Qiniu’, ‘~> 7.1’
+    pod 'Qiniu', '~> 7.1'
+    pod 'PanelKit'
+    pod 'MessageKit', :git => 'https://github.com/MessageKit/MessageKit.git'
+    pod 'JNDropDownMenu', :git => 'https://github.com/javalnanda/JNDropDownMenu'
 end

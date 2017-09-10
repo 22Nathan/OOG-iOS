@@ -80,9 +80,11 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
                     //Mark: - print
                     print("response register")
                     print(json)
+                    let userID = json["id"].stringValue
                     let uuid = json["uuid"].stringValue
                     let position = json["position"].stringValue
-                    self.user.uuid = uuid
+                    self.user.userID = userID
+                    ApiHelper.uuid = uuid
                     self.user.position = position
                     completionHandler()
                 }

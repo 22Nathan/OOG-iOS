@@ -11,12 +11,14 @@ import SwiftyJSON
 import DGElasticPullToRefresh
 import SwiftDate
 
-class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-
-    var userID : String = ApiHelper.currentUser.uuid
+class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate {
+    let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
+    let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
+    var userID : String = ApiHelper.currentUser.userID
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 设置NavigationBar
 //        segmented.backgroundColor = UIColor.flatBlack
         let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         item.tintColor = UIColor.black
@@ -34,6 +36,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         loadingView_2.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         MovementsTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             Cache.homeMovementsCache.homeMovementRequest(userID: (self?.userID)!) {
+                print(self?.userID)
                 self?.loadCache()
                 self?.MovementsTableView.dg_stopLoading()
             }
@@ -61,13 +64,14 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         loadCache()
     }
 
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView!{
+        didSet{
+//            scrollView.isPagingEnabled = true
+        }
+    }
     @IBOutlet weak var segmented: UISegmentedControl!
     @IBOutlet weak var MovementsTableView: UITableView!
     @IBOutlet weak var HotTableView: UITableView!
-    
-    let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
-    let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
     
     //Mark: - Action
     var offset: CGFloat = 0.0 {
@@ -93,6 +97,22 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     @IBAction func tabChanged(_ sender: Any) {
         let index = (sender as! UISegmentedControl).selectedSegmentIndex
         offset = CGFloat(index) * self.view.frame.width
+    }
+    
+    @IBAction func postMovement(from segue : UIStoryboardSegue){
+        if let vc = segue.source as? HomePopViewController{
+            let seconds = 0.4
+            perform(#selector(self.performSegueToPost), with: nil, afterDelay: TimeInterval(seconds))
+        }
+    }
+    
+    func performSegueToPost(){
+        performSegue(withIdentifier: "postMovementFromHome", sender: self)
+    }
+    
+    //Mark : - delegate
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
     //Mark : -Model
@@ -224,15 +244,27 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
      // MARK: - Navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var destinationViewController = segue.destination
-        if let navigationController = destinationViewController as? UINavigationController{
-            destinationViewController = navigationController.visibleViewController ?? destinationViewController
-        }
-        if let movementDetailController = destinationViewController as? MovementDetailViewController{
-            if segue.identifier == "movementDetail"{
+        if segue.identifier == "movementDetail"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let movementDetailController = destinationViewController as? MovementDetailViewController{
                 if let cell = sender as? HomeMovementTableViewCell{
                     movementDetailController.movement = cell.movement
                     movementDetailController.navigationItem.title = "Post"
                 }
+            }
+        }
+        if segue.identifier == "addMore"{
+            if let vc = destinationViewController as? HomePopViewController {
+                if let ppc = vc.popoverPresentationController{
+                    ppc.delegate = self
+                }
+            }
+        }
+        if segue.identifier == "postMovementFromHome"{
+            if let publishMovementVC = destinationViewController as? PublishMovementViewController{
+                publishMovementVC.userID = userID
             }
         }
     }

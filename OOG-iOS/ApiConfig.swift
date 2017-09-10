@@ -47,7 +47,7 @@ extension ApiConfig: TargetType{
         case .userInfo(let username):
             return ["username" : username]
         case .homeMovement(let userID):
-            return ["uuid" : userID]
+            return ["id" : userID]
         case .userMovement( _):
             return nil
         case .movementComment( _):

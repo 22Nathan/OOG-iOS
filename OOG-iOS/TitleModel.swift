@@ -10,6 +10,7 @@ import Foundation
 
 class TitleModel{
     var username : String   //用户名
+    var userID : String     //用户ID
     var tel : String        //账号
     var position : String   //场上位置
     var avatar_url : String //头像url
@@ -19,6 +20,7 @@ class TitleModel{
     var description : String    //个人描述
     
     init(_ username : String = "",
+         _ userID : String = "",
          _ tel : String,
          _ position : String = "",
          _ avatar_url : String = "",
@@ -27,6 +29,7 @@ class TitleModel{
          _ likes : String = "",
          _ description : String) {
         self.username = username
+        self.userID = userID 
         self.tel = tel
         self.position = position
         self.avatar_url = avatar_url

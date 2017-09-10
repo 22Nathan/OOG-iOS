@@ -109,7 +109,8 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     
     private func requestLikes(_ movementID : String ,completionHandler: @escaping (_ number : Int) -> ()){
         var parameters = [String : String]()
-        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["uuid"] = ApiHelper.uuid
+        parameters["id"] = ApiHelper.currentUser.userID
         Alamofire.request(ApiHelper.API_Root + "/movements/" + movementID + "/likes/",
                           method: .post,
                           parameters: parameters,
@@ -136,6 +137,9 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     }
     
     private func requestDisLike(_ movementID : String, completionHandler: @escaping (_ number : Int) -> ()){
+        var parameters = [String : String]()
+        parameters["uuid"] = ApiHelper.uuid
+        parameters["id"] = ApiHelper.currentUser.userID
         Alamofire.request(ApiHelper.API_Root + "/movements/" + movementID + "/likes/",
                           method: .delete,
                           parameters: nil,

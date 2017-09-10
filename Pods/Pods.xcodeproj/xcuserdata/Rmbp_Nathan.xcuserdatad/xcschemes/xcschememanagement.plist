@@ -29,7 +29,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JNDropDownMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MessageKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Moya.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PanelKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -67,12 +82,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>080F96349D9EFF6CFBC9F7F5F4734C07</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1215771836B84E9F9899950098D2FF80</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1AE6818F0C0F7D239C464D994F47BCF2</key>
+		<key>1722A2C6C087D708C3B0918957AB28B0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3C4DFB10181F88F0915592ACE8C92D11</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,17 +117,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8035A6A80C13E25C5FFE1B7B573C9EDF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9280BBE498470BE59556CB7BCDD103A7</key>
+		<key>A31B449E83D899B3658C05187BFF8B5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD5A83D228C0C2EFB2DF4A6BFAEE7A40</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +137,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C8A00B632782460C6BCFBA05361DA4B9</key>
+		<key>CDBAD062B9A5E96EB764CE55D11C7095</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,7 +147,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F82148AF7D46FB5BD9CA8A8E4071252B</key>
+		<key>D6F57B53265DE9A618DBD258F35A75D6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D9B67181F5F2D959F5D0A8E4450683B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -72,6 +72,7 @@ class TelLoginViewController: UIViewController,UITextFieldDelegate {
                     print(json)
                     let result = json["result"]
                     if result == "ok"{
+                        let userID = json["id"].stringValue
                         let uuid = json["uuid"].stringValue
                         let username = json["username"].stringValue
                         let avatar_url = json["avatar_url"].stringValue
@@ -79,7 +80,8 @@ class TelLoginViewController: UIViewController,UITextFieldDelegate {
                         let followings = json["followings"].stringValue
                         let likes = json["likes"].stringValue
                         let position = json["position"].stringValue
-                        self.user.uuid = uuid
+                        self.user.userID = userID
+                        ApiHelper.uuid = uuid
                         self.user.followers = followers
                         self.user.followings = followings
                         self.user.likes = likes

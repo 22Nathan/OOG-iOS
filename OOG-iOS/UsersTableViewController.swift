@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class UsersTableViewController: UITableViewController {
 
-    var ownerUserID = ApiHelper.currentUser.uuid
+    var ownerUserID = ApiHelper.currentUser.userID
     var listType = "1"
     
     //Mark : LifeCycle

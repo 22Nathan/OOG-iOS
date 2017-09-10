@@ -77,7 +77,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request Home Movements###########################")
-//                print(json)
+                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
@@ -95,7 +95,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Movements###########################")
-//                print(json)
+                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):

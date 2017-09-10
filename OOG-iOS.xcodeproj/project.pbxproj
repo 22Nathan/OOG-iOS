@@ -56,6 +56,10 @@
 		53C94D2B1F62578E007FD2B9 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D2A1F62578E007FD2B9 /* UserListTableViewCell.swift */; };
 		53C94D2E1F62B310007FD2B9 /* more-png.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C94D2C1F62B310007FD2B9 /* more-png.png */; };
 		53C94D2F1F62B310007FD2B9 /* window.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C94D2D1F62B310007FD2B9 /* window.png */; };
+		53C94D321F63D547007FD2B9 /* FindGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D311F63D547007FD2B9 /* FindGameViewController.swift */; };
+		53C94D341F641636007FD2B9 /* HomePopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D331F641636007FD2B9 /* HomePopViewController.swift */; };
+		53C94D361F654657007FD2B9 /* PopTeamInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D351F654657007FD2B9 /* PopTeamInfoViewController.swift */; };
+		53C94D3A1F65501D007FD2B9 /* ModalStieInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D391F65501D007FD2B9 /* ModalStieInfoViewController.swift */; };
 		53D2C8301F592F8100CD2CB1 /* MainTarBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */; };
 		53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */; };
 		53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */; };
@@ -117,6 +121,10 @@
 		53C94D2A1F62578E007FD2B9 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		53C94D2C1F62B310007FD2B9 /* more-png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-png.png"; sourceTree = "<group>"; };
 		53C94D2D1F62B310007FD2B9 /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
+		53C94D311F63D547007FD2B9 /* FindGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindGameViewController.swift; sourceTree = "<group>"; };
+		53C94D331F641636007FD2B9 /* HomePopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePopViewController.swift; sourceTree = "<group>"; };
+		53C94D351F654657007FD2B9 /* PopTeamInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopTeamInfoViewController.swift; sourceTree = "<group>"; };
+		53C94D391F65501D007FD2B9 /* ModalStieInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalStieInfoViewController.swift; sourceTree = "<group>"; };
 		53D2C82F1F592F8100CD2CB1 /* MainTarBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTarBarViewController.swift; sourceTree = "<group>"; };
 		53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTabViewController.swift; sourceTree = "<group>"; };
@@ -402,6 +410,16 @@
 			name = UserListModule;
 			sourceTree = "<group>";
 		};
+		53C94D301F63D525007FD2B9 /* FindGameModule */ = {
+			isa = PBXGroup;
+			children = (
+				53C94D311F63D547007FD2B9 /* FindGameViewController.swift */,
+				53C94D351F654657007FD2B9 /* PopTeamInfoViewController.swift */,
+				53C94D391F65501D007FD2B9 /* ModalStieInfoViewController.swift */,
+			);
+			name = FindGameModule;
+			sourceTree = "<group>";
+		};
 		53D2C82E1F592F1700CD2CB1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +434,7 @@
 			children = (
 				53B2D0B91F5D890B00DDB826 /* HomeViewController.swift */,
 				53B2D0C11F5E4C2400DDB826 /* HomeMovementTableViewCell.swift */,
+				53C94D331F641636007FD2B9 /* HomePopViewController.swift */,
 			);
 			name = HomeModule;
 			sourceTree = "<group>";
@@ -423,6 +442,7 @@
 		53FCA7401F5AE3AB008B34BB /* GameModule */ = {
 			isa = PBXGroup;
 			children = (
+				53C94D301F63D525007FD2B9 /* FindGameModule */,
 				53FCA7411F5AE3F9008B34BB /* GameTabViewController.swift */,
 			);
 			name = GameModule;
@@ -591,6 +611,7 @@
 			files = (
 				53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */,
 				53C94D221F617024007FD2B9 /* PublishMovementContent.swift in Sources */,
+				53C94D321F63D547007FD2B9 /* FindGameViewController.swift in Sources */,
 				539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */,
 				53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */,
 				53BC50D41F57904B00BE76B8 /* ApiConfig.swift in Sources */,
@@ -601,6 +622,7 @@
 				5310EEA11F4DCD0A00486589 /* AppDelegate.swift in Sources */,
 				53BC50D11F57901900BE76B8 /* Cache.swift in Sources */,
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
+				53C94D341F641636007FD2B9 /* HomePopViewController.swift in Sources */,
 				539BE5971F60E27500CB6E95 /* MovementDisplayTableViewCell.swift in Sources */,
 				53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */,
 				53C94D241F622995007FD2B9 /* ConvertISOToDisplay.swift in Sources */,
@@ -610,6 +632,7 @@
 				53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */,
 				53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */,
 				53C94D2B1F62578E007FD2B9 /* UserListTableViewCell.swift in Sources */,
+				53C94D361F654657007FD2B9 /* PopTeamInfoViewController.swift in Sources */,
 				533758CA1F5D2CC900DCA48A /* MovementCollectionViewCell.swift in Sources */,
 				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
 				53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */,
@@ -617,6 +640,7 @@
 				533758C71F5CF90700DCA48A /* MovementListTableViewController.swift in Sources */,
 				533758CC1F5D2CE500DCA48A /* MovmentDisplayCollectionViewController.swift in Sources */,
 				539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */,
+				53C94D3A1F65501D007FD2B9 /* ModalStieInfoViewController.swift in Sources */,
 				533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */,
 				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,
 				53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */,

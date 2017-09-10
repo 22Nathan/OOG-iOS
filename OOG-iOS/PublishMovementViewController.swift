@@ -124,7 +124,8 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     
     private func postOut(){
         var parameters = [String : String]()
-        parameters["uuid"] = userID
+        parameters["id"] = userID
+        parameters["uuid"] = ApiHelper.uuid
         parameters["content"] = contentTextView.text
         parameters["image_url"] = ApiHelper.qiniu_Root + key
         Alamofire.request(ApiHelper.API_Root + "/movements/publish/",
