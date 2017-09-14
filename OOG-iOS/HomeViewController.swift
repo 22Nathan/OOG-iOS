@@ -11,10 +11,10 @@ import SwiftyJSON
 import DGElasticPullToRefresh
 import SwiftDate
 
-class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate {
+class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate,HomeViewControllerProtocol {
     let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
     let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
-    var userID : String = ApiHelper.currentUser.userID
+    var userID : String = ApiHelper.currentUser.id
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         loadingView_2.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         MovementsTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             Cache.homeMovementsCache.homeMovementRequest(userID: (self?.userID)!) {
-                print(self?.userID)
                 self?.loadCache()
                 self?.MovementsTableView.dg_stopLoading()
             }
@@ -115,6 +114,10 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         return .none
     }
     
+    func cellMessageButtonDidPress(sender cell: UITableViewCell) {
+        performSegue(withIdentifier: "movementDetail", sender: cell)
+    }
+    
     //Mark : -Model
     var movements : [[Movement]] = []
     
@@ -133,7 +136,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         for movementJSON in movments{
             //parse basic info
 //            print(movementJSON)
-            let movment_ID = movementJSON["movement_ID"].stringValue
+            let movment_ID = movementJSON["id"].stringValue
             let content = movementJSON["content"].stringValue
             let likesNumber = movementJSON["likesNumber"].stringValue
             let repostsNumber = movementJSON["repostsNumber"].stringValue
@@ -174,6 +177,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 let created_at = comment["created_at"].stringValue
                 let username = comment["activeCommentUser"]["username"].stringValue
                 
+//                print(username)
                 let subRange = NSRange(location: 0,length: 19)
                 var subCreated_at = created_at.substring(subRange)
                 let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)
@@ -224,12 +228,19 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         return movements[section].count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let movement = movements[indexPath.section][indexPath.row]
+        let commentHeight = CGFloat(movement.comments.count * 40)
+        return 518 + commentHeight
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var reusedID: String!
         if tableView.tag == 101 {
             reusedID = "HomeMovement"
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath) as! HomeMovementTableViewCell
             cell.movement = movements[indexPath.section][indexPath.row]
+            cell.delegate = self
             return cell
         }
         else{
@@ -239,7 +250,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             return cell
         }
     }
-    
     
      // MARK: - Navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -268,4 +278,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             }
         }
     }
+}
+
+protocol HomeViewControllerProtocol {
+    func cellMessageButtonDidPress(sender cell: UITableViewCell)
 }

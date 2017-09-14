@@ -83,7 +83,8 @@ class CompleteInfoViewController: UIViewController,UITextFieldDelegate {
                     let userID = json["id"].stringValue
                     let uuid = json["uuid"].stringValue
                     let position = json["position"].stringValue
-                    self.user.userID = userID
+                    self.user.id = userID
+                    self.user.uuid = uuid
                     ApiHelper.uuid = uuid
                     self.user.position = position
                     completionHandler()

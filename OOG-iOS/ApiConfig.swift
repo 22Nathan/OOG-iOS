@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum ApiConfig{
-    case userInfo(username: String)
+    case userInfo(userID: String)
     case homeMovement(userID: String)
     case userMovement(userID: String)
     case movementComment(movementID: String)
@@ -22,8 +22,8 @@ extension ApiConfig: TargetType{
     
     var path: String{
         switch self {
-        case .userInfo(let username):
-            return "/users/infos/" + username
+        case .userInfo(let userID):
+            return "/users/" + userID
         case .homeMovement:
             return "/movements/all/"
         case .userMovement(let userID):
@@ -44,8 +44,8 @@ extension ApiConfig: TargetType{
     
     var parameters: [String: Any]? {
         switch self {
-        case .userInfo(let username):
-            return ["username" : username]
+        case .userInfo(let userID):
+            return ["userID" : userID]
         case .homeMovement(let userID):
             return ["id" : userID]
         case .userMovement( _):
@@ -66,8 +66,8 @@ extension ApiConfig: TargetType{
     
     var sampleData: Data {
         switch self {
-        case .userInfo(let username):
-            return "{\"Username\": \(username)}".utf8Encoded
+        case .userInfo(let userID):
+            return "{\"UserID\": \(userID)}".utf8Encoded
         case .homeMovement, .movementComment , .userMovement :
             return "HomeMovements".utf8Encoded
         case .userFollowersOrFollowings(let userID, _):

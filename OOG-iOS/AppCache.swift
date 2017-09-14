@@ -52,12 +52,12 @@ class AppCache{
     //MARK: - Request
     
     //获取用户个人信息
-    func userInfoRequest(_ username : String, completionHandler: @escaping ()->() ){
-        provider.request(.userInfo(username: username)) {result in
+    func userInfoRequest(_ userID : String, completionHandler: @escaping ()->() ){
+        provider.request(.userInfo(userID: userID)) {result in
             switch result{
             case let .success(moyaResponse):
                 let data = moyaResponse.data
-                let json = JSON(data)
+                var json = JSON(data)
                 print("##################Request User Info###########################")
 //                print(json)
                 self.set(self.key, json.rawString()!)
@@ -77,7 +77,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request Home Movements###########################")
-                print(json)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
@@ -95,7 +95,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Movements###########################")
-                print(json)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
@@ -131,8 +131,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Followers OR Followings " + listType +  "###########################")
-//                                print(json)
-//                self.setKeysuffix(listType)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):

@@ -37,7 +37,7 @@ class MovementDisplayTableViewCell: UITableViewCell,UICollectionViewDelegate,UIC
 //    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return movements.count
     }
     
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {

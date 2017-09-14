@@ -50,6 +50,8 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     var movement : Movement?{ didSet{updateUI()} }
     var isLike = false
     
+    var delegate : HomeViewControllerProtocol?
+    
     @IBAction func likesAction(_ sender: Any) {
         if isLike{
             //发请求取消
@@ -63,6 +65,9 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         }
     }
     
+    @IBAction func commentAction(_ sender: Any) {
+        delegate?.cellMessageButtonDidPress(sender: self)
+    }
     //MarL : - delegate
     func textViewDidChange(_ textView: UITextView) {
         let maxHeight : CGFloat = CGFloat(300)
@@ -103,14 +108,15 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     func completionHandler(plus number: Int){
         let previousNumber = Int((movement?.likesNumber)!)
         let newNumber = previousNumber! + number
-        likesNumberLabel.text = String(newNumber) + "人喜欢"
-        likeButton.isEnabled = true
+        movement?.likesNumber = String(newNumber)
+        self.likesNumberLabel.text = String(newNumber) + "人喜欢"
+        self.likeButton.isEnabled = true
     }
     
     private func requestLikes(_ movementID : String ,completionHandler: @escaping (_ number : Int) -> ()){
         var parameters = [String : String]()
-        parameters["uuid"] = ApiHelper.uuid
-        parameters["id"] = ApiHelper.currentUser.userID
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["id"] = ApiHelper.currentUser.id
         Alamofire.request(ApiHelper.API_Root + "/movements/" + movementID + "/likes/",
                           method: .post,
                           parameters: parameters,
@@ -121,7 +127,7 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
                                     let json = SwiftyJSON.JSON(value)
                                     //Mark: - print
                                     print("################### Response likes ###################")
-//                                    print(json)
+                                    print(json)
                                     let result = json["result"].stringValue
                                     if result == "no"{
                                         SVProgressHUD.showInfo(withStatus: "操作失败")
@@ -138,18 +144,18 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     
     private func requestDisLike(_ movementID : String, completionHandler: @escaping (_ number : Int) -> ()){
         var parameters = [String : String]()
-        parameters["uuid"] = ApiHelper.uuid
-        parameters["id"] = ApiHelper.currentUser.userID
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["id"] = ApiHelper.currentUser.id
         Alamofire.request(ApiHelper.API_Root + "/movements/" + movementID + "/likes/",
                           method: .delete,
-                          parameters: nil,
+                          parameters: parameters,
                           encoding: URLEncoding.default).responseJSON{response in
                             switch response.result.isSuccess{
                             case true:
                                 if let value = response.value{
                                     let json = SwiftyJSON.JSON(value)
-                                    print(json)
                                     print("################### Response Dislikes ###################")
+                                    print(json)
                                     let result = json["result"].stringValue
                                     if result == "no"{
                                         SVProgressHUD.showInfo(withStatus: "操作失败")
@@ -245,7 +251,7 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         let length = (para! as NSString).length
         let userNameRange = NSRange(location: 0,length: length)
         let colorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
-        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14) ]
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16) ]
         attributedContent.addAttributes(colorAttribute, range: userNameRange)
         attributedContent.addAttributes(boldFontAttribute, range: userNameRange)
         

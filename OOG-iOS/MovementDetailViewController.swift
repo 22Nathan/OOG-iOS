@@ -7,12 +7,26 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
+import SwiftyJSON
 
 class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UITextViewDelegate {
 
+    //Mark : - Model
+    var movement : Movement?
+    
+    //Mark : -LifeCycle
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        self.navigationController?.toolbar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
         updateUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        self.tabBarController?.tabBar.isHidden = false
     }
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
@@ -35,6 +49,57 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
         }
     }
     
+    @IBOutlet weak var searchBar: UISearchBar!{
+        didSet{
+//            searchBar.contentMode = .left
+        }
+    }
+    
+    @IBAction func sendAction(_ sender: Any) {
+        if searchBar.text == ""{
+            SVProgressHUD.showInfo(withStatus: "评论内容不能为空")
+        }else{
+            sendCommentRequest((movement?.movement_ID)!,completionHandler: completionHandler)
+        }
+    }
+    
+    
+    func completionHandler(){
+        searchBar.text = ""
+        SVProgressHUD.showInfo(withStatus: "评论成功")
+    }
+    
+    private func sendCommentRequest(_ objectID : String ,completionHandler: @escaping () -> ()){
+        var parameters = [String : String]()
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["id"] = ApiHelper.currentUser.id
+        parameters["comment_content"] = searchBar.text
+        Alamofire.request(ApiHelper.API_Root + "/movements/" + objectID + "/comments/",
+                          method: .post,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response follow ###################")
+                                    print(json)
+                                    let result = json["result"].stringValue
+                                    if result == "no"{
+                                        SVProgressHUD.showInfo(withStatus: "操作失败")
+                                    }
+                                    if result == "ok"{
+                                        completionHandler()
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
+    
     func textViewDidChange(_ textView: UITextView) {
         let maxHeight : CGFloat = CGFloat(300)
         let nowframe = textView.frame
@@ -55,9 +120,6 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
         }
         textView.frame = CGRect(x: nowframe.origin.x, y: nowframe.origin.y, width: nowframe.size.width, height: size.height)
     }
-    
-    //Mark : - Model
-    var movement : Movement?
     
     private func updateUI(){
         //hook up avator 

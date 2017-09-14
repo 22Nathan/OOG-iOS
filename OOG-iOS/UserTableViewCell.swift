@@ -1,43 +1,32 @@
 //
-//  UserListTableViewCell.swift
+//  UserTableViewCell.swift
 //  OOG-iOS
 //
-//  Created by Nathan on 08/09/2017.
+//  Created by Nathan on 12/09/2017.
 //  Copyright © 2017 Nathan. All rights reserved.
 //
 
 import UIKit
-import Alamofire
 import SwiftyJSON
+import Alamofire
 import SVProgressHUD
 
-class UserListTableViewCell: UITableViewCell {
-    
+class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var positionLabel: UILabel!
-    @IBOutlet weak var rateLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var relationshipButton: UIButton!
+    @IBOutlet weak var followerButton: UIButton!
+    @IBOutlet weak var followingButton: UIButton!
+    @IBOutlet weak var likesButton: UIButton!
     
     var user : User?{
         didSet{
-            initialIsFollow()
             updateUI()
         }
     }
-    var listType : String?
-    var isFollow : Bool = false
-    
-    private func initialIsFollow(){
-        if listType == "1"{
-            isFollow = true
-        }else if user?.followType == "1"{
-            isFollow = true
-        }else{
-            isFollow = false
-        }
-    }
-    
+    var isFollow = false
+    var listType = ""
     @IBAction func followAction(_ sender: Any) {
         if isFollow{
             isFollow = false
@@ -122,8 +111,7 @@ class UserListTableViewCell: UITableViewCell {
     }
     
     private func updateUI(){
-        //hook up image
-        avatarImage.contentMode = .scaleAspectFit
+        avatarImage.contentMode = .scaleAspectFill
         let profileImageKey = "ProfileImageKey" + (user?.username)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
             avatarImage.image = UIImage(data: imageData)
@@ -143,16 +131,33 @@ class UserListTableViewCell: UITableViewCell {
             }
         }
         
-        //hook up label
-        usernameLabel.text = user?.username
-        positionLabel.text = user?.position
+        followingButton.titleLabel?.numberOfLines = 0
+        followingButton.titleLabel?.textAlignment = .center
+        followingButton.setTitle("关注\n" + (user?.followings)!, for: UIControlState(rawValue: 0))
         
-        //hook up button
-        var word = "未关注"
-        if isFollow{
-            word = "已关注"
+        followerButton.titleLabel?.numberOfLines = 0
+        followerButton.titleLabel?.textAlignment = .center
+        followerButton.setTitle("粉丝\n" + (user?.followers)!, for: UIControlState(rawValue: 0))
+        
+        likesButton.titleLabel?.numberOfLines = 0
+        likesButton.titleLabel?.textAlignment = .center
+        likesButton.setTitle("喜欢\n" + (user?.likes)!, for: UIControlState(rawValue: 0))
+        
+        descriptionLabel.text = user?.description
+        usernameLabel.text = user?.username
+        
+        if listType == "1"{
+            isFollow = true
+        }else if user?.followType == "1"{
+            isFollow = true
+        }else{
+            isFollow = false
         }
-        relationshipButton.backgroundColor = UIColor.flatBlue
-        relationshipButton.setTitle(word, for: UIControlState.normal)
+        
+        if isFollow{
+            relationshipButton.setTitle("已关注", for: UIControlState.normal)
+        }else{
+            relationshipButton.setTitle("未关注", for: UIControlState.normal)
+        }
     }
 }

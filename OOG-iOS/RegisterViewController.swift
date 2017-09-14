@@ -65,7 +65,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
         var parameters = [String : String]()
         parameters["tel"] = tel
         Alamofire.request(ApiHelper.API_Root + "/users/register/validation/",
-                          method: .post,
+                          method: .get,
                           parameters: ["tel":tel],
                           encoding: URLEncoding.default).responseJSON {response in
             switch response.result.isSuccess {

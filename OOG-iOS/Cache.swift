@@ -43,4 +43,11 @@ class Cache{
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }
+    
+    //Mark: - otherUsers
+    static let otherUsersKey = "otherUsers"
+    static let otherUsersCache = AppCache(otherUsersKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
 }
