@@ -37,6 +37,9 @@ class UserListTableViewCell: UITableViewCell {
             isFollow = false
         }
     }
+    @IBAction func AskTeamAction(_ sender: Any) {
+        requestTeam((user?.id)!)
+    }
     
     @IBAction func followAction(_ sender: Any) {
         if isFollow{
@@ -92,10 +95,6 @@ class UserListTableViewCell: UITableViewCell {
         var parameters = [String : String]()
         parameters["uuid"] = ApiHelper.currentUser.uuid
         parameters["id"] = objectID
-        print("mark")
-        print(ApiHelper.currentUser.uuid)
-        print(ApiHelper.currentUser.id)
-        print("mark")
         Alamofire.request(ApiHelper.API_Root + "/users/" + ApiHelper.currentUser.id + "/follow/",
                           method: .delete,
                           parameters: parameters,
@@ -113,6 +112,43 @@ class UserListTableViewCell: UITableViewCell {
                                     }
                                     if result == "ok"{
                                         completionHandler(2)
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
+    private func requestTeam(_ objectID : String){
+        var parameters = [String : String]()
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["id"] = objectID
+        print(ApiHelper.currentUser.uuid)
+        print(ApiHelper.currentUser.id)
+        Alamofire.request(ApiHelper.API_Root + "/users/" + ApiHelper.currentUser.id + "/team/",
+                          method: .post,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response teamAsk ###################")
+                                    print(json)
+                                    let result = json["result"].stringValue
+                                    if result == "ok"{
+                                        SVProgressHUD.showInfo(withStatus: "对方已同意请求")
+                                    }
+                                    if result == "failed"{
+                                        let reason = json["reason"].stringValue
+                                        if reason == "the team has already full"{
+                                            SVProgressHUD.showInfo(withStatus: "您的队伍人数已满")
+                                        }
+                                        else if reason == "the user has already joined one team"{
+                                            SVProgressHUD.showInfo(withStatus: "该用户已有组队")
+                                        }
                                     }
                                 }
                             case false:

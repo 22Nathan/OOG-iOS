@@ -50,4 +50,10 @@ class Cache{
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }
+    
+    static let userTeamKey = "userTeam"
+    static let userTeamCache = AppCache(userTeamKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
 }

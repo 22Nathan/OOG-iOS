@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PanelKit
 import JNDropDownMenu
 import SVProgressHUD
 import SwiftDate

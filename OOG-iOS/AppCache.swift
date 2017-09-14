@@ -141,6 +141,29 @@ class AppCache{
         }
     }
     
+    //获取用户组队信息
+    func userTeamInfo(_ userID : String , completionHandler: @escaping (_ ifEmpty : Bool)->()){
+        provider.request(.userTeam(userID: userID)){result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Team Info###########################")
+//                print(json)
+                self.set(self.key, json.rawString()!)
+                let result = json["result"].stringValue
+                if result == "failed"{
+                    completionHandler(true)
+                }else{
+                    completionHandler(false)
+                }
+            case let .failure(error):
+                print("##################请求用户组队信息失败###########################")
+                print(error)
+            }
+        }
+    }
+    
     func set(_ key : String, _ value : String) {
         AppCache.myCache.set(value, forKey: key)
     }

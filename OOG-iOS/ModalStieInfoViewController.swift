@@ -31,4 +31,6 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
     @IBAction func cancel(_ sender: Any) {
         presentingViewController?.dismiss(animated: true)
     }
+    
+    
 }

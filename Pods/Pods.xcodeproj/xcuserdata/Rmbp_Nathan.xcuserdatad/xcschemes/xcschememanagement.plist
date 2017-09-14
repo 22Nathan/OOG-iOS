@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DZNEmptyDataSet.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HappyDNS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -40,11 +45,6 @@
 			<false/>
 		</dict>
 		<key>Moya.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>PanelKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -82,7 +82,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>080F96349D9EFF6CFBC9F7F5F4734C07</key>
+		<key>0C19A8BB78DEE365E9BD9534F857189E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,12 +92,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1722A2C6C087D708C3B0918957AB28B0</key>
+		<key>1E730FF485E3B56D950AD58DDA0F3540</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3C4DFB10181F88F0915592ACE8C92D11</key>
+		<key>2DF693D7E7FCD53BBE3ED737867B608D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +112,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>5C1BAE55CAED62B6A2273075492BBAFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>76BD4592010354D6C23D6ECCA20D83A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>83FCF6AFB0603EB01CACA3162FE6A26C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,17 +137,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD5A83D228C0C2EFB2DF4A6BFAEE7A40</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C1A54FC0100DFA5394FE6BCAC6C721A6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CDBAD062B9A5E96EB764CE55D11C7095</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,7 +147,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D6F57B53265DE9A618DBD258F35A75D6</key>
+		<key>D386C75EFD4F03725E4EFB866B600B9A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

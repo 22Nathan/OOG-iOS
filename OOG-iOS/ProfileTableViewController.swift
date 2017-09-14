@@ -244,5 +244,10 @@ class ProfileTableViewController: UITableViewController {
                 publishMovementVC.userID = userID
             }
         }
+        if segue.identifier == "myTeam"{
+            if let teamVC = destinationViewController as? TeamTableViewController{
+                teamVC.userID = userID
+            }
+        }
     }
 }

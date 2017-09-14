@@ -15,6 +15,7 @@ enum ApiConfig{
     case userMovement(userID: String)
     case movementComment(movementID: String)
     case userFollowersOrFollowings(userID: String,listType : String)
+    case userTeam(userID: String)
 }
 
 extension ApiConfig: TargetType{
@@ -32,12 +33,14 @@ extension ApiConfig: TargetType{
             return "/movements/" + movementID + "/comments/"
         case .userFollowersOrFollowings(let userID , _):
             return "/users/" + userID + "/followList/"
+        case .userTeam(let userID):
+            return "/users/" + userID + "/team/"
         }
     }
     
     var method: Moya.Method{
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings :
+        case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings , .userTeam:
             return .get
         }
     }
@@ -54,12 +57,14 @@ extension ApiConfig: TargetType{
             return nil
         case .userFollowersOrFollowings( _,let listType):
             return ["followListType" : listType]
+        case .userTeam(_):
+            return nil
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings:
+        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -72,12 +77,14 @@ extension ApiConfig: TargetType{
             return "HomeMovements".utf8Encoded
         case .userFollowersOrFollowings(let userID, _):
             return "{\"UserID\": \(userID)}".utf8Encoded
+        case .userTeam(let userID):
+            return "{\"UserID\": \(userID)}".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings :
+        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam :
             return .request
         }
     }

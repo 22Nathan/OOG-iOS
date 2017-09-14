@@ -16,6 +16,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     var mapView: MAMapView!
     var search: AMapSearchAPI!
     var courtList : [Court] = []
+    var annotationList : [MAAnnotation?] = []
     var tempLocation : CLLocationCoordinate2D?
     var selectedAnnotation : MAAnnotation?
     
@@ -29,7 +30,6 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         
         let locationManager = AMapLocationManager()
         locationManager.delegate = self
-//        locationManager.distanceFilter = 10000
         locationManager.startUpdatingLocation()
         
         mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
@@ -40,6 +40,17 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         mapView.showsScale = false
         tempLocation = mapView.userLocation.coordinate
         self.view.addSubview(mapView!)
+        let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
+        centerLogo.setImage(#imageLiteral(resourceName: "like.png"), for: UIControlState.normal)
+        mapView.addSubview(centerLogo)
+        
+        let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 140, width: 20, height: 20))
+        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "message.png"), for: UIControlState.normal)
+        mapView.addSubview(backToWhereIAmButton)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapEvent(byReactingTo:)))
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.numberOfTouchesRequired = 1
+        backToWhereIAmButton.addGestureRecognizer(tapRecognizer)
         
         //initSearch
         search = AMapSearchAPI()
@@ -47,8 +58,9 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
 //        demoRequest()
         
         //初始定位
-        requestCourtsNearBy(coordinate: CLLocationCoordinate2DMake(32.01,118.74), completionHandler: addAnnotationFromCourt)
+        requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
     }
+    
     
 //    func demoRequest(){
 //        let request = AMapPOIKeywordsSearchRequest()
@@ -102,7 +114,10 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
                                         if json["result"] == "No service in your city"{
                                             SVProgressHUD.showInfo(withStatus: "您所在城市未开放服务")
                                         }
+                                        self.courtList.removeAll()
+                                        completionHandler()
                                     }else{
+                                        //清空之前记录
                                         self.courtList.removeAll()
                                         let courts = json["courts"].arrayValue
                                         for courtJson in courts{
@@ -140,25 +155,41 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
 
     }
     
-    // 回调函数 增加Annotation
+    // 回调函数 更新Annotation
     func addAnnotationFromCourt(){
+//        print("删去annotationList")
+//        print(annotationList.count)
+        for annotation in self.annotationList{
+            self.mapView!.removeAnnotation(annotation)
+        }
+        annotationList.removeAll()
+        
         for court in courtList{
             let annotation = MAPointAnnotation()
+            annotationList.append(annotation)
             annotation.coordinate = CLLocationCoordinate2DMake(Double(court.latitude)!, Double(court.longitude)!)
             annotation.title = court.courtName
             annotation.subtitle = court.location
             mapView!.addAnnotation(annotation)
         }
+//        print("增加annotationList")
+//        print(annotationList.count)
     }
     
     //Mark: - AMapLocationManagerDelegate
     //更新用户位置
-    func amapLocationManager(_ manager: AMapLocationManager!, didUpdate location: CLLocation!) {
-        if (location.coordinate.longitude != tempLocation?.longitude) || (location.coordinate.latitude != tempLocation?.latitude){
-            tempLocation = location.coordinate
-            requestCourtsNearBy(coordinate: CLLocationCoordinate2DMake(32.01,118.74), completionHandler: addAnnotationFromCourt)
-        }
+//    func amapLocationManager(_ manager: AMapLocationManager!, didUpdate location: CLLocation!) {
+////        if (location.coordinate.longitude != tempLocation?.longitude) || (location.coordinate.latitude != tempLocation?.latitude){
+////            tempLocation = location.coordinate
+////            requestCourtsNearBy(coordinate: CLLocationCoordinate2DMake(32.01,118.74), completionHandler: addAnnotationFromCourt)
+////        }
+//    }
+    
+    //用户移动中心标时
+    func mapView(_ mapView: MAMapView!, mapDidMoveByUser wasUserAction: Bool) {
+        requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
     }
+    
     
 //    //MARK:- MAMapViewDelegate
 //    //更新用户位置
@@ -201,7 +232,6 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             annotationView!.canShowCallout = true
             annotationView?.isDraggable = false
             annotationView!.image = #imageLiteral(resourceName: "like.png")
-            annotationView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure)
             
             //设置中心点偏移，使得标注底部中间点成为经纬度对应点
             annotationView!.centerOffset = CGPoint(x: 0, y: -18);
@@ -210,18 +240,14 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         return nil
     }
     
-    //callout的右边按钮点击事件
-    func mapView(_ mapView: MAMapView!, didAnnotationViewCalloutTapped view: MAAnnotationView!) {
-        print("fuck ")
-    }
-    
     //annotation点击事件
     func mapView(_ mapView: MAMapView!, didSelect view: MAAnnotationView!) {
-        print("what")
         showDropDownView(view.annotation)
+        
     }
     
     func showDropDownView(_ annotation: MAAnnotation!) {
+        mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
         selectedAnnotation = annotation
         // 定义下弹视图的位置和大小
         let originDropDownView = CGPoint(x: 0, y: -36)
@@ -238,11 +264,11 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         swipeRight.direction = .right
         swipeRight.numberOfTouchesRequired = 1
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
-        swipeRight.direction = .down
-        swipeRight.numberOfTouchesRequired = 1
+        swipeDown.direction = .down
+        swipeDown.numberOfTouchesRequired = 1
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
-        swipeRight.direction = .up
-        swipeRight.numberOfTouchesRequired = 1
+        swipeUp.direction = .up
+        swipeUp.numberOfTouchesRequired = 1
         
         // 手势需要遵循的代理：UIGestureRecognizerDelegate
         tapGestureRecognizer.delegate = self
@@ -286,6 +312,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         UIView.animate(withDuration: 0.3) { () -> Void in
             self.dropDownView.frame.origin = CGPoint(x: 0, y: -36)
         }
+        mapView.setZoomLevel(mapView.zoomLevel/1.1, animated: true)
         let seconds = 0.3
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
         mapView.deselectAnnotation(selectedAnnotation, animated: false)
@@ -309,6 +336,24 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     //滑动手势
     func swipe(gesture: UISwipeGestureRecognizer) {
         popOffDropDownView()
+        if gesture.direction == .left{
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude+0.4), animated: true)
+        }else if gesture.direction == .right{
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude-0.4), animated: true)
+        }else if gesture.direction == .up{
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude-0.4, mapView.centerCoordinate.longitude), animated: true)
+        }else if gesture.direction == .down{
+            print("here")
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude+0.4, mapView.centerCoordinate.longitude), animated: true)
+        }
+
+    }
+    
+    // tap手势
+    func tapEvent(byReactingTo tapRecognizer: UITapGestureRecognizer){
+        if tapRecognizer.state == .ended{
+            mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+        }
     }
     
     //MARK:- AMapSearchDelegate

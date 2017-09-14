@@ -10,7 +10,8 @@
 #endif
 #endif
 
+#import "UIScrollView+EmptyDataSet.h"
 
-FOUNDATION_EXPORT double PanelKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char PanelKitVersionString[];
+FOUNDATION_EXPORT double DZNEmptyDataSetVersionNumber;
+FOUNDATION_EXPORT const unsigned char DZNEmptyDataSetVersionString[];
 
