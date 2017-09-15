@@ -13,6 +13,8 @@
 		5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5310EEA91F4DCD0A00486589 /* LaunchScreen.storyboard */; };
 		53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */; };
 		53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53237F581F5A7FE100B33AAA /* TitleModel.swift */; };
+		532652161F6C135600EE29CA /* ConvertPHAssetToUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */; };
+		532652181F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */; };
 		533758BA1F5C2D9C00DCA48A /* MovementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */; };
 		533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */; };
 		533758C71F5CF90700DCA48A /* MovementListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758C61F5CF90700DCA48A /* MovementListTableViewController.swift */; };
@@ -53,7 +55,6 @@
 		53BC50E51F58429900BE76B8 /* CompleteInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E41F58429900BE76B8 /* CompleteInfoViewController.swift */; };
 		53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC50E61F5843A900BE76B8 /* ExtViewController.swift */; };
 		53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */; };
-		53C94D221F617024007FD2B9 /* PublishMovementContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D211F617024007FD2B9 /* PublishMovementContent.swift */; };
 		53C94D241F622995007FD2B9 /* ConvertISOToDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */; };
 		53C94D261F6237B0007FD2B9 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D251F6237B0007FD2B9 /* Comment.swift */; };
 		53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C94D271F623D4F007FD2B9 /* UsersTableViewController.swift */; };
@@ -96,6 +97,8 @@
 		5310EEAC1F4DCD0A00486589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		53237F581F5A7FE100B33AAA /* TitleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleModel.swift; sourceTree = "<group>"; };
+		532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertPHAssetToUIImage.swift; sourceTree = "<group>"; };
+		532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageButtonCollectionViewCell.swift; sourceTree = "<group>"; };
 		533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementTableViewCell.swift; sourceTree = "<group>"; };
 		533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		533758C61F5CF90700DCA48A /* MovementListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementListTableViewController.swift; sourceTree = "<group>"; };
@@ -137,7 +140,6 @@
 		53BC50E41F58429900BE76B8 /* CompleteInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteInfoViewController.swift; sourceTree = "<group>"; };
 		53BC50E61F5843A900BE76B8 /* ExtViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtViewController.swift; sourceTree = "<group>"; };
 		53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMovementViewController.swift; sourceTree = "<group>"; };
-		53C94D211F617024007FD2B9 /* PublishMovementContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMovementContent.swift; sourceTree = "<group>"; };
 		53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertISOToDisplay.swift; sourceTree = "<group>"; };
 		53C94D251F6237B0007FD2B9 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		53C94D271F623D4F007FD2B9 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				539BE58E1F60067000CB6E95 /* Synchronized.swift */,
 				53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */,
 				53EBD8481F6B6FE600A96D8E /* OOGConvert.swift */,
+				532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -448,7 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				53C94D1F1F6163EA007FD2B9 /* PublishMovementViewController.swift */,
-				53C94D211F617024007FD2B9 /* PublishMovementContent.swift */,
+				532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */,
 			);
 			name = MovementPublishModule;
 			sourceTree = "<group>";
@@ -720,7 +723,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */,
-				53C94D221F617024007FD2B9 /* PublishMovementContent.swift in Sources */,
 				53C94D321F63D547007FD2B9 /* FindGameViewController.swift in Sources */,
 				53EBD8351F6A241200A96D8E /* TeamTableViewController.swift in Sources */,
 				539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */,
@@ -734,6 +736,7 @@
 				5310EEA11F4DCD0A00486589 /* AppDelegate.swift in Sources */,
 				53EBD8291F6941BE00A96D8E /* CustomCalloutView.swift in Sources */,
 				53EBD8491F6B6FE600A96D8E /* OOGConvert.swift in Sources */,
+				532652181F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift in Sources */,
 				53BC50D11F57901900BE76B8 /* Cache.swift in Sources */,
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
 				53EBD8451F6AD6C100A96D8E /* UnRatedGameTableViewCell.swift in Sources */,
@@ -770,6 +773,7 @@
 				53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */,
 				53BC50CC1F572BF200BE76B8 /* User.swift in Sources */,
 				53608D111F5BB37500B3442E /* ChatListTableViewController.swift in Sources */,
+				532652161F6C135600EE29CA /* ConvertPHAssetToUIImage.swift in Sources */,
 				53EBD83F1F6A58F900A96D8E /* TeamTitleModel.swift in Sources */,
 				53C94D261F6237B0007FD2B9 /* Comment.swift in Sources */,
 				53FCA7421F5AE3F9008B34BB /* GameTabViewController.swift in Sources */,

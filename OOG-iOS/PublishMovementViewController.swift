@@ -13,19 +13,25 @@ import SwiftyJSON
 import SwiftDate
 import SVProgressHUD
 import DKImagePickerController
+import Photos
 
-class PublishMovementViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate {
-
+class PublishMovementViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,PublishMovementViewControllerDelegate {
+    var uploadPHAssets : [PHAsset] = []
+    var uploadImages : [UIImage] = []
+    var token : String = ""
+    var userID : String = ""
+    var imageUrls : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let what = NSTimeIntervalSince1970
-//        print(what)
+        uploadImages.append(#imageLiteral(resourceName: "window.png"))
     }
-
-    @IBOutlet weak var imageButton: UIButton!{
+    
+    @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
-            imageButton.imageView?.contentMode = .scaleAspectFit
-            imageButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+            collectionView.isScrollEnabled = false
+            collectionView.delegate = self
+            collectionView.dataSource = self
         }
     }
     
@@ -47,6 +53,15 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
         }
     }
     
+    //监听多张图片上传
+    var uploadImageCount = 0{
+        didSet{
+            if uploadImageCount == uploadPHAssets.count{
+                self.postOut()
+            }
+        }
+    }
+    
     @IBAction func postAction(_ sender: Any) {
         requestToken() //三级回调 先请求token
         showProgressDialog()
@@ -54,27 +69,49 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     @IBOutlet weak var siteButton: UIButton!
     @IBOutlet weak var mentionButton: UIButton!
     
-    // variables
-    var uploadImages : [Data] = []
-    var token : String = ""
-    var userID : String = ""
-    var key : String = ""
-//    var keySuffix : String {
-//        return DateInRegion(absoluteDate: Date(), in: Region.Local()).string()
-//    }
-//    var key : String{
-//        return keyPrefix + keySuffix
-//    }
+    //Mark : - PublishMovementViewControllerDelegate
+    func deleteFirst() {
+        self.uploadImages.popLast()
+    }
     
-    @IBAction func pickImage(_ sender: Any) {
-        let pickerController = DKImagePickerController()
-        
-        pickerController.didSelectAssets = { (assets: [DKAsset]) in
-            print("didSelectAssets")
-            print(assets)
+    func appendImage(_ image: UIImage) {
+        self.uploadImages.append(image)
+    }
+    
+    func appendAsset(_ assets: PHAsset) {
+        self.uploadPHAssets.append(assets)
+    }
+    
+    func presentPickVC(_ vc: DKImagePickerController) {
+        self.present(vc, animated: true)
+    }
+    
+    func reloadView() {
+        self.collectionView.reloadData()
+    }
+    
+    // collection dataSource
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return uploadImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let image = uploadImages[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageButton", for: indexPath) as! ImageButtonCollectionViewCell
+        cell.image = image
+        cell.delegate = self
+        if ( (indexPath.row + 1) == uploadImages.count ){
+            cell.lastPlus = true
+        }else{
+            cell.lastPlus = false 
         }
-        
-        self.presentViewController(pickerController, animated: true) {}
+        return cell
+    }
+    
 //        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
 //            let imagePicker = UIImagePickerController()
 //            imagePicker.delegate = self
@@ -82,24 +119,23 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
 //            imagePicker.allowsEditing = false
 //            self.present(imagePicker, animated: true, completion: nil)
 //        }
-    }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        var uploadImage : UIImage? = nil
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            imageButton.setBackgroundImage(image, for: UIControlState.normal)
-            uploadImage = image
-        }
-        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imageButton.setBackgroundImage(image, for: UIControlState.normal)
-            uploadImage = image
-        } else{
-            print("Something went wrong")
-        }
-        let imageData = UIImagePNGRepresentation(uploadImage!)
-        uploadImages.append(imageData!)
-        self.dismiss(animated: true, completion: nil)
-    }
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        var uploadImage : UIImage? = nil
+//        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+//            imageButton.setBackgroundImage(image, for: UIControlState.normal)
+//            uploadImage = image
+//        }
+//        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            imageButton.setBackgroundImage(image, for: UIControlState.normal)
+//            uploadImage = image
+//        } else{
+//            print("Something went wrong")
+//        }
+//        let imageData = UIImagePNGRepresentation(uploadImage!)
+//        uploadImages.append(imageData!)
+//        self.dismiss(animated: true, completion: nil)
+//    }
     
     private func requestToken(){
         Alamofire.request(ApiHelper.API_Root + "/users/picture/authentication/",
@@ -109,7 +145,7 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
                 if let value = response.result.value {
                     let json = SwiftyJSON.JSON(value)
                     self.token = json["result"].stringValue
-//                    print(self.token)
+                    print(self.token)
                     self.uploadData()
                 }
                 case false:
@@ -121,16 +157,23 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     
     private func uploadData(){
         let upManager = QNUploadManager()
-        let timeStamp = Int(NSTimeIntervalSince1970)
-        key = userID + String(timeStamp)
-        upManager?.put(uploadImages[0], key: key, token: token, complete: { (responseInfo, key , dict) in
-            if (responseInfo?.isOK)!{
-                print("上传成功")
-                self.postOut()
-            }else{
-                SVProgressHUD.showInfo(withStatus: "图片上传失败")
-            }
-        }, option: nil)
+        for asset in uploadPHAssets{
+            let date = NSDate()
+            let timeInterval = date.timeIntervalSince1970 * 1000
+            let key = userID + String(timeInterval)
+            upManager?.put(asset, key: key, token: token, complete: { (responseInfo, key, dict) in
+                if (responseInfo?.isOK)!{
+                    self.uploadImageCount += 1
+                    if(self.uploadImageCount == 1){
+                        self.imageUrls += (ApiHelper.qiniu_Root + key!)
+                    }else{
+                        self.imageUrls += ("," + ApiHelper.qiniu_Root + key!)
+                    }
+                }else{
+                    SVProgressHUD.showInfo(withStatus: "图片上传失败")
+                }
+            }, option: nil)
+        }
     }
     
     private func postOut(){
@@ -138,7 +181,7 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
         parameters["id"] = userID
         parameters["uuid"] = ApiHelper.currentUser.uuid
         parameters["content"] = contentTextView.text
-        parameters["image_url"] = ApiHelper.qiniu_Root + key
+        parameters["image_url"] = imageUrls
         Alamofire.request(ApiHelper.API_Root + "/movements/publish/",
                           method: .post,
                           parameters: parameters,
@@ -175,4 +218,12 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     }
     */
 
+}
+
+protocol PublishMovementViewControllerDelegate {
+    func deleteFirst()
+    func appendImage(_ image : UIImage)
+    func appendAsset(_ assets : PHAsset)
+    func presentPickVC(_ vc : DKImagePickerController)
+    func reloadView()
 }
