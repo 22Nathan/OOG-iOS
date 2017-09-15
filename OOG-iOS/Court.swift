@@ -12,7 +12,7 @@ class Court{
     var id : String
     var courtName : String
     var courtType : String
-    var court_image_url : String
+    var court_image_url : [String]
     var location : String
     var atCity : String
     var rate : String
@@ -20,18 +20,24 @@ class Court{
     var status : String
     var longitude : String
     var latitude : String
+    var priceRate : String
+    var transportRate : String
+    var facilityRate : String
     
     init(_ id : String,
          _ courtName : String,
          _ courtType : String = "",
-         _ court_image_url : String = "",
+         _ court_image_url : [String] = [],
          _ location : String,
          _ atCity : String = "",
          _ rate : String = "",
          _ game_now_url : String = "",
          _ status : String = "1",
          _ longitude : String,
-         _ latitude : String) {
+         _ latitude : String,
+         _ priceRate : String = "",
+         _ transportRate : String = "",
+         _ facilityRate : String = "") {
         self.id = id
         self.courtName = courtName
         self.courtType = courtType
@@ -43,5 +49,8 @@ class Court{
         self.status = status
         self.longitude = longitude
         self.latitude = latitude
+        self.priceRate = priceRate
+        self.transportRate = transportRate
+        self.facilityRate = facilityRate
     }
 }

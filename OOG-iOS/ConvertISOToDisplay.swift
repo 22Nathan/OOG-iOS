@@ -35,3 +35,7 @@ func convertFrom(_ timeISO : DateInRegion) -> String{
     displayTime += " ago"
     return displayTime
 }
+
+//func convertFrom(_ displayString : String) ->String{
+//    
+//}

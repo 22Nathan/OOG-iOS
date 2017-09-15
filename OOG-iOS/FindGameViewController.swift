@@ -10,12 +10,18 @@ import UIKit
 import JNDropDownMenu
 import SVProgressHUD
 import SwiftDate
+import Alamofire
+import SwiftyJSON
 
-class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDownMenuDataSource,UIPopoverPresentationControllerDelegate{
+class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDownMenuDataSource,UIPopoverPresentationControllerDelegate,FindGameViewControllerProtocol{
     
     @IBOutlet weak var gameListTableView: UITableView!
     @IBOutlet weak var teamInfoButton: UIButton!
     @IBOutlet weak var siteButton: UIButton!
+
+    var courtName : String?
+    var gameTypeIndex : Int = 0
+    var gameTimeIndex : Int = 0
 
     var gameTypeArray = ["1V1" , "2V2" , "3V3" , "5V5" , "Free"]
     var gameTimeArray : [String]{
@@ -40,6 +46,11 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         return templateString
     }
     
+    func setSite(_ courtName: String, _ location: String) {
+        self.siteButton.setTitle(courtName, for: UIControlState.normal)
+        self.courtName = courtName
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // initial menu
@@ -51,6 +62,37 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         self.view.addSubview(menu)
     }
     
+    @IBAction func createGame(_ sender: Any) {
+        var parameters = [String : String]()
+        parameters["adminID"] = ApiHelper.currentUser.id
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["courtName"] = self.courtName
+        let range = NSRange(location: 0, length: 1)
+        parameters["game_type"] =  gameTypeArray[gameTypeIndex].substring(range)
+        parameters["started_at"] = gameTimeArray[gameTimeIndex]
+        Alamofire.request(ApiHelper.API_Root + "/games/creation/",
+                          method: .post,
+                            parameters: parameters,
+                            encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                            if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response Creation Game###################")
+                                    print(json)
+                                    let result = json["result"].stringValue
+                                    if result == "ok"{
+                                        SVProgressHUD.showInfo(withStatus: "创建比赛成功")
+                                    }else{
+                                        SVProgressHUD.showInfo(withStatus: "你没有权限，请联系队长")
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
     
     //Mark : - Delegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -86,16 +128,16 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
     }
     
     func didSelectRow(at indexPath: JNIndexPath, for forMenu: JNDropDownMenu) {
-        var str = ""
         switch indexPath.column {
         case 0:
-            str = gameTypeArray[indexPath.row]
+            gameTypeIndex = indexPath.row
             break
         case 1:
-            str = gameTimeArray[indexPath.row]
+            gameTimeIndex = indexPath.row
             break
         default:
-            str = ""
+            gameTimeIndex = 0
+            gameTypeIndex = 0
         }
     }
     
@@ -112,6 +154,18 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
                 }
             }
         }
+        if segue.identifier == "select site"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let vc = destinationViewController as? ModalStieInfoViewController{
+                vc.delegate = self
+            }
+        }
     }
+}
+
+protocol FindGameViewControllerProtocol {
+    func setSite(_ courtID : String , _ loacation : String)
 }
 

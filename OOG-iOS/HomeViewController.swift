@@ -135,7 +135,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         let movments = json["movements"].arrayValue
         for movementJSON in movments{
             //parse basic info
-//            print(movementJSON)
             let movment_ID = movementJSON["id"].stringValue
             let content = movementJSON["content"].stringValue
             let likesNumber = movementJSON["likesNumber"].stringValue
@@ -151,7 +150,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             let toIndex = created_at.index(subCreated_at.startIndex,offsetBy: 11)
             let range = fromIndex..<toIndex
             subCreated_at.replaceSubrange(range, with: " ")
-//            print(subCreated_at)
             let createdDate = DateInRegion(string: subCreated_at, format: .custom("yyyy-MM-dd HH:mm:ss"), fromRegion: Region.Local())
             
             //parse imageUrl
@@ -177,7 +175,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 let created_at = comment["created_at"].stringValue
                 let username = comment["activeCommentUser"]["username"].stringValue
                 
-//                print(username)
                 let subRange = NSRange(location: 0,length: 19)
                 var subCreated_at = created_at.substring(subRange)
                 let fromIndex = created_at.index(subCreated_at.startIndex,offsetBy: 10)

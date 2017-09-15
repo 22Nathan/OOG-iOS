@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class TeamTitleTableViewCell: UITableViewCell {
     
@@ -19,9 +21,12 @@ class TeamTitleTableViewCell: UITableViewCell {
             updateUI()
         }
     }
+    @IBAction func quitTeamAction(_ sender: Any) {
+        
+    }
     
     private func updateUI(){
-        teamNumbersLabel.text = teamTitle?.teamNumber
-        averageRateLabel.text = teamTitle?.teamRate
+        teamNumbersLabel.text = "组队人数" + (teamTitle?.teamNumber)!
+        averageRateLabel.text = "组队平均分" + (teamTitle?.teamRate)!
     }
 }

@@ -16,6 +16,8 @@ enum ApiConfig{
     case movementComment(movementID: String)
     case userFollowersOrFollowings(userID: String,listType : String)
     case userTeam(userID: String)
+    case userGame(userID: String)
+    case courtGame(courtID : String)
 }
 
 extension ApiConfig: TargetType{
@@ -35,12 +37,16 @@ extension ApiConfig: TargetType{
             return "/users/" + userID + "/followList/"
         case .userTeam(let userID):
             return "/users/" + userID + "/team/"
+        case .userGame(_):
+            return "/games/all/"
+        case .courtGame(let courtID):
+            return "/courts/" + courtID + "/games/"
         }
     }
     
     var method: Moya.Method{
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings , .userTeam:
+        case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings , .userTeam, .userGame, .courtGame:
             return .get
         }
     }
@@ -59,12 +65,16 @@ extension ApiConfig: TargetType{
             return ["followListType" : listType]
         case .userTeam(_):
             return nil
+        case .userGame(_):
+            return nil
+        case .courtGame(_):
+            return nil
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam:
+        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam , .userGame , .courtGame:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -79,12 +89,16 @@ extension ApiConfig: TargetType{
             return "{\"UserID\": \(userID)}".utf8Encoded
         case .userTeam(let userID):
             return "{\"UserID\": \(userID)}".utf8Encoded
+        case .userGame(let userID):
+            return "{\"UserID\": \(userID)}".utf8Encoded
+        case .courtGame(let courtID):
+            return "{\"UserID\": \(courtID)}".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam :
+        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam , .userGame , .courtGame :
             return .request
         }
     }
@@ -95,4 +109,5 @@ extension ApiConfig: TargetType{
     public func url(route: TargetType) -> String {
         return route.baseURL.appendingPathComponent(route.path).absoluteString
     }
+    
 }

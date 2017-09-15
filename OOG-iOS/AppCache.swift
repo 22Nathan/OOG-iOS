@@ -164,6 +164,42 @@ class AppCache{
         }
     }
     
+    //获得用户比赛信息
+    func userGameRequest(userID : String , completionHandler: @escaping ()->()) {
+        provider.request(.userGame(userID: userID) ) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Game###########################")
+//                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户比赛列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获取球馆比赛信息
+    func courtGameRequest(courtID : String, completionHandler: @escaping ()->()){
+        provider.request(.userGame(userID: userID) ) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request Court Game###########################")
+                //                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求球馆比赛列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
     func set(_ key : String, _ value : String) {
         AppCache.myCache.set(value, forKey: key)
     }

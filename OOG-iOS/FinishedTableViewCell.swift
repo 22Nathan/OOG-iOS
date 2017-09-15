@@ -1,5 +1,5 @@
 //
-//  CourtTitleTableViewCell.swift
+//  FinishedTableViewCell.swift
 //  OOG-iOS
 //
 //  Created by Nathan on 14/09/2017.
@@ -8,14 +8,19 @@
 
 import UIKit
 
-class CourtTitleTableViewCell: UITableViewCell {
+class FinishedTableViewCell: UITableViewCell {
+
     @IBOutlet weak var courtImage: UIImageView!
+
     @IBOutlet weak var courtNameLabel: UILabel!
-    @IBOutlet weak var courtLocationLabel: UILabel!
-    @IBOutlet weak var contactLabel: UILabel!
-    @IBOutlet weak var courtRateLabel: UILabel!
     
-    var court : Court?{
+    @IBOutlet weak var locationLabel: UILabel!
+    
+    @IBOutlet weak var startTimeLabel: UILabel!
+    
+    @IBOutlet weak var checkRateButton: UIButton!
+    
+    var game : Game?{
         didSet{
             updateUI()
         }
@@ -23,11 +28,11 @@ class CourtTitleTableViewCell: UITableViewCell {
     
     private func updateUI(){
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
-        let profileImageKey = "CourtImageKey" + (court?.id)!
+        let profileImageKey = "CourtImageKey" + (game?.court.id)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
             courtImage.image = UIImage(data: imageData)
         }else{
-            if let imageUrl = URL(string: (court!.court_image_url[0])){
+            if let imageUrl = URL(string: (game?.court.court_image_url[0])!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
                     Cache.set(profileImageKey, urlContents)
@@ -41,9 +46,9 @@ class CourtTitleTableViewCell: UITableViewCell {
                 courtImage.image = nil
             }
         }
-        courtNameLabel.text = court?.courtName
-        courtLocationLabel.text = court?.location
-        courtRateLabel.text = court?.rate
         
+        courtNameLabel.text = game?.court.courtName
+        startTimeLabel.text = game?.started_at
+        locationLabel.text = game?.court.location
     }
 }

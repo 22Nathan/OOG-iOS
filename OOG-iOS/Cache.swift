@@ -51,8 +51,23 @@ class Cache{
         return provider
     }
     
+    //Mark: - userTeam
     static let userTeamKey = "userTeam"
     static let userTeamCache = AppCache(userTeamKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark: - userGame
+    static let userGameKey = "userGame"
+    static let userGameCache = AppCache(userGameKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark: - courtGame
+    static let courtGameKey = "courtGame"
+    static let courtGameCache = AppCache(courtGameKey){
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }

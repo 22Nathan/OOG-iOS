@@ -25,6 +25,10 @@ class User{
     var height : String           //身高
     var weight : String           //体重
     var followType : String        //关注关系，1为相互关注，0表示没有互相关注
+    var userRate : String          //用户总平均分
+    var skillRate : String         //用户技术平均分
+    var physicalRate : String       //身体素质平均分
+    var BQRate : String         //球商评分
     
     init(_ username : String = "",
          _ tel : String,
@@ -40,7 +44,11 @@ class User{
          _ description : String = "",
          _ height : String = "",
          _ weight : String = "",
-         _ followType : String = "") {
+         _ followType : String = "",
+         _ userRate : String = "",
+         _ skillRate : String = "",
+         _ physicalRate : String = "",
+         _ BQRate : String = "") {
         self.username = username
         self.tel = tel
         self.password = password
@@ -56,6 +64,10 @@ class User{
         self.height = height
         self.weight = weight
         self.followType = followType
+        self.userRate = userRate
+        self.physicalRate = physicalRate
+        self.skillRate = skillRate
+        self.BQRate = BQRate
     }
     
     convenience init(_ json : JSON){
@@ -73,7 +85,11 @@ class User{
                   json["description"].stringValue,
                   json["height"].stringValue,
                   json["weight"].stringValue,
-                  json["followType"].stringValue)
+                  json["followType"].stringValue,
+                  json["userRate"].stringValue,
+                  json["physicalRate"].stringValue,
+                  json["skillRate"].stringValue,
+                  json["BQRate"].stringValue)
     }
     
     func toJSON() -> JSON {
@@ -92,7 +108,11 @@ class User{
             "description"  : description,
             "height" : height,
             "weight" : weight,
-            "followType" : followType
+            "followType" : followType,
+            "userRate" :userRate,
+            "physicalRate" :userRate,
+            "skillRate" :userRate,
+            "BQRate" :userRate
             ])
     }
 }

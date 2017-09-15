@@ -24,4 +24,13 @@ class ApiHelper{
         }
     }
     
+    static var inGame : Game{
+        get{
+            return inGame
+        }
+        set{
+            inGame = newValue
+        }
+    }
+    
 }

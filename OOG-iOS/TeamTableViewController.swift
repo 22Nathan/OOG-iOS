@@ -32,7 +32,7 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
         
         //Cache后缀
         Cache.userTeamCache.setKeysuffix(userID)
-        Cache.userTeamCache.value = ""
+//        Cache.userTeamCache.value = ""
         loadCache()
     }
     
@@ -49,7 +49,9 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
         let teamValue = Cache.userTeamCache.value
         var json = JSON.parse(teamValue)
         let teamMember = json["users"].arrayValue
-        let teamTitle = teamItem.Title(TeamTitleModel("2","3.8"))
+        let peopleNumber = json["peopleNumber"].stringValue
+        let averageRate = json["averageRate"].stringValue
+        let teamTitle = teamItem.Title(TeamTitleModel(peopleNumber,averageRate))
         teamItems.append([teamTitle])
         
         for memberJSON in teamMember{
@@ -65,6 +67,7 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
             let followers = memberJSON["followedNumber"].stringValue
             let likes = memberJSON["likes"].stringValue
             let description = memberJSON["description"].stringValue
+            
             
             let user = teamItem.UserItem(User(username,
                                               tel,

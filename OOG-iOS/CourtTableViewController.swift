@@ -7,34 +7,63 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class CourtTableViewController: UITableViewController {
-
+    enum courtItem{
+        case Title(Court)
+        case GameItem([Game])
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
+    var court : Court?{
+        didSet{
+            Cache.courtGameCache.setKeysuffix((court?.id)!)
+            loadCache()
+        }
+    }
+    //Mark : - Model
+    var courtItems : [[courtItem]] = []
+    
+    //Mark : -Logic
+    private func loadCache(){
+        if Cache.courtGameCache.isEmpty{
+            refreshCache()
+            return
+        }
+        
+        let value = Cache.courtGameCache.value
+        let json = JSON.parse(value)
+        let gamesArray = json["games"].arrayValue
+        for gameJSON in gamesArray{
+            
+        }
+    }
+    
+    private func refreshCache(){
+        Cache.courtGameCache.courtGameRequest((self.court?.id)!) {
+            self.loadCache()
+        }
+    }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return courtItems.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return courtItems[section].count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
-
         return cell
     }
-    */
-
-
     /*
     // MARK: - Navigation
 

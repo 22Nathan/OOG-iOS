@@ -12,16 +12,24 @@ import SwiftyJSON
 import SVProgressHUD
 
 class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDelegate,AMapLocationManagerDelegate,UIGestureRecognizerDelegate {
-
     var mapView: MAMapView!
     var search: AMapSearchAPI!
     var courtList : [Court] = []
     var annotationList : [MAAnnotation?] = []
-    var tempLocation : CLLocationCoordinate2D?
     var selectedAnnotation : MAAnnotation?
+    var selectedCourt : Court? //点击发请求后才获得
+    var displayedGame : Game?  //点击发请求后才获得
+    var ifHaveDisplayedGame = false
     
     var emptyView = UIView()
     let dropDownView = UIView()
+    
+    var noGmaeLabel = UILabel()
+    var gameTimeLabel = UILabel()
+    var gameTypeLabel = UILabel()
+    var gameRateLabel = UILabel()
+    var joinGameButton = UIButton()
+    var moreButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +46,15 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         mapView.userTrackingMode = .follow
         mapView.showsCompass = false
         mapView.showsScale = false
-        tempLocation = mapView.userLocation.coordinate
+//        mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
+        
         self.view.addSubview(mapView!)
         let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
         centerLogo.setImage(#imageLiteral(resourceName: "like.png"), for: UIControlState.normal)
         mapView.addSubview(centerLogo)
         
-        let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 140, width: 20, height: 20))
+        //回到user location
+        let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 135, width: 20, height: 20))
         backToWhereIAmButton.setImage(#imageLiteral(resourceName: "message.png"), for: UIControlState.normal)
         mapView.addSubview(backToWhereIAmButton)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapEvent(byReactingTo:)))
@@ -60,36 +70,6 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         //初始定位
         requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
     }
-    
-    
-//    func demoRequest(){
-//        let request = AMapPOIKeywordsSearchRequest()
-//        request.keywords = "篮球场"
-//        request.requireExtension = true
-//        request.city = "南京"
-//        request.cityLimit = true
-//        request.requireSubPOIs = true
-//        search.aMapPOIKeywordsSearch(request)
-//    }
-    
-//    func onPOISearchDone(_ request: AMapPOISearchBaseRequest!, response: AMapPOISearchResponse!) {
-//        
-//        if response.count == 0 {
-//            return
-//        }
-//        for add in response.pois{
-//            print(add.address)
-//            let coordinate = CLLocationCoordinate2DMake(Double(add.location.latitude), Double(add.location.longitude))
-//            
-//            let annotation = MAPointAnnotation()
-//            annotation.coordinate = coordinate
-//            annotation.title = add.address
-//            annotation.subtitle = add.city
-//            mapView!.addAnnotation(annotation)
-//        }
-//
-//        //解析response获取POI信息，具体解析见 Demo
-//    }
     
     // 请求后台服务器最近5km的球场信息
     func requestCourtsNearBy(coordinate: CLLocationCoordinate2D!,completionHandler: @escaping () -> ()){
@@ -124,6 +104,15 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
                                             let courtID = courtJson["id"].stringValue
                                             let courtName = courtJson["courtName"].stringValue
                                             let courtType = courtJson["courtType"].stringValue
+                                            
+                                            var imageNumber = 0
+                                            let imageUrlsJSON = courtJson["court_image_url"].arrayValue
+                                            var imageUrls : [String] = []
+                                            for imageUrl in imageUrlsJSON{
+                                                imageUrls.append(imageUrl.stringValue)
+                                                imageNumber += 1
+                                            }
+                                            
                                             let court_image_url = courtJson["court_image_url"].stringValue
                                             let location = courtJson["location"].stringValue
                                             let atCity = courtJson["atCity"].stringValue
@@ -135,7 +124,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
                                             let court = Court(courtID,
                                                               courtName,
                                                               courtType,
-                                                              court_image_url,
+                                                              imageUrls,
                                                               location,
                                                               atCity,
                                                               rate,
@@ -242,10 +231,17 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     
     //annotation点击事件
     func mapView(_ mapView: MAMapView!, didSelect view: MAAnnotationView!) {
-        showDropDownView(view.annotation)
-        
+        let annotation = view.annotation
+        var courtID = ""
+        for court in courtList{
+            if court.courtName == annotation?.title{
+                courtID = court.id
+            }
+        }
+        requestCourtInfo(courtID, annotation: annotation!, completionHandler: showDropDownView)
     }
     
+    // 下弹视图
     func showDropDownView(_ annotation: MAAnnotation!) {
         mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
         selectedAnnotation = annotation
@@ -282,8 +278,6 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         emptyView.addGestureRecognizer(swipeDown)
         emptyView.addGestureRecognizer(swipeUp)
 
-        
-        // 设置 播放列表视图 的背景图片、大小、透明度
         dropDownView.backgroundColor = UIColor.white
         dropDownView.frame = CGRect(origin: originDropDownView, size: sizeDropDownView)
         dropDownView.alpha = 1
@@ -294,10 +288,61 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         }
         
         //加载控件与数据
-        let courtNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
-        courtNameLabel.text = "text"
-        courtNameLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        dropDownView.addSubview(courtNameLabel)
+        if !ifHaveDisplayedGame{
+            noGmaeLabel = UILabel(frame: CGRect(x: 0, y: 5, width: 375, height: 40))
+            noGmaeLabel.text = "当前球场没有比赛,去看看其他球场吧~"
+            noGmaeLabel.textAlignment = .center
+            noGmaeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            moreButton = UIButton(frame: CGRect(x: 0, y: 50, width: 375, height: 25))
+            moreButton.backgroundColor = UIColor.flatBlue
+            moreButton.titleLabel?.textAlignment = .center
+            moreButton.setTitle("查看更多", for: UIControlState.normal)
+            moreButton.addTarget(self, action: #selector(joinGame), for: UIControlEvents.touchDown)
+            
+            dropDownView.addSubview(noGmaeLabel)
+            dropDownView.addSubview(moreButton)
+        }else{
+            gameTypeLabel = UILabel(frame: CGRect(x: 0, y: 5, width: 125, height: 40))
+            gameTypeLabel.textAlignment = .center
+            gameTypeLabel.numberOfLines = 0
+            gameTypeLabel.text = convertNumberToDisplayedGameType((displayedGame?.game_type)!) + "\n比赛类型"
+            gameTypeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            gameRateLabel = UILabel(frame: CGRect(x: 125, y: 5, width: 125, height: 40))
+            gameRateLabel.text = (displayedGame?.game_rate)! + "\n参赛者平均分"
+            gameRateLabel.textAlignment = .center
+            gameRateLabel.numberOfLines = 0
+            gameRateLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            gameTimeLabel = UILabel(frame: CGRect(x: 250, y: 5, width: 125, height: 40))
+            let nsString = (displayedGame?.started_at)! as NSString
+            let range = NSRange(location: 7, length: nsString.length)
+            let displayedTime = (displayedGame?.started_at)!.substring(range)
+            gameTimeLabel.text = displayedTime + "\n比赛开始时间"
+            gameTimeLabel.textAlignment = .center
+            gameTimeLabel.numberOfLines = 0
+            gameTimeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            joinGameButton = UIButton(frame: CGRect(x: 0, y: 50, width: 375, height: 23))
+            joinGameButton.backgroundColor = UIColor.flatBlue
+            joinGameButton.titleLabel?.textAlignment = .center
+            joinGameButton.setTitle("加入比赛", for: UIControlState.normal)
+            joinGameButton.addTarget(self, action: #selector(joinGame), for: UIControlEvents.touchDown)
+            
+            moreButton = UIButton(frame: CGRect(x: 0, y: 75, width: 375, height: 23))
+            moreButton.backgroundColor = UIColor.flatBlue
+            moreButton.titleLabel?.textAlignment = .center
+            moreButton.setTitle("查看更多", for: UIControlState.normal)
+            moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
+            
+            dropDownView.addSubview(gameTypeLabel)
+            dropDownView.addSubview(gameRateLabel)
+            dropDownView.addSubview(gameTimeLabel)
+            dropDownView.addSubview(joinGameButton)
+            dropDownView.addSubview(moreButton)
+        }
+        ifHaveDisplayedGame = false
         
         // 加载视图
         emptyView.addSubview(dropDownView)
@@ -308,7 +353,14 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         popOffDropDownView()
     }
     
+    //下弹视图收回
     private func popOffDropDownView(){
+        noGmaeLabel.removeFromSuperview()
+        gameTypeLabel.removeFromSuperview()
+        gameTimeLabel.removeFromSuperview()
+        gameRateLabel.removeFromSuperview()
+        moreButton.removeFromSuperview()
+        joinGameButton.removeFromSuperview()
         UIView.animate(withDuration: 0.3) { () -> Void in
             self.dropDownView.frame.origin = CGPoint(x: 0, y: -36)
         }
@@ -332,19 +384,27 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             return true
         }
     }
+    
+    //
+    func joinGame(){
+//        print("funck")
+    }
+    
+    func seeMore(){
+        performSegue(withIdentifier: "seeMore", sender: self)
+    }
 
     //滑动手势
     func swipe(gesture: UISwipeGestureRecognizer) {
         popOffDropDownView()
         if gesture.direction == .left{
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude+0.4), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude+0.1), animated: true)
         }else if gesture.direction == .right{
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude-0.4), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude-0.1), animated: true)
         }else if gesture.direction == .up{
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude-0.4, mapView.centerCoordinate.longitude), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude-0.1, mapView.centerCoordinate.longitude), animated: true)
         }else if gesture.direction == .down{
-            print("here")
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude+0.4, mapView.centerCoordinate.longitude), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude+0.1, mapView.centerCoordinate.longitude), animated: true)
         }
 
     }
@@ -356,9 +416,96 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         }
     }
     
+    //Mark : - RequestCourt
+    private func requestCourtInfo(_ courtID : String , annotation : MAAnnotation,completionHandler: @escaping (_ annotation: MAAnnotation) -> ()){
+        Alamofire.request(ApiHelper.API_Root + "/courts/" + courtID + "/",
+                          method: .get,
+                          parameters: nil,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response Court Info ###################")
+//                                    print(json)
+                                    let courtID = json["id"].stringValue
+                                    let courtName = json["courtName"].stringValue
+                                    let atCity = json["atCity"].stringValue
+                                    
+                                    var imageNumber = 0
+                                    let imageUrlsJSON = json["court_image_url"].arrayValue
+                                    var imageUrls : [String] = []
+                                    for imageUrl in imageUrlsJSON{
+                                        imageUrls.append(imageUrl.stringValue)
+                                        imageNumber += 1
+                                    }
+                                    let location = json["location"].stringValue
+                                    let longitude = json["longitude"].stringValue
+                                    let latitude = json["latitude"].stringValue
+                                    let courtRate = json["courtRate"].stringValue
+                                    let courtStatus = json["status"].stringValue
+                                    let priceRate = json["priceRate"].stringValue
+                                    let transportRate = json["transportRate"].stringValue
+                                    let facilityRate = json["facilityRate"].stringValue
+                                    let status = json["status"].stringValue
+                                    let court = Court(courtID,
+                                                      courtName,
+                                                      "",
+                                                      imageUrls,
+                                                      location,
+                                                      atCity,
+                                                      courtRate,
+                                                      "",
+                                                      courtStatus,
+                                                      longitude,
+                                                      latitude,
+                                                      priceRate,
+                                                      transportRate,
+                                                      facilityRate)
+                                    self.selectedCourt = court
+                                    if status != "1"{
+                                        //parse displayedGame
+                                        self.ifHaveDisplayedGame = true
+                                        let game_id = json["displayedGame"]["id"].stringValue
+                                        let game_rate = json["displayedGame"]["game_rate"].stringValue
+                                        let game_type = json["displayedGame"]["game_type"].stringValue
+                                        let game_status = json["displayedGame"]["game_status"].stringValue
+                                        let participantNumber = json["displayedGame"]["participantNumber"].stringValue
+                                        let started_at = json["displayedGame"]["started_at"].stringValue
+                                        let game = Game(game_id,
+                                                        game_type,
+                                                        game_status,
+                                                        started_at,
+                                                        court,
+                                                        participantNumber,
+                                                        game_rate)
+                                        self.displayedGame = game
+                                    }
+                                }
+                                completionHandler(annotation)
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
     //MARK:- AMapSearchDelegate
     func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {
         print("request :\(request), error: \(error)")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destinationViewController = segue.destination
+        if segue.identifier == "seeMore"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let courtVC = destinationViewController as? CourtTableViewController{
+                courtVC.court = selectedCourt
+                courtVC.navigationItem.title = selectedCourt?.courtName
+            }
+        }
     }
     
 }
