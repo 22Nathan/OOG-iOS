@@ -67,7 +67,11 @@ class TitleTableViewCell: UITableViewCell {
         positionButton.setTitle(title?.position, for: UIControlState(rawValue: 0))
         usernameButton.setTitle(title?.username, for: UIControlState(rawValue: 0))
         //Label
-        descriptionLabel.text = title?.description
+        if title?.description == ""{
+            descriptionLabel.text = "快去编辑你的个性简介吧~"
+        }else{
+            descriptionLabel.text = title?.description
+        }
         
     }
 }

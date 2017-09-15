@@ -12,11 +12,14 @@ import Alamofire
 import SwiftyJSON
 import SwiftDate
 import SVProgressHUD
+import DKImagePickerController
 
 class PublishMovementViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let what = NSTimeIntervalSince1970
+//        print(what)
     }
 
     @IBOutlet weak var imageButton: UIButton!{
@@ -45,10 +48,9 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     }
     
     @IBAction func postAction(_ sender: Any) {
-        requestToken() //三级回调
+        requestToken() //三级回调 先请求token
         showProgressDialog()
     }
-    
     @IBOutlet weak var siteButton: UIButton!
     @IBOutlet weak var mentionButton: UIButton!
     
@@ -65,13 +67,21 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
 //    }
     
     @IBAction func pickImage(_ sender: Any) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
+        let pickerController = DKImagePickerController()
+        
+        pickerController.didSelectAssets = { (assets: [DKAsset]) in
+            print("didSelectAssets")
+            print(assets)
         }
+        
+        self.presentViewController(pickerController, animated: true) {}
+//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
+//            let imagePicker = UIImagePickerController()
+//            imagePicker.delegate = self
+//            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+//            imagePicker.allowsEditing = false
+//            self.present(imagePicker, animated: true, completion: nil)
+//        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -99,7 +109,7 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
                 if let value = response.result.value {
                     let json = SwiftyJSON.JSON(value)
                     self.token = json["result"].stringValue
-                    print(self.token)
+//                    print(self.token)
                     self.uploadData()
                 }
                 case false:
@@ -111,7 +121,8 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     
     private func uploadData(){
         let upManager = QNUploadManager()
-        key = userID
+        let timeStamp = Int(NSTimeIntervalSince1970)
+        key = userID + String(timeStamp)
         upManager?.put(uploadImages[0], key: key, token: token, complete: { (responseInfo, key , dict) in
             if (responseInfo?.isOK)!{
                 print("上传成功")

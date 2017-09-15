@@ -16,4 +16,5 @@ target 'OOG-iOS' do
     pod 'MessageKit', :git => 'https://github.com/MessageKit/MessageKit.git'
     pod 'JNDropDownMenu', :git => 'https://github.com/javalnanda/JNDropDownMenu'
     pod 'DZNEmptyDataSet'
+    pod 'DKImagePickerController'
 end

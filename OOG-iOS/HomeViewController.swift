@@ -11,10 +11,14 @@ import SwiftyJSON
 import DGElasticPullToRefresh
 import SwiftDate
 
-class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate,HomeViewControllerProtocol {
+class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate,HomeViewControllerProtocol,MAMapViewDelegate,AMapSearchDelegate {
     let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
     let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
     var userID : String = ApiHelper.currentUser.id
+    
+    var mapView: MAMapView!
+    var search: AMapSearchAPI!
+    var request = AMapReGeocodeSearchRequest()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +34,24 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         MovementsTableView.dataSource = self
         HotTableView.dataSource = self
         
+        //定位系统
+        AMapServices.shared().apiKey = ApiHelper.mapKey
+        AMapServices.shared().enableHTTPS = true
+//        let locationManager = AMapLocationManager()
+//        locationManager.distanceFilter = 200
+//        locationManager.delegate = self
+//        locationManager.pausesLocationUpdatesAutomatically = false
+//        locationManager.locatingWithReGeocode = true
+//        locationManager.startUpdatingLocation()
+        mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+        
+        search = AMapSearchAPI()
+        search.delegate = self
+        let seconds = 90
+        perform(#selector(self.startSearch), with: nil, afterDelay: TimeInterval(seconds))
         
         // Refresh stuff
         loadingView_1.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
@@ -215,6 +237,30 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
     }
     
+    //Mark: - AMapLocationManagerDelegate
+    //更新用户位置
+    func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
+        request = AMapReGeocodeSearchRequest()
+        request.location = AMapGeoPoint.location(withLatitude: CGFloat(userLocation.coordinate.latitude), longitude: CGFloat(userLocation.coordinate.longitude))
+//        search.aMapReGoecodeSearch(request)
+        
+    }
+    
+    //90秒确认一次地理位置
+    func startSearch(){
+        search.aMapReGoecodeSearch(request)
+        let seconds = 90
+        perform(#selector(self.startSearch), with: nil, afterDelay: TimeInterval(seconds))
+    }
+    
+    //搜索回调函数
+    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) {
+        if response.regeocode == nil {
+            return
+        }
+        ApiHelper.currentUser.atCity = response.regeocode.addressComponent.city
+        self.navigationItem.leftBarButtonItem?.title = response.regeocode.addressComponent.city
+    }
     
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -36,10 +36,12 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         AMapServices.shared().apiKey = ApiHelper.mapKey
         AMapServices.shared().enableHTTPS = true
         
-        let locationManager = AMapLocationManager()
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
+        //navigation Bar
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
         
+        //初始化mapView
         mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -48,7 +50,15 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         mapView.showsScale = false
 //        mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
         
+        //自定义蓝点
+        let r = MAUserLocationRepresentation()
+        mapView.customizeUserLocationAccuracyCircleRepresentation = true
+        r.showsHeadingIndicator = true
+        mapView.update(r)
+        
         self.view.addSubview(mapView!)
+        
+        //地图上控件
         let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
         centerLogo.setImage(#imageLiteral(resourceName: "like.png"), for: UIControlState.normal)
         mapView.addSubview(centerLogo)
@@ -65,9 +75,8 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         //initSearch
         search = AMapSearchAPI()
         search.delegate = self
-//        demoRequest()
         
-        //初始定位
+        //发起初始定位
         requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
     }
     
@@ -146,8 +155,6 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     
     // 回调函数 更新Annotation
     func addAnnotationFromCourt(){
-//        print("删去annotationList")
-//        print(annotationList.count)
         for annotation in self.annotationList{
             self.mapView!.removeAnnotation(annotation)
         }
@@ -161,34 +168,12 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             annotation.subtitle = court.location
             mapView!.addAnnotation(annotation)
         }
-//        print("增加annotationList")
-//        print(annotationList.count)
     }
-    
-    //Mark: - AMapLocationManagerDelegate
-    //更新用户位置
-//    func amapLocationManager(_ manager: AMapLocationManager!, didUpdate location: CLLocation!) {
-////        if (location.coordinate.longitude != tempLocation?.longitude) || (location.coordinate.latitude != tempLocation?.latitude){
-////            tempLocation = location.coordinate
-////            requestCourtsNearBy(coordinate: CLLocationCoordinate2DMake(32.01,118.74), completionHandler: addAnnotationFromCourt)
-////        }
-//    }
     
     //用户移动中心标时
     func mapView(_ mapView: MAMapView!, mapDidMoveByUser wasUserAction: Bool) {
         requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
     }
-    
-    
-//    //MARK:- MAMapViewDelegate
-//    //更新用户位置
-//    func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
-//        if (userLocation.coordinate.longitude != tempLocation?.longitude) || (userLocation.coordinate.latitude != tempLocation?.latitude){
-//            tempLocation = userLocation.coordinate
-//            requestCourtsNearBy(coordinate: CLLocationCoordinate2DMake(32.01,118.74), completionHandler: addAnnotationFromCourt)
-//        }
-//    }
-
     
 //    func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
 //        
@@ -298,7 +283,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             moreButton.backgroundColor = UIColor.flatBlue
             moreButton.titleLabel?.textAlignment = .center
             moreButton.setTitle("查看更多", for: UIControlState.normal)
-            moreButton.addTarget(self, action: #selector(joinGame), for: UIControlEvents.touchDown)
+            moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
             
             dropDownView.addSubview(noGmaeLabel)
             dropDownView.addSubview(moreButton)

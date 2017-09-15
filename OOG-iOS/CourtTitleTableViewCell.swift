@@ -10,7 +10,6 @@ import UIKit
 
 class CourtTitleTableViewCell: UITableViewCell {
     @IBOutlet weak var courtImage: UIImageView!
-    @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var courtLocationLabel: UILabel!
     @IBOutlet weak var contactLabel: UILabel!
     @IBOutlet weak var courtRateLabel: UILabel!
@@ -41,7 +40,6 @@ class CourtTitleTableViewCell: UITableViewCell {
                 courtImage.image = nil
             }
         }
-        courtNameLabel.text = court?.courtName
         courtLocationLabel.text = court?.location
         courtRateLabel.text = court?.rate
         

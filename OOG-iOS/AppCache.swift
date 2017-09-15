@@ -184,7 +184,7 @@ class AppCache{
     
     //获取球馆比赛信息
     func courtGameRequest(courtID : String, completionHandler: @escaping ()->()){
-        provider.request(.userGame(userID: userID) ) {result in
+        provider.request(.courtGame(courtID: courtID) ) {result in
             switch result{
             case let .success(moyaResponse):
                 let data = moyaResponse.data

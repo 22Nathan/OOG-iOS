@@ -504,10 +504,10 @@
 		53EBD8361F6A272100A96D8E /* ProfileViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				539BE59A1F61260000CB6E95 /* MovementDisplayCell */,
-				539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */,
-				539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */,
 				53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */,
+				539BE5921F60D23A00CB6E95 /* InfoTableViewCell.swift */,
+				539BE5961F60E27500CB6E95 /* MovementDisplayTableViewCell.swift */,
+				539BE59A1F61260000CB6E95 /* MovementDisplayCell */,
 			);
 			name = ProfileViewCell;
 			sourceTree = "<group>";
@@ -614,6 +614,11 @@
 					5310EE9C1F4DCD0A00486589 = {
 						CreatedOnToolsVersion = 8.3.3;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

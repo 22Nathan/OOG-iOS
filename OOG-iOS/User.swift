@@ -29,6 +29,7 @@ class User{
     var skillRate : String         //用户技术平均分
     var physicalRate : String       //身体素质平均分
     var BQRate : String         //球商评分
+    var atCity : String             //所在城市
     
     init(_ username : String = "",
          _ tel : String,
@@ -48,7 +49,8 @@ class User{
          _ userRate : String = "",
          _ skillRate : String = "",
          _ physicalRate : String = "",
-         _ BQRate : String = "") {
+         _ BQRate : String = "",
+         _ atCity : String = "") {
         self.username = username
         self.tel = tel
         self.password = password
@@ -68,6 +70,7 @@ class User{
         self.physicalRate = physicalRate
         self.skillRate = skillRate
         self.BQRate = BQRate
+        self.atCity = atCity
     }
     
     convenience init(_ json : JSON){
@@ -89,7 +92,8 @@ class User{
                   json["userRate"].stringValue,
                   json["physicalRate"].stringValue,
                   json["skillRate"].stringValue,
-                  json["BQRate"].stringValue)
+                  json["BQRate"].stringValue,
+                  json["atCity"].stringValue)
     }
     
     func toJSON() -> JSON {
@@ -112,7 +116,8 @@ class User{
             "userRate" :userRate,
             "physicalRate" :userRate,
             "skillRate" :userRate,
-            "BQRate" :userRate
+            "BQRate" :userRate,
+            "atCity" : atCity
             ])
     }
 }

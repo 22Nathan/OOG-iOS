@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DKImagePickerController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>DZNEmptyDataSet.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -82,22 +87,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C19A8BB78DEE365E9BD9534F857189E</key>
+		<key>0C06CCDA30F6EC80BF4B9B2E1C6EB4E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>1215771836B84E9F9899950098D2FF80</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1E730FF485E3B56D950AD58DDA0F3540</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2DF693D7E7FCD53BBE3ED737867B608D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +107,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C1BAE55CAED62B6A2273075492BBAFB</key>
+		<key>5BC58274B0C9E008F6ABABC5A0F2326E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,12 +117,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>83FCF6AFB0603EB01CACA3162FE6A26C</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<key>91E0446C2823B4E0F804F6DFB87A9B53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D5842B50FEFD723A642CFF1C0D41084</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,7 +142,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>C4C5E2AC4AA5FBA00F58B6E9378D22E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>CF671F7E57B92905F1CC91D036D6B4A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D29ECE69EF439D1FF5B5E9EB40FDFFE0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

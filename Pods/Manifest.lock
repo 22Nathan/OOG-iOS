@@ -26,6 +26,11 @@ PODS:
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - DGElasticPullToRefresh (1.1)
+  - DKImagePickerController (3.5.1):
+    - DKImagePickerController/Camera (= 3.5.1)
+    - DKImagePickerController/ImageManager (= 3.5.1)
+  - DKImagePickerController/Camera (3.5.1)
+  - DKImagePickerController/ImageManager (3.5.1)
   - DZNEmptyDataSet (1.8.1)
   - HappyDNS (0.3.10)
   - JNDropDownMenu (0.1.6)
@@ -50,6 +55,7 @@ DEPENDENCIES:
   - AMapSearch
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - DGElasticPullToRefresh
+  - DKImagePickerController
   - DZNEmptyDataSet
   - JNDropDownMenu (from `https://github.com/javalnanda/JNDropDownMenu`)
   - MessageKit (from `https://github.com/MessageKit/MessageKit.git`)
@@ -87,6 +93,7 @@ SPEC CHECKSUMS:
   AMapSearch: cf7fd100d533995822d92c22586abfaf7cdf6eef
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
+  DKImagePickerController: 8db7e76a88a7a66a893ba30e935cc4c9bb7ed335
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   JNDropDownMenu: 1744134c23d97af7bd5afca53d17f5c80272c907
@@ -98,6 +105,6 @@ SPEC CHECKSUMS:
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 871274a7efb7dbc794de0c472a790df1280e945b
+PODFILE CHECKSUM: 4eacd4b66625185a4f4a6e936114aaef78fafd99
 
 COCOAPODS: 1.2.1

@@ -30,17 +30,15 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         AMapServices.shared().apiKey = ApiHelper.mapKey
         AMapServices.shared().enableHTTPS = true
         
-        let locationManager = AMapLocationManager()
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
-        
         mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
         mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.showsCompass = false
         mapView.showsScale = false
+        
         tempLocation = mapView.userLocation.coordinate
+        
         self.view.addSubview(mapView!)
         let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
         centerLogo.setImage(#imageLiteral(resourceName: "like.png"), for: UIControlState.normal)
@@ -57,7 +55,6 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         //initSearch
         search = AMapSearchAPI()
         search.delegate = self
-        //        demoRequest()
         
         //初始定位
         requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)    }
@@ -130,7 +127,6 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
                                 print(response.result.error!)
                             }
         }
-        
     }
 
     // 回调函数 更新Annotation
