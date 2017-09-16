@@ -730,7 +730,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3c-PN-jeA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3456.8000000000002" y="4349.7751124437782"/>
+            <point key="canvasLocation" x="2638" y="2966"/>
         </scene>
         <!--信息-->
         <scene sceneID="pzN-7l-jaN">
@@ -791,6 +791,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="UDd-dw-sD8"/>
                     <connections>
+                        <outlet property="searchBar" destination="cUH-vy-InZ" id="wvc-JT-a2F"/>
                         <segue destination="Ciw-kM-LXt" kind="show" identifier="seeMore" id="mYH-rj-ogW"/>
                     </connections>
                 </viewController>
@@ -1674,6 +1675,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="uts-R0-sPY" kind="show" identifier="seeMoreModal" id="xyu-Oi-6yq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PG3-bG-VDq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2103,6 +2107,24 @@
             </objects>
             <point key="canvasLocation" x="2165.5999999999999" y="2292.5037481259374"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="cN2-sC-gEB">
+            <objects>
+                <viewController id="zk5-FG-vZ1" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jNn-gC-Y8E"/>
+                        <viewControllerLayoutGuide type="bottom" id="ec8-Ws-LQH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Aft-Jg-00p">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HgO-eJ-AWW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2831" y="2286"/>
+        </scene>
         <!--Item-->
         <scene sceneID="luJ-02-1pL">
             <objects>
@@ -2207,7 +2229,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="slp-f7-MEw"/>
-        <segue reference="ard-cd-GeG"/>
+        <segue reference="xyu-Oi-6yq"/>
         <segue reference="jNH-Fw-9fE"/>
+        <segue reference="ard-cd-GeG"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -278,7 +278,6 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     //Mark : - DZNEmptyDataSetDelegate
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
-        print(scrollView.tag)
         return true
     }
     

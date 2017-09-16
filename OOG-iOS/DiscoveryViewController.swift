@@ -31,6 +31,12 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     var joinGameButton = UIButton()
     var moreButton = UIButton()
     
+    @IBOutlet weak var searchBar: UISearchBar!{
+        didSet{
+//            searchBar.addGestureRecognizer(<#T##gestureRecognizer: UIGestureRecognizer##UIGestureRecognizer#>)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         AMapServices.shared().apiKey = ApiHelper.mapKey

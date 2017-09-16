@@ -12,18 +12,27 @@ import SwiftyJSON
 import SVProgressHUD
 
 class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearchDelegate,AMapLocationManagerDelegate,UIGestureRecognizerDelegate {
-
     var mapView: MAMapView!
     var search: AMapSearchAPI!
     var courtList : [Court] = []
     var annotationList : [MAAnnotation?] = []
-    var tempLocation : CLLocationCoordinate2D?
     var selectedAnnotation : MAAnnotation?
+    var selectedCourt : Court? //点击发请求后才获得
+    var displayedGame : Game?  //点击发请求后才获得
+    var ifHaveDisplayedGame = false
+    var tempLocation : CLLocationCoordinate2D?
     
     var delegate : FindGameViewControllerProtocol?
     
     var emptyView = UIView()
     let dropDownView = UIView()
+    
+    var noGmaeLabel = UILabel()
+    var gameTimeLabel = UILabel()
+    var gameTypeLabel = UILabel()
+    var gameRateLabel = UILabel()
+    var joinGameButton = UIButton()
+    var moreButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +67,80 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         
         //初始定位
         requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)    }
+    
+    //Mark : - RequestCourt
+    private func requestCourtInfo(_ courtID : String , annotation : MAAnnotation,completionHandler: @escaping (_ annotation: MAAnnotation) -> ()){
+        Alamofire.request(ApiHelper.API_Root + "/courts/" + courtID + "/",
+                          method: .get,
+                          parameters: nil,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response Court Info ###################")
+                                    //                                    print(json)
+                                    let courtID = json["id"].stringValue
+                                    let courtName = json["courtName"].stringValue
+                                    let atCity = json["atCity"].stringValue
+                                    
+                                    var imageNumber = 0
+                                    let imageUrlsJSON = json["court_image_url"].arrayValue
+                                    var imageUrls : [String] = []
+                                    for imageUrl in imageUrlsJSON{
+                                        imageUrls.append(imageUrl.stringValue)
+                                        imageNumber += 1
+                                    }
+                                    let location = json["location"].stringValue
+                                    let longitude = json["longitude"].stringValue
+                                    let latitude = json["latitude"].stringValue
+                                    let courtRate = json["courtRate"].stringValue
+                                    let courtStatus = json["status"].stringValue
+                                    let priceRate = json["priceRate"].stringValue
+                                    let transportRate = json["transportRate"].stringValue
+                                    let facilityRate = json["facilityRate"].stringValue
+                                    let status = json["status"].stringValue
+                                    let court = Court(courtID,
+                                                      courtName,
+                                                      "",
+                                                      imageUrls,
+                                                      location,
+                                                      atCity,
+                                                      courtRate,
+                                                      "",
+                                                      courtStatus,
+                                                      longitude,
+                                                      latitude,
+                                                      priceRate,
+                                                      transportRate,
+                                                      facilityRate)
+                                    self.selectedCourt = court
+                                    if status != "1"{
+                                        //parse displayedGame
+                                        self.ifHaveDisplayedGame = true
+                                        let game_id = json["displayedGame"]["id"].stringValue
+                                        let game_rate = json["displayedGame"]["game_rate"].stringValue
+                                        let game_type = json["displayedGame"]["game_type"].stringValue
+                                        let game_status = json["displayedGame"]["game_status"].stringValue
+                                        let participantNumber = json["displayedGame"]["participantNumber"].stringValue
+                                        let started_at = json["displayedGame"]["started_at"].stringValue
+                                        let game = Game(game_id,
+                                                        game_type,
+                                                        game_status,
+                                                        started_at,
+                                                        court,
+                                                        participantNumber,
+                                                        game_rate)
+                                        self.displayedGame = game
+                                    }
+                                }
+                                completionHandler(annotation)
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
     
     func requestCourtsNearBy(coordinate: CLLocationCoordinate2D!,completionHandler: @escaping () -> ()){
         var parameters = [String : String]()
@@ -151,11 +234,6 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
     }
     
-    //annotation点击事件
-    func mapView(_ mapView: MAMapView!, didSelect view: MAAnnotationView!) {
-        showDropDownView(view.annotation)
-    }
-    
     //弹出的callout
     func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
         
@@ -177,6 +255,19 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         return nil
     }
     
+    //annotation点击事件
+    func mapView(_ mapView: MAMapView!, didSelect view: MAAnnotationView!) {
+        let annotation = view.annotation
+        var courtID = ""
+        for court in courtList{
+            if court.courtName == annotation?.title{
+                courtID = court.id
+            }
+        }
+        requestCourtInfo(courtID, annotation: annotation!, completionHandler: showDropDownView)
+    }
+    
+    // 下弹视图
     func showDropDownView(_ annotation: MAAnnotation!) {
         mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
         selectedAnnotation = annotation
@@ -223,10 +314,61 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         }
         
         //加载控件与数据
-        let courtNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
-        courtNameLabel.text = "text"
-        courtNameLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        dropDownView.addSubview(courtNameLabel)
+        if !ifHaveDisplayedGame{
+            noGmaeLabel = UILabel(frame: CGRect(x: 0, y: 5, width: 375, height: 40))
+            noGmaeLabel.text = "当前球场没有比赛,去看看其他球场吧~"
+            noGmaeLabel.textAlignment = .center
+            noGmaeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            moreButton = UIButton(frame: CGRect(x: 0, y: 50, width: 375, height: 25))
+            moreButton.backgroundColor = UIColor.flatBlue
+            moreButton.titleLabel?.textAlignment = .center
+            moreButton.setTitle("查看更多", for: UIControlState.normal)
+            moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
+            
+            dropDownView.addSubview(noGmaeLabel)
+            dropDownView.addSubview(moreButton)
+        }else{
+            gameTypeLabel = UILabel(frame: CGRect(x: 0, y: 5, width: 125, height: 40))
+            gameTypeLabel.textAlignment = .center
+            gameTypeLabel.numberOfLines = 0
+            gameTypeLabel.text = convertNumberToDisplayedGameType((displayedGame?.game_type)!) + "\n比赛类型"
+            gameTypeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            gameRateLabel = UILabel(frame: CGRect(x: 125, y: 5, width: 125, height: 40))
+            gameRateLabel.text = (displayedGame?.game_rate)! + "\n参赛者平均分"
+            gameRateLabel.textAlignment = .center
+            gameRateLabel.numberOfLines = 0
+            gameRateLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            gameTimeLabel = UILabel(frame: CGRect(x: 250, y: 5, width: 125, height: 40))
+            let nsString = (displayedGame?.started_at)! as NSString
+            let range = NSRange(location: 7, length: nsString.length)
+            let displayedTime = (displayedGame?.started_at)!.substring(range)
+            gameTimeLabel.text = displayedTime + "\n比赛开始时间"
+            gameTimeLabel.textAlignment = .center
+            gameTimeLabel.numberOfLines = 0
+            gameTimeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            joinGameButton = UIButton(frame: CGRect(x: 0, y: 50, width: 375, height: 23))
+            joinGameButton.backgroundColor = UIColor.flatBlue
+            joinGameButton.titleLabel?.textAlignment = .center
+            joinGameButton.setTitle("加入比赛", for: UIControlState.normal)
+            joinGameButton.addTarget(self, action: #selector(joinGame), for: UIControlEvents.touchDown)
+            
+            moreButton = UIButton(frame: CGRect(x: 0, y: 75, width: 375, height: 23))
+            moreButton.backgroundColor = UIColor.flatBlue
+            moreButton.titleLabel?.textAlignment = .center
+            moreButton.setTitle("查看更多", for: UIControlState.normal)
+            moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
+            
+            dropDownView.addSubview(gameTypeLabel)
+            dropDownView.addSubview(gameRateLabel)
+            dropDownView.addSubview(gameTimeLabel)
+            dropDownView.addSubview(joinGameButton)
+            dropDownView.addSubview(moreButton)
+        }
+        ifHaveDisplayedGame = false
         
         // 加载视图
         emptyView.addSubview(dropDownView)
@@ -237,7 +379,14 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         popOffDropDownView()
     }
     
+    //下弹视图收回
     private func popOffDropDownView(){
+        noGmaeLabel.removeFromSuperview()
+        gameTypeLabel.removeFromSuperview()
+        gameTimeLabel.removeFromSuperview()
+        gameRateLabel.removeFromSuperview()
+        moreButton.removeFromSuperview()
+        joinGameButton.removeFromSuperview()
         UIView.animate(withDuration: 0.3) { () -> Void in
             self.dropDownView.frame.origin = CGPoint(x: 0, y: -36)
         }
@@ -245,7 +394,6 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         let seconds = 0.3
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
         mapView.deselectAnnotation(selectedAnnotation, animated: false)
-        selectedAnnotation = nil
     }
     
     //延时操作，等待下弹视图转场动画结束
@@ -261,19 +409,18 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         } else {
             return true
         }
-    }
-    
+    }    
     //滑动手势
     func swipe(gesture: UISwipeGestureRecognizer) {
         popOffDropDownView()
         if gesture.direction == .left{
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude+0.4), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude+0.1), animated: true)
         }else if gesture.direction == .right{
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude-0.4), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude-0.1), animated: true)
         }else if gesture.direction == .up{
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude-0.4, mapView.centerCoordinate.longitude), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude-0.1, mapView.centerCoordinate.longitude), animated: true)
         }else if gesture.direction == .down{
-            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude+0.4, mapView.centerCoordinate.longitude), animated: true)
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude+0.1, mapView.centerCoordinate.longitude), animated: true)
         }
         
     }
@@ -283,6 +430,14 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         if tapRecognizer.state == .ended{
             mapView.setCenter(mapView.userLocation.coordinate, animated: true)
         }
+    }
+    
+    func joinGame(){
+        //        print("funck")
+    }
+    
+    func seeMore(){
+        performSegue(withIdentifier: "seeMoreModal", sender: self)
     }
     
     //MARK:- AMapSearchDelegate
@@ -300,6 +455,19 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
             presentingViewController?.dismiss(animated: true)
         }else{
             SVProgressHUD.showInfo(withStatus: "您未选择球场")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destinationViewController = segue.destination
+        if segue.identifier == "seeMoreModal"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let courtVC = destinationViewController as? CourtTableViewController{
+                courtVC.court = selectedCourt
+                courtVC.navigationItem.title = selectedCourt?.courtName
+            }
         }
     }
     
