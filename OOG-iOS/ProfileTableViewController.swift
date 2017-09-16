@@ -85,6 +85,7 @@ class ProfileTableViewController: UITableViewController {
         
         //parse TitleModel
         let username = json["username"].stringValue
+        self.navigationItem.title = username
         let userID = json["userID"].stringValue
         let tel = json["tel"].stringValue
         let position = json["position"].stringValue

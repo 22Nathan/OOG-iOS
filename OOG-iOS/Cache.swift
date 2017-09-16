@@ -16,6 +16,19 @@ class Cache{
         Cache.imageCache.set(value,forKey: key)
     }
     
+    //Mark: - updateImage
+    static let tempImageCache = UserDefaults.standard
+    static var keySet = Set<String>()
+    
+    static func tempImageSet(_ key : String, _ value : Any?){
+        Cache.tempImageCache.set(value, forKey: key)
+    }
+    static func clearTempImage(){
+        for key in keySet{
+            Cache.tempImageCache.removeObject(forKey: key)
+        }
+    }
+    
     //Mark: - currentUser
     static let currentUserKey = "currentUser"
     static let currentUserCache = AppCache(currentUserKey){

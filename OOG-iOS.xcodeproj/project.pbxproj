@@ -17,6 +17,10 @@
 		532652181F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */; };
 		5326521A1F6CE63200EE29CA /* ChangeInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */; };
 		5326521D1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5326521C1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift */; };
+		532652211F6CFEEC00EE29CA /* ChangeBasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652201F6CFEEC00EE29CA /* ChangeBasicTableViewCell.swift */; };
+		532652231F6CFF0600EE29CA /* ChangeDesciptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652221F6CFF0600EE29CA /* ChangeDesciptionTableViewCell.swift */; };
+		532652251F6D0BD500EE29CA /* ChangeUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652241F6D0BD500EE29CA /* ChangeUsernameViewController.swift */; };
+		532652271F6D1AB000EE29CA /* ChangeDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652261F6D1AB000EE29CA /* ChangeDescriptionViewController.swift */; };
 		533758BA1F5C2D9C00DCA48A /* MovementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */; };
 		533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */; };
 		533758C71F5CF90700DCA48A /* MovementListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758C61F5CF90700DCA48A /* MovementListTableViewController.swift */; };
@@ -103,6 +107,10 @@
 		532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageButtonCollectionViewCell.swift; sourceTree = "<group>"; };
 		532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeInfoTableViewController.swift; sourceTree = "<group>"; };
 		5326521C1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeImageTableViewCell.swift; sourceTree = "<group>"; };
+		532652201F6CFEEC00EE29CA /* ChangeBasicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeBasicTableViewCell.swift; sourceTree = "<group>"; };
+		532652221F6CFF0600EE29CA /* ChangeDesciptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDesciptionTableViewCell.swift; sourceTree = "<group>"; };
+		532652241F6D0BD500EE29CA /* ChangeUsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeUsernameViewController.swift; sourceTree = "<group>"; };
+		532652261F6D1AB000EE29CA /* ChangeDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDescriptionViewController.swift; sourceTree = "<group>"; };
 		533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementTableViewCell.swift; sourceTree = "<group>"; };
 		533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		533758C61F5CF90700DCA48A /* MovementListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementListTableViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				5326521C1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift */,
+				532652201F6CFEEC00EE29CA /* ChangeBasicTableViewCell.swift */,
+				532652221F6CFF0600EE29CA /* ChangeDesciptionTableViewCell.swift */,
 			);
 			name = InfoViewCell;
 			sourceTree = "<group>";
@@ -552,6 +562,8 @@
 				53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */,
 				53EBD8341F6A241200A96D8E /* TeamTableViewController.swift */,
 				532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */,
+				532652241F6D0BD500EE29CA /* ChangeUsernameViewController.swift */,
+				532652261F6D1AB000EE29CA /* ChangeDescriptionViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -737,6 +749,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */,
+				532652271F6D1AB000EE29CA /* ChangeDescriptionViewController.swift in Sources */,
 				53C94D321F63D547007FD2B9 /* FindGameViewController.swift in Sources */,
 				53EBD8351F6A241200A96D8E /* TeamTableViewController.swift in Sources */,
 				539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */,
@@ -755,6 +768,7 @@
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
 				53EBD8451F6AD6C100A96D8E /* UnRatedGameTableViewCell.swift in Sources */,
 				53C94D341F641636007FD2B9 /* HomePopViewController.swift in Sources */,
+				532652251F6D0BD500EE29CA /* ChangeUsernameViewController.swift in Sources */,
 				537A8BF81F6829A60091A232 /* UserMovementCollectionViewCell.swift in Sources */,
 				53EBD82E1F6A11C900A96D8E /* CourtTableViewController.swift in Sources */,
 				539BE5971F60E27500CB6E95 /* MovementDisplayTableViewCell.swift in Sources */,
@@ -766,6 +780,7 @@
 				539BE58F1F60067000CB6E95 /* Synchronized.swift in Sources */,
 				539BE59C1F61265200CB6E95 /* ButtonCollectionViewCell.swift in Sources */,
 				53B2D0BA1F5D890B00DDB826 /* HomeViewController.swift in Sources */,
+				532652211F6CFEEC00EE29CA /* ChangeBasicTableViewCell.swift in Sources */,
 				53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */,
 				53EBD82B1F6955E000A96D8E /* CustomAnnotationView.swift in Sources */,
 				53EBD83D1F6A573900A96D8E /* TeamUserTableViewCell.swift in Sources */,
@@ -774,6 +789,7 @@
 				53C94D361F654657007FD2B9 /* PopTeamInfoViewController.swift in Sources */,
 				533758CA1F5D2CC900DCA48A /* MovementCollectionViewCell.swift in Sources */,
 				5326521D1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift in Sources */,
+				532652231F6CFF0600EE29CA /* ChangeDesciptionTableViewCell.swift in Sources */,
 				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
 				53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */,
 				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,

@@ -37,7 +37,6 @@ class CourtTableViewController: UITableViewController {
             refreshCache()
             return
         }
-        
         let value = Cache.courtGameCache.value
         let json = JSON.parse(value)
         let gamesArray = json["games"].arrayValue
@@ -81,7 +80,6 @@ class CourtTableViewController: UITableViewController {
         return courtItems[section].count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let courtItem = courtItems[indexPath.section][indexPath.row]
         switch courtItem {

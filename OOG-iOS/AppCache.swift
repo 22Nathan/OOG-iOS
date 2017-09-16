@@ -202,7 +202,8 @@ class AppCache{
     
     //更改个人信息
     func changeUserInfo(_ userID : String, completionHandler: @escaping ()->() ){
-        provider.request(.userInfo(userID: userID)) {result in
+        print(ApiHelper.currentUser.username)
+        provider.request(.changeUserInfo(userID: userID)) {result in
             switch result{
             case let .success(moyaResponse):
                 let data = moyaResponse.data

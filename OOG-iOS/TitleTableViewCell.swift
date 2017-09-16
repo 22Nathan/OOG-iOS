@@ -32,14 +32,15 @@ class TitleTableViewCell: UITableViewCell {
 //        avatorImage.layer.borderWidth = 2.0
 //        avatorImage.layer.borderColor = UIColor.white.cgColor
 
-        let profileImageKey = "ProfileImageKey" + (title?.username)!
-        if let imageData = Cache.imageCache.data(forKey: profileImageKey){
+        let profileImageKey = "ProfileImageKey" + (title?.userID)!
+        Cache.keySet.insert(profileImageKey)
+        if let imageData = Cache.tempImageCache.data(forKey: profileImageKey){
             avatorImage.image = UIImage(data: imageData)
         }else{
             if let imageUrl = URL(string: (title?.avatar_url)!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
-                    Cache.set(profileImageKey, urlContents)
+                    Cache.tempImageSet(profileImageKey, urlContents)
                     if let imageData = urlContents{
                         DispatchQueue.main.async {
                             self?.avatorImage.image = UIImage(data: imageData)

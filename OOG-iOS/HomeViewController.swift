@@ -258,8 +258,10 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         if response.regeocode == nil {
             return
         }
-        ApiHelper.currentUser.atCity = response.regeocode.addressComponent.city
-        self.navigationItem.leftBarButtonItem?.title = response.regeocode.addressComponent.city
+        var city = response.regeocode.addressComponent.city! as NSString
+        let range = NSMakeRange(0, city.length-1)
+        ApiHelper.currentUser.atCity = city.substring(with: range)
+        self.navigationItem.leftBarButtonItem?.title = ApiHelper.currentUser.atCity
     }
     
     //Mark : - tableView DataSource
