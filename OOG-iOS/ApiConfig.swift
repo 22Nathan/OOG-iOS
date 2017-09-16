@@ -18,6 +18,7 @@ enum ApiConfig{
     case userTeam(userID: String)
     case userGame(userID: String)
     case courtGame(courtID : String)
+    case changeUserInfo(userID : String)
 }
 
 extension ApiConfig: TargetType{
@@ -41,6 +42,8 @@ extension ApiConfig: TargetType{
             return "/games/all/"
         case .courtGame(let courtID):
             return "/courts/" + courtID + "/games/"
+        case .changeUserInfo(let userID):
+            return "/users/" + userID + "/"
         }
     }
     
@@ -48,6 +51,8 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings , .userTeam, .userGame, .courtGame:
             return .get
+        case .changeUserInfo:
+            return .put
         }
     }
     
@@ -69,12 +74,24 @@ extension ApiConfig: TargetType{
             return nil
         case .courtGame(_):
             return nil
+        case .changeUserInfo(_):
+            return ["uuid" : ApiHelper.currentUser.uuid,
+                    "username" : ApiHelper.currentUser.username,
+                    "password" : ApiHelper.currentUser.password,
+                    "gender" : ApiHelper.currentUser.gender,
+                    "position" : ApiHelper.currentUser.position,
+                    "height" : ApiHelper.currentUser.height,
+                    "weight" : ApiHelper.currentUser.weight,
+                    "description" : ApiHelper.currentUser.description,
+                    "atCity" : ApiHelper.currentUser.atCity,
+                    "avatar_url" : ApiHelper.currentUser.avatar_url
+            ]
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam , .userGame , .courtGame:
+        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam , .userGame , .courtGame, .changeUserInfo:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -93,12 +110,14 @@ extension ApiConfig: TargetType{
             return "{\"UserID\": \(userID)}".utf8Encoded
         case .courtGame(let courtID):
             return "{\"UserID\": \(courtID)}".utf8Encoded
+        case .changeUserInfo(let userID):
+            return "{\"UserID\": \(userID)}".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam , .userGame , .courtGame :
+        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam , .userGame , .courtGame ,.changeUserInfo :
             return .request
         }
     }

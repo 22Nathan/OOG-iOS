@@ -15,6 +15,8 @@
 		53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53237F581F5A7FE100B33AAA /* TitleModel.swift */; };
 		532652161F6C135600EE29CA /* ConvertPHAssetToUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */; };
 		532652181F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */; };
+		5326521A1F6CE63200EE29CA /* ChangeInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */; };
+		5326521D1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5326521C1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift */; };
 		533758BA1F5C2D9C00DCA48A /* MovementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */; };
 		533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */; };
 		533758C71F5CF90700DCA48A /* MovementListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533758C61F5CF90700DCA48A /* MovementListTableViewController.swift */; };
@@ -99,6 +101,8 @@
 		53237F581F5A7FE100B33AAA /* TitleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleModel.swift; sourceTree = "<group>"; };
 		532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertPHAssetToUIImage.swift; sourceTree = "<group>"; };
 		532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageButtonCollectionViewCell.swift; sourceTree = "<group>"; };
+		532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeInfoTableViewController.swift; sourceTree = "<group>"; };
+		5326521C1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeImageTableViewCell.swift; sourceTree = "<group>"; };
 		533758B91F5C2D9C00DCA48A /* MovementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementTableViewCell.swift; sourceTree = "<group>"; };
 		533758BD1F5C3F8400DCA48A /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		533758C61F5CF90700DCA48A /* MovementListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementListTableViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +219,14 @@
 				53BC50BE1F572A7B00BE76B8 /* Supporting Files */,
 			);
 			path = "OOG-iOS";
+			sourceTree = "<group>";
+		};
+		5326521B1F6CE84600EE29CA /* InfoViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5326521C1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift */,
+			);
+			name = InfoViewCell;
 			sourceTree = "<group>";
 		};
 		533758BB1F5C3ACA00DCA48A /* MovementListModule */ = {
@@ -527,6 +539,7 @@
 		53EBD8381F6A3F1E00A96D8E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5326521B1F6CE84600EE29CA /* InfoViewCell */,
 				53EBD8371F6A3F0F00A96D8E /* TeamViewCell */,
 				53EBD8361F6A272100A96D8E /* ProfileViewCell */,
 			);
@@ -538,6 +551,7 @@
 			children = (
 				53D2C8381F593A2200CD2CB1 /* ProfileTableViewController.swift */,
 				53EBD8341F6A241200A96D8E /* TeamTableViewController.swift */,
+				532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -759,6 +773,7 @@
 				537A8BF61F6825820091A232 /* UserMovementTableViewCell.swift in Sources */,
 				53C94D361F654657007FD2B9 /* PopTeamInfoViewController.swift in Sources */,
 				533758CA1F5D2CC900DCA48A /* MovementCollectionViewCell.swift in Sources */,
+				5326521D1F6CE86F00EE29CA /* ChangeImageTableViewCell.swift in Sources */,
 				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
 				53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */,
 				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,
@@ -767,6 +782,7 @@
 				537A8BF21F6808060091A232 /* UserTableViewController.swift in Sources */,
 				533758CC1F5D2CE500DCA48A /* MovmentDisplayCollectionViewController.swift in Sources */,
 				539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */,
+				5326521A1F6CE63200EE29CA /* ChangeInfoTableViewController.swift in Sources */,
 				53C94D3A1F65501D007FD2B9 /* ModalStieInfoViewController.swift in Sources */,
 				533758BE1F5C3F8400DCA48A /* ProfileViewController.swift in Sources */,
 				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,

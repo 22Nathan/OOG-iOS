@@ -14,10 +14,12 @@ import SwiftDate
 import SVProgressHUD
 import DKImagePickerController
 import Photos
+import SwiftPhotoGallery
 
-class PublishMovementViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,PublishMovementViewControllerDelegate {
+class PublishMovementViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,PublishMovementViewControllerDelegate,SwiftPhotoGalleryDelegate,SwiftPhotoGalleryDataSource {
     var uploadPHAssets : [PHAsset] = []
     var uploadImages : [UIImage] = []
+    var previewImages : [UIImage] = []
     var token : String = ""
     var userID : String = ""
     var imageUrls : String = ""
@@ -78,6 +80,10 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
         self.uploadImages.append(image)
     }
     
+    func appendPreviewImage(_ image: UIImage) {
+        self.previewImages.append(image)
+    }
+    
     func appendAsset(_ assets: PHAsset) {
         self.uploadPHAssets.append(assets)
     }
@@ -88,6 +94,28 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     
     func reloadView() {
         self.collectionView.reloadData()
+    }
+    
+    func preview() {
+        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
+        gallery.backgroundColor = UIColor.black
+        gallery.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.5)
+        gallery.currentPageIndicatorTintColor = UIColor.white
+        gallery.hidePageControl = false
+        present(gallery, animated: true, completion: nil)
+    }
+    
+    // Gallery dataSource
+    func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
+        return previewImages.count
+    }
+    
+    func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
+        return previewImages[forIndex]
+    }
+    
+    func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
+        dismiss(animated: true, completion: nil)
     }
     
     // collection dataSource
@@ -223,7 +251,9 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
 protocol PublishMovementViewControllerDelegate {
     func deleteFirst()
     func appendImage(_ image : UIImage)
+    func appendPreviewImage(_ image : UIImage)
     func appendAsset(_ assets : PHAsset)
     func presentPickVC(_ vc : DKImagePickerController)
     func reloadView()
+    func preview()
 }

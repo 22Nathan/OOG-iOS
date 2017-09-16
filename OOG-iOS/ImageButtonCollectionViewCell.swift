@@ -31,7 +31,9 @@ class ImageButtonCollectionViewCell: UICollectionViewCell {
             pickerController.didSelectAssets = { (assets: [DKAsset]) in
                 self.delegate?.deleteFirst()
                 for photo in assets{
-                    let displayedImage = convertPHAssetToUIImage(asset: photo.originalAsset!)
+                    let displayedImage = convertPHAssetToUIImage(asset: photo.originalAsset!,88)
+                    let previewImage = convertPHAssetToUIImage(asset: photo.originalAsset!,375)
+                    self.delegate?.appendPreviewImage(previewImage)
                     self.delegate?.appendImage(displayedImage)
                     self.delegate?.appendAsset(photo.originalAsset!)
                 }
@@ -39,6 +41,11 @@ class ImageButtonCollectionViewCell: UICollectionViewCell {
                 self.delegate?.reloadView()
             }
             self.delegate?.presentPickVC(pickerController)
+        }else{
+            self.delegate?.deleteFirst()
+            self.delegate?.preview()
+            self.delegate?.appendImage(#imageLiteral(resourceName: "window.png"))
+            self.delegate?.reloadView()
         }
     }
     

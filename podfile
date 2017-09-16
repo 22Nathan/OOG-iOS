@@ -17,4 +17,5 @@ target 'OOG-iOS' do
     pod 'JNDropDownMenu', :git => 'https://github.com/javalnanda/JNDropDownMenu'
     pod 'DZNEmptyDataSet'
     pod 'DKImagePickerController'
+    pod 'SwiftPhotoGallery'
 end

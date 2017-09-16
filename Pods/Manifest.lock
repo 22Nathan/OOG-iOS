@@ -46,6 +46,7 @@ PODS:
   - Result (3.2.1)
   - SVProgressHUD (2.1.2)
   - SwiftDate (4.1.1)
+  - SwiftPhotoGallery (3.1.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -63,6 +64,7 @@ DEPENDENCIES:
   - Qiniu (~> 7.1)
   - SVProgressHUD
   - SwiftDate (~> 4.0)
+  - SwiftPhotoGallery
   - SwiftyJSON
 
 EXTERNAL SOURCES:
@@ -103,8 +105,9 @@ SPEC CHECKSUMS:
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
+  SwiftPhotoGallery: 85ff48f685dafc5e84639bee5c74ddb4f0f221d3
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 4eacd4b66625185a4f4a6e936114aaef78fafd99
+PODFILE CHECKSUM: 133911655985fdf713893e7ae734a01738936645
 
 COCOAPODS: 1.2.1

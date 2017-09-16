@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import PhotosUI
 
-func convertPHAssetToUIImage(asset : PHAsset) -> UIImage{
+func convertPHAssetToUIImage(asset : PHAsset, _ length : CGFloat) -> UIImage{
     var image = UIImage()
     
     // 新建一个默认类型的图像管理器imageManager
@@ -28,7 +28,7 @@ func convertPHAssetToUIImage(asset : PHAsset) -> UIImage{
     // 缩略图的质量为高质量，不管加载时间花多少
     imageRequestOption.deliveryMode = .highQualityFormat
     
-    let size = CGSize(width: 88, height: 88)
+    let size = CGSize(width: length, height: length)
     
     // 按照PHImageRequestOptions指定的规则取出图片
     imageManager.requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: imageRequestOption, resultHandler: {
