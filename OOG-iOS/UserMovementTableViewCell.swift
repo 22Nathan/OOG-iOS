@@ -30,6 +30,9 @@ class UserMovementTableViewCell: UITableViewCell,UICollectionViewDelegate,UIColl
             if movements.count % 3 > 0{
                 lines += 1
             }
+            if lines == 0{
+                lines = 1
+            }
             collectionView.frame = CGRect(origin: collectionView.frame.origin, size: CGSize(width: collectionView.frame.width, height: lines*125 - 3) )
         }
     }

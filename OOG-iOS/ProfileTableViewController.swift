@@ -58,6 +58,8 @@ class ProfileTableViewController: UITableViewController {
     var profileUserName : String = ApiHelper.currentUser.username
     var userID : String = ApiHelper.currentUser.id
     
+    var movementProfilesList : [Movement] = []
+    
     //MARK: - Logic
     func timeChanged() {
         refreshCache()
@@ -74,7 +76,6 @@ class ProfileTableViewController: UITableViewController {
         
         var titleProfiles : [profileItem] = []
         var infoProfiles : [profileItem] = []
-        var movementProfilesList : [Movement] = []
         var movemntProfiles : [profileItem] = []
         titleProfiles.removeAll()
         infoProfiles.removeAll()
@@ -200,7 +201,17 @@ class ProfileTableViewController: UITableViewController {
         case .Info( _):
             return 40
         case .MovementItem( _):
-            return 375
+            var lines = CGFloat(movementProfilesList.count / 3)
+            if movementProfilesList.count % 3 > 0{
+                lines += 1
+            }
+            if lines == 0 {
+                lines = 1
+            }
+            if movementProfilesList.count > 9{
+                lines = 3
+            }
+            return lines * 125 - 3
         }
     }
     

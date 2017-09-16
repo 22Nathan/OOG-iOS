@@ -139,6 +139,9 @@ class UserTableViewController: UITableViewController {
             if movementProfilesList.count % 3 > 0{
                 lines += 1
             }
+            if lines == 0 {
+                lines = 1
+            }
             return lines * 125 - 3
         }
     }

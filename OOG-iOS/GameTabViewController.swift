@@ -181,15 +181,6 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     func swipe(gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .left {
-            // 向左滑时展示第二个tableview,同时设置选中的segmented item
-            if offset != 0.0{
-                offset = offset - self.view.frame.width
-                segmented.selectedSegmentIndex = segmented.selectedSegmentIndex - 1
-            }else{
-                
-            }
-        }
-        else {
             if offset != self.view.frame.width*3{
                 offset = offset + self.view.frame.width
                 segmented.selectedSegmentIndex = segmented.selectedSegmentIndex + 1
@@ -197,8 +188,15 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
                 
             }
         }
+        else {
+            if offset != 0.0{
+                offset = offset - self.view.frame.width
+                segmented.selectedSegmentIndex = segmented.selectedSegmentIndex - 1
+            }else{
+                
+            }
+        }
     }
-    
     
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -237,7 +235,6 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
             cell.game = finishedGame[indexPath.section][indexPath.row]
             return cell
         }
-        print("if here")
         let cell = tableView.dequeueReusableCell(withIdentifier: "whatwhat", for: indexPath)
         return cell
     }

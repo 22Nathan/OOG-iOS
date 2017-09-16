@@ -103,6 +103,7 @@ class UsersTableViewController: UITableViewController {
         if segue.identifier == "user detail"{
             if let userVC = destinationViewController as? UserTableViewController{
                 if let cell = sender as? UserListTableViewCell{
+                    print("what")
                     userVC.user = cell.user
                     userVC.navigationItem.title = cell.user?.username
                     userVC.followList = cell.listType!
