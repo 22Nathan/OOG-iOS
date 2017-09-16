@@ -275,7 +275,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let movement = movements[indexPath.section][indexPath.row]
-        let commentHeight = CGFloat(movement.comments.count * 40)
+        let commentHeight = CGFloat(movement.comments.count * 29)
         return 518 + commentHeight
     }
     

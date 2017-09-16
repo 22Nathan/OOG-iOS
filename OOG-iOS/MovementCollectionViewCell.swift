@@ -28,8 +28,10 @@ class MovementCollectionViewCell: UICollectionViewCell {
             if let imageUrl = URL(string: (movement?.imageUrls[0])!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
-                    Cache.set(movementImageKey, urlContents)
-                    if let imageData = urlContents,imageUrl == URL(string: (self?.movement?.imageUrls[0])!){
+                    let resizeImage = UIImage(data: urlContents!)?.reSizeImage(reSize: CGSize(width: 123, height: 123))
+                    let resizeData = UIImagePNGRepresentation(resizeImage!)
+                    Cache.set(movementImageKey, resizeData)
+                    if let imageData = resizeData,imageUrl == URL(string: (self?.movement?.imageUrls[0])!){
                         DispatchQueue.main.async {
                             self?.displayMovementImage.image = UIImage(data: imageData)
                         }

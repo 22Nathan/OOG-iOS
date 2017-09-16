@@ -9,19 +9,16 @@
 import UIKit
 
 class UnRatedGameTableViewCell: UITableViewCell {
-    
     @IBOutlet weak var courtImage: UIImageView!
     @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var rateButton: UIButton!
-    
     var game : Game?{
         didSet{
             updateUI()
         }
     }
-    
     private func updateUI(){
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "CourtImageKey" + (game?.court.id)!
@@ -42,7 +39,6 @@ class UnRatedGameTableViewCell: UITableViewCell {
                 courtImage.image = nil
             }
         }
-        
         courtNameLabel.text = game?.court.courtName
         startTimeLabel.text = game?.started_at
         locationLabel.text = game?.court.location

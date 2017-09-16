@@ -23,14 +23,12 @@ class MovementDisplayTableViewCell: UITableViewCell,UICollectionViewDelegate,UIC
         didSet{
             self.collectionView.reloadData()
             var lines = CGFloat(movements.count / 3)
-            if movements.count % 3 > 0{
+            if (movements.count % 3 > 0) || (movements.count == 3) || (movements.count == 6){
                 lines += 1
             }
             if lines == 0{
                 lines = 1
             }
-            print("dsadsadsa")
-            print(lines)
             self.collectionView.frame = CGRect(origin: collectionView.frame.origin, size: CGSize(width: collectionView.frame.width, height: lines*125 - 3) )
         }
     }
@@ -43,7 +41,7 @@ class MovementDisplayTableViewCell: UITableViewCell,UICollectionViewDelegate,UIC
         if movements.count > 9{
             return 9
         }else{
-            return movements.count + 1
+            return (movements.count + 1)
         }
     }
     

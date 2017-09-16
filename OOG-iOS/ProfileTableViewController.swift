@@ -80,6 +80,8 @@ class ProfileTableViewController: UITableViewController {
         titleProfiles.removeAll()
         infoProfiles.removeAll()
         movemntProfiles.removeAll()
+        movementProfilesList.removeAll()
+        
         profiles.removeAll()
         let userValue = Cache.currentUserCache.value
         var json = JSON.parse(userValue)
@@ -202,7 +204,7 @@ class ProfileTableViewController: UITableViewController {
             return 40
         case .MovementItem( _):
             var lines = CGFloat(movementProfilesList.count / 3)
-            if movementProfilesList.count % 3 > 0{
+            if (movementProfilesList.count % 3 > 0) || (movementProfilesList.count == 3) || (movementProfilesList.count == 6){
                 lines += 1
             }
             if lines == 0 {

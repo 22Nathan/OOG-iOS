@@ -12,9 +12,7 @@ class MainTarBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.tabBar.barTintColor = UIColor.flatWhite
-        
         let homeImage = #imageLiteral(resourceName: "tab_home").withRenderingMode(.alwaysOriginal)
         let homeTabBarItem = UITabBarItem(title: "首页", image: homeImage,selectedImage: nil)
         homeTabBarItem.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)

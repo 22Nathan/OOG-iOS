@@ -9,21 +9,17 @@
 import UIKit
 
 class ToStartTableViewCell: UITableViewCell {
-    
     @IBOutlet weak var courtImage: UIImageView!
     @IBOutlet weak var courtLocationLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
-    
     @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var gameTypeLabel: UILabel!
-    
     var game : Game?{
         didSet{
             updateUI()
         }
     }
-    
     private func updateUI(){
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "CourtImageKey" + (game?.court.id)!

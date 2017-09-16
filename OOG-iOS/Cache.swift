@@ -50,6 +50,13 @@ class Cache{
         return provider
     }
     
+    //Mark : - movementComment
+    static let movementCommentKey = "movementComments"
+    static let movementCommentCache = AppCache(movementCommentKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
     //Mark: - userFollowers OR Follings list
     static let userListKey = "userList"
     static let userListCache = AppCache(userListKey){

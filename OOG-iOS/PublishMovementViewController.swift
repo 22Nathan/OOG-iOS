@@ -191,12 +191,12 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
             let key = userID + String(timeInterval)
             upManager?.put(asset, key: key, token: token, complete: { (responseInfo, key, dict) in
                 if (responseInfo?.isOK)!{
-                    self.uploadImageCount += 1
-                    if(self.uploadImageCount == 1){
+                    if(self.uploadImageCount == 0){
                         self.imageUrls += (ApiHelper.qiniu_Root + key!)
                     }else{
                         self.imageUrls += ("," + ApiHelper.qiniu_Root + key!)
                     }
+                    self.uploadImageCount += 1
                 }else{
                     SVProgressHUD.showInfo(withStatus: "图片上传失败")
                 }

@@ -24,13 +24,13 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         }
     }
     @IBOutlet weak var ownerAvatarImgae: UIImageView!
-    @IBOutlet weak var movementImage: UIImageView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var messageButton: UIButton!
     @IBOutlet weak var repostButton: UIButton!
     @IBOutlet weak var commentsTextView: UITextView!{
         didSet{
+            commentsTextView.isEditable = false
             commentsTextView.delegate = self
 //            textViewDidChange(commentsTextView)
             commentsTextView.isScrollEnabled = false
@@ -42,16 +42,18 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     @IBOutlet weak var likesNumberLabel: UILabel!
     @IBOutlet weak var contentTextView: UITextView!{
         didSet{
+            contentTextView.isEditable = false
             contentTextView.delegate = self
+            contentTextView.isScrollEnabled = false
 //            textViewDidChange(contentTextView)
         }
     }
-    //Model
+    //Mark: -  Model
     var movement : Movement?{ didSet{updateUI()} }
     var isLike = false
-    
     var delegate : HomeViewControllerProtocol?
     
+    //Mark: - Action
     @IBAction func likesAction(_ sender: Any) {
         if isLike{
             //发请求取消
@@ -68,7 +70,15 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     @IBAction func commentAction(_ sender: Any) {
         delegate?.cellMessageButtonDidPress(sender: self)
     }
-    //MarL : - delegate
+    
+    func pageChanged(_ sender:UIPageControl){
+        var frame = imageScrollView.frame
+        frame.origin.x = frame.size.width * CGFloat(sender.currentPage)
+        frame.origin.y = 0
+        imageScrollView.scrollRectToVisible(frame, animated: true)
+    }
+    
+    //Mark : - delegate
     func textViewDidChange(_ textView: UITextView) {
         let maxHeight : CGFloat = CGFloat(300)
         let nowframe = textView.frame
@@ -95,13 +105,6 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = Int(imageScrollView.contentOffset.x / imageScrollView.frame.size.width)
         pageControl.currentPage = page
-    }
-    
-    func pageChanged(_ sender:UIPageControl){
-        var frame = imageScrollView.frame
-        frame.origin.x = frame.size.width * CGFloat(sender.currentPage)
-        frame.origin.y = 0
-        imageScrollView.scrollRectToVisible(frame, animated: true)
     }
     
     //Mark: - Logic
@@ -172,6 +175,10 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
 
     private func updateUI(){
         //hook up movement image
+        for subView in imageScrollView.subviews{
+            subView.removeFromSuperview()
+        }
+        
         imageScrollView.delegate = self
         let scrollViewFrame = imageScrollView.bounds
         let numOfPages = (movement?.imageNumber)!
@@ -198,8 +205,10 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
                 if let imageUrl = URL(string: (movement?.imageUrls[index])!){
                     DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                         let urlContents = try? Data(contentsOf: imageUrl)
-                        Cache.set(movementImageKey, urlContents)
-                        if let imageData = urlContents{
+                        let resizeImage = UIImage(data: urlContents!)?.reSizeImage(reSize: CGSize(width: 375, height: 375))
+                        let resizeData = UIImagePNGRepresentation(resizeImage!)
+                        Cache.set(movementImageKey, resizeData)
+                        if let imageData = resizeData{
                             DispatchQueue.main.async {
                                 self?.imageView?.image = UIImage(data: imageData)
                             }
@@ -216,7 +225,6 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         pageControl.currentPage = 0
         pageControl.isHidden = false
 
-        
         //hook up avator avatar image
         ownerAvatarImgae.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "ProfileImage" + (movement?.owner_userName)!
@@ -237,14 +245,12 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
                 ownerAvatarImgae.image = nil
             }
         }
-        
         //hook up label
         username.text = movement?.owner_userName
         let displayTime = convertFrom((movement?.created_at)!)
         createdAtLabel.text = displayTime
         likesNumberLabel.text = (movement?.likesNumber)! + "人喜欢"
         
-        //hook up textView
         //hook up content
         var para = movement?.owner_userName
         let attributedContent = NSMutableAttributedString.init(string: para!)

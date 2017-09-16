@@ -68,7 +68,6 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
             let likes = memberJSON["likes"].stringValue
             let description = memberJSON["description"].stringValue
             
-            
             let user = teamItem.UserItem(User(username,
                                               tel,
                                               "",
