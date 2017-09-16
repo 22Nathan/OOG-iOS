@@ -158,6 +158,10 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
         return 10
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let teamItem = teamItems[indexPath.section][indexPath.row]
         switch teamItem {

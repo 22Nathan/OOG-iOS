@@ -8,9 +8,11 @@
 
 import UIKit
 import SwiftyJSON
+import DZNEmptyDataSet
 
-class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MAMapViewDelegate,AMapSearchDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource {
 
+    var mapView: MAMapView!
     var userID : String = ApiHelper.currentUser.id
     //Mark : - Model
     var toStartGames : [[Game]] = []
@@ -27,6 +29,14 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         item.tintColor = UIColor.black
         self.navigationItem.backBarButtonItem = item
         
+        //定位系统
+        AMapServices.shared().apiKey = ApiHelper.mapKey
+        AMapServices.shared().enableHTTPS = true
+        mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+        
         //设置delegate,dataSource
         toStartTableView.delegate = self
         unRatedGameTableView.delegate = self
@@ -35,6 +45,18 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         unRatedGameTableView.dataSource = self
         finishedGameTableView.dataSource = self
         
+        toStartTableView.emptyDataSetSource = self
+        toStartTableView.emptyDataSetDelegate = self
+        toStartTableView.tableFooterView = UIView()
+        
+        unRatedGameTableView.emptyDataSetSource = self
+        unRatedGameTableView.emptyDataSetDelegate = self
+        unRatedGameTableView.tableFooterView = UIView()
+        
+        finishedGameTableView.emptyDataSetSource = self
+        finishedGameTableView.emptyDataSetDelegate = self
+        finishedGameTableView.tableFooterView = UIView()
+
         // 设置左滑和右滑手势
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
         swipeLeft.direction = .left
@@ -48,7 +70,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         scrollView.addGestureRecognizer(swipeRight)
         
         Cache.userGameCache.setKeysuffix(userID)
-        Cache.userGameCache.value = ""
+//        Cache.userGameCache.value = ""
         loadCache()
     }
     
@@ -198,6 +220,21 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
     }
     
+    //Mark : -Deleagte
+    
+    //Mark: - AMapLocationManagerDelegate
+    //更新用户位置
+    func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
+        for game in toStartGames[0]{
+            let gameLocation = CLLocationCoordinate2DMake(Double(game.court.latitude)!, Double(game.court.longitude)!)
+            let userLocation = userLocation.coordinate
+            let point_1 = MAMapPointForCoordinate(gameLocation)
+            let point_2 = MAMapPointForCoordinate(userLocation)
+            let distance = MAMetersBetweenMapPoints(point_1, point_2)
+//            print(distance)
+        }
+    }
+    
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         if tableView.tag == 201{
@@ -237,6 +274,59 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "whatwhat", for: indexPath)
         return cell
+    }
+    
+    //Mark : - DZNEmptyDataSetDelegate
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
+        print(scrollView.tag)
+        return true
+    }
+    
+    func emptyDataSetShouldAllowTouch(_ scrollView: UIScrollView!) -> Bool {
+        return true
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return #imageLiteral(resourceName: "like.png")
+    }
+    
+    func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
+        return UIColor.white
+    }
+    
+    //Mark : - DZNEmptyDataSetSource
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        var para = ""
+        switch scrollView.tag {
+        case 201:
+            para = "您还没有未开始的比赛呢，快去参加吧~"
+        case 203:
+            para = "您没有未评价的比赛"
+        case 204:
+            para = "您没有未完成的比赛"
+        default:
+            para = ""
+        }
+        let attributedTitle = NSMutableAttributedString.init(string: para)
+        let length = (para as NSString).length
+        let titleRange = NSRange(location: 0,length: length)
+        let colorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18) ]
+        attributedTitle.addAttributes(colorAttribute, range: titleRange)
+        attributedTitle.addAttributes(boldFontAttribute, range: titleRange)
+        return attributedTitle
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let para = "啦啦啦啦~"
+        let attributedDescription = NSMutableAttributedString.init(string: para)
+        let length = (para as NSString).length
+        let titleRange = NSRange(location: 0,length: length)
+        let colorAttribute = [ NSForegroundColorAttributeName: UIColor.gray ]
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14) ]
+        attributedDescription.addAttributes(colorAttribute, range: titleRange)
+        attributedDescription.addAttributes(boldFontAttribute, range: titleRange)
+        return attributedDescription
     }
     
     // MARK: - Navigation

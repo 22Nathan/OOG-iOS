@@ -28,7 +28,7 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         get{
             var returnArray : [String] = []
             let nowTime = DateInRegion(absoluteDate: Date(), in: Region.Local())
-            var startHour = nowTime.hour
+            var startHour = nowTime.hour + 1
             while(startHour <= 24){
                 returnArray.append(makeArrayString(startHour))
                 startHour += 1

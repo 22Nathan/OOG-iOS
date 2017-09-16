@@ -22,8 +22,8 @@ class CourtGameTableViewCell: UITableViewCell {
     }
     
     private func updateUI(){
-        gameTypeLabel.text = "比赛类型\n" + (game?.game_type)!
-        gameStatusLabel.text = "比赛状态\n" + (game?.game_status)!
+        gameTypeLabel.text = "比赛类型\n" + convertNumberToDisplayedGameType((game?.game_type)!)
+        gameStatusLabel.text = "比赛状态\n" + converNumberToDisplayedGameStatus((game?.game_status)!)
         gameTimeLabel.text = "开始时间\n" + (game?.started_at)!
     }
 }

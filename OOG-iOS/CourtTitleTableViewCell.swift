@@ -12,7 +12,6 @@ class CourtTitleTableViewCell: UITableViewCell {
     @IBOutlet weak var courtImage: UIImageView!
     @IBOutlet weak var courtLocationLabel: UILabel!
     @IBOutlet weak var contactLabel: UILabel!
-    @IBOutlet weak var courtRateLabel: UILabel!
     
     var court : Court?{
         didSet{
@@ -41,7 +40,6 @@ class CourtTitleTableViewCell: UITableViewCell {
             }
         }
         courtLocationLabel.text = court?.location
-        courtRateLabel.text = court?.rate
         
     }
 }

@@ -12,7 +12,6 @@ class ToStartTableViewCell: UITableViewCell {
     @IBOutlet weak var courtImage: UIImageView!
     @IBOutlet weak var courtLocationLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
-    @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var gameTypeLabel: UILabel!
     var game : Game?{
@@ -42,9 +41,9 @@ class ToStartTableViewCell: UITableViewCell {
         }
         
         courtNameLabel.text = game?.court.courtName
-        startTimeLabel.text = game?.started_at
-        rateLabel.text = game?.court.rate
-        gameTypeLabel.text = game?.game_type
+        startTimeLabel.text = "预计" + (game?.started_at)! + "开始"
+        
+        gameTypeLabel.text = "赛制:" + convertNumberToDisplayedGameType((game?.game_type)!)
         courtLocationLabel.text = game?.court.location
 
     }

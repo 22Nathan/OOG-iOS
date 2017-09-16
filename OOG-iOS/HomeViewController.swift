@@ -221,7 +221,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                                          commentsNumber,
                                          movementType,
                                          displayComments)
-            
             movementList.append(movment_Model)
         }
         movements.append(movementList)

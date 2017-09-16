@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -900,25 +899,25 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bgZ-BQ-9h9">
-                                                            <rect key="frame" x="8" y="8" width="50" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="球场名字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8SY-47-FZs">
-                                                            <rect key="frame" x="80" y="11" width="70" height="30"/>
+                                                            <rect key="frame" x="103" y="3" width="121" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="球场地点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ads-jS-QMc">
-                                                            <rect key="frame" x="86" y="39" width="70" height="30"/>
+                                                            <rect key="frame" x="103" y="30" width="210" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="开始时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tg9-8b-dwU">
-                                                            <rect key="frame" x="88" y="71" width="70" height="30"/>
+                                                            <rect key="frame" x="103" y="59" width="120" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -955,44 +954,46 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qEA-NT-74g">
-                                                            <rect key="frame" x="8" y="8" width="50" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="球场名字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bw-c5-CsX">
-                                                            <rect key="frame" x="80" y="11" width="70" height="30"/>
+                                                            <rect key="frame" x="103" y="0.0" width="121" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="球场地点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljC-8y-cNo">
-                                                            <rect key="frame" x="86" y="39" width="70" height="30"/>
+                                                            <rect key="frame" x="103" y="32" width="214" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" red="0.70345703319398822" green="0.71042195431472077" blue="0.71042195431472077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="开始时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRf-5S-iC7">
-                                                            <rect key="frame" x="88" y="71" width="70" height="30"/>
+                                                            <rect key="frame" x="103" y="62" width="122" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0Z-Ps-2bd">
-                                                            <rect key="frame" x="280" y="8" width="46" height="30"/>
+                                                            <rect key="frame" x="279" y="28" width="53" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                            <state key="normal" title="Button"/>
+                                                            <state key="normal" title="评价">
+                                                                <color key="titleColor" red="0.10596621659450584" green="0.10701538705583757" blue="0.10701538705583757" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
                                                         </button>
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="courtImage" destination="qEA-NT-74g" id="Y6k-0m-4qU"/>
                                                     <outlet property="courtNameLabel" destination="2bw-c5-CsX" id="1MK-3b-t3z"/>
+                                                    <outlet property="endTimeLabel" destination="KRf-5S-iC7" id="812-Qw-cD8"/>
                                                     <outlet property="locationLabel" destination="ljC-8y-cNo" id="j04-i7-Wue"/>
                                                     <outlet property="rateButton" destination="g0Z-Ps-2bd" id="MuO-et-qY7"/>
-                                                    <outlet property="startTimeLabel" destination="KRf-5S-iC7" id="Fza-g3-C2V"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -1003,87 +1004,66 @@
                                             <segue destination="Qdx-Sf-RJd" kind="embed" id="zfz-Tp-OMo"/>
                                         </connections>
                                     </containerView>
-                                    <tableView clipsSubviews="YES" tag="201" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="105" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ukc-LK-89I">
+                                    <tableView clipsSubviews="YES" tag="201" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="101" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ukc-LK-89I">
                                         <rect key="frame" x="0.0" y="2" width="375" height="526"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="526" id="eNx-SV-SQp"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="To Start" rowHeight="105" id="C8U-B5-cEX" customClass="ToStartTableViewCell" customModule="OOG_iOS" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="375" height="105"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="To Start" rowHeight="101" id="C8U-B5-cEX" customClass="ToStartTableViewCell" customModule="OOG_iOS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="101"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C8U-B5-cEX" id="tDP-Kx-5Lr">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="104.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bUb-f7-5Tm">
-                                                            <rect key="frame" x="8" y="8" width="51" height="48"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="51" id="2NK-Fi-Dha"/>
-                                                            </constraints>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bUb-f7-5Tm">
+                                                            <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="球场地点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcW-35-BD4">
-                                                            <rect key="frame" x="86" y="43" width="122" height="21"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="122" id="8qd-Zb-aUg"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="球场地点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcW-35-BD4">
+                                                            <rect key="frame" x="103" y="32" width="214" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                            <color key="textColor" red="0.665346893040211" green="0.67193448604060912" blue="0.67193448604060912" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="球场名字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VsJ-7o-BJd">
+                                                            <rect key="frame" x="103" y="0.0" width="151" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预定时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hS-8F-Sgn">
-                                                            <rect key="frame" x="86" y="70" width="122" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="预定时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hS-8F-Sgn">
+                                                            <rect key="frame" x="103" y="62" width="122" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="球场评分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kop-K9-XzR">
-                                                            <rect key="frame" x="8" y="72" width="51" height="21"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="der-Ez-GT8">
+                                                            <rect key="frame" x="274" y="53" width="62" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal" title="退出比赛">
+                                                                <color key="titleColor" red="0.22807181248133768" green="0.23032994923857864" blue="0.23032994923857864" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="赛制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBW-sl-1e2">
+                                                            <rect key="frame" x="274" y="8" width="85" height="26"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.6476956740818155" green="0.65410850253807107" blue="0.65410850253807107" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="赛制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBW-sl-1e2">
-                                                            <rect key="frame" x="314" y="71" width="35" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="球场名字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VsJ-7o-BJd">
-                                                            <rect key="frame" x="86" y="14" width="107" height="21"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="107" id="cS6-9Z-UNt"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="1hS-8F-Sgn" firstAttribute="top" secondItem="ZcW-35-BD4" secondAttribute="bottom" constant="6" id="2v9-sN-8JT"/>
-                                                        <constraint firstItem="bUb-f7-5Tm" firstAttribute="leading" secondItem="kop-K9-XzR" secondAttribute="leading" id="5gj-iU-L9b"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="kop-K9-XzR" secondAttribute="bottom" constant="3.5" id="Ptk-Sb-Y0j"/>
-                                                        <constraint firstItem="bUb-f7-5Tm" firstAttribute="top" secondItem="tDP-Kx-5Lr" secondAttribute="topMargin" id="R51-U3-ixP"/>
-                                                        <constraint firstItem="VsJ-7o-BJd" firstAttribute="leading" secondItem="ZcW-35-BD4" secondAttribute="leading" id="Rde-Xm-u3f"/>
-                                                        <constraint firstItem="bUb-f7-5Tm" firstAttribute="leading" secondItem="tDP-Kx-5Lr" secondAttribute="leadingMargin" id="U7B-pL-RIZ"/>
-                                                        <constraint firstItem="kop-K9-XzR" firstAttribute="top" secondItem="bUb-f7-5Tm" secondAttribute="bottom" constant="16" id="ZNi-v1-bV4"/>
-                                                        <constraint firstItem="VsJ-7o-BJd" firstAttribute="top" secondItem="tDP-Kx-5Lr" secondAttribute="topMargin" constant="6" id="ZWm-ue-Ndd"/>
-                                                        <constraint firstItem="ZcW-35-BD4" firstAttribute="top" secondItem="VsJ-7o-BJd" secondAttribute="bottom" constant="8" symbolic="YES" id="clA-MQ-pZJ"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="pBW-sl-1e2" secondAttribute="trailing" constant="18" id="gv2-mV-tRk"/>
-                                                        <constraint firstItem="ZcW-35-BD4" firstAttribute="trailing" secondItem="1hS-8F-Sgn" secondAttribute="trailing" id="lhf-Az-Jpz"/>
-                                                        <constraint firstItem="bUb-f7-5Tm" firstAttribute="trailing" secondItem="kop-K9-XzR" secondAttribute="trailing" id="lvF-Z7-bSO"/>
-                                                        <constraint firstItem="pBW-sl-1e2" firstAttribute="top" secondItem="tDP-Kx-5Lr" secondAttribute="topMargin" constant="63" id="me0-rU-Jme"/>
-                                                        <constraint firstItem="ZcW-35-BD4" firstAttribute="leading" secondItem="1hS-8F-Sgn" secondAttribute="leading" id="s7y-Om-P9p"/>
-                                                        <constraint firstItem="VsJ-7o-BJd" firstAttribute="leading" secondItem="bUb-f7-5Tm" secondAttribute="trailing" constant="27" id="tO4-gt-ZjF"/>
-                                                    </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="courtImage" destination="bUb-f7-5Tm" id="dPc-3q-Y9z"/>
                                                     <outlet property="courtLocationLabel" destination="ZcW-35-BD4" id="exc-IY-SdA"/>
                                                     <outlet property="courtNameLabel" destination="VsJ-7o-BJd" id="OwY-Pp-vUQ"/>
                                                     <outlet property="gameTypeLabel" destination="pBW-sl-1e2" id="bsy-uk-84V"/>
-                                                    <outlet property="rateLabel" destination="kop-K9-XzR" id="4v0-IB-rRP"/>
                                                     <outlet property="startTimeLabel" destination="1hS-8F-Sgn" id="f2a-dV-6YT"/>
                                                 </connections>
                                             </tableViewCell>
@@ -1160,7 +1140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVP-CZ-RN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1526" y="1603"/>
+            <point key="canvasLocation" x="1525.5999999999999" y="1602.5487256371816"/>
         </scene>
         <!--消息页面-->
         <scene sceneID="Iwi-CN-u5A">
@@ -2038,7 +2018,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YGd-K7-bs0">
-                                            <rect key="frame" x="8" y="0.0" width="70" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="88" height="81"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="具体位置" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djw-E4-rbP">
@@ -2055,20 +2035,12 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="评分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Nn-SF-f6J">
-                                            <rect key="frame" x="302" y="42" width="40" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="contactLabel" destination="8nA-ng-jEF" id="bvD-wW-VN5"/>
                                     <outlet property="courtImage" destination="YGd-K7-bs0" id="5Yz-SO-rJR"/>
                                     <outlet property="courtLocationLabel" destination="Djw-E4-rbP" id="MZU-N8-REL"/>
-                                    <outlet property="courtRateLabel" destination="2Nn-SF-f6J" id="Qd3-oS-Tve"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="courtGame" rowHeight="100" id="gGI-s0-p9e" customClass="CourtGameTableViewCell" customModule="OOG_iOS" customModuleProvider="target">
@@ -2081,14 +2053,14 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="比赛类型" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Jp-q2-NZy">
                                             <rect key="frame" x="0.0" y="7" width="92" height="69"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="比赛状态" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MCb-xt-xXd">
                                             <rect key="frame" x="100" y="8" width="92" height="69"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -2100,7 +2072,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="开始时间" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJP-Qv-9mJ">
                                             <rect key="frame" x="200" y="8" width="92" height="69"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -2129,7 +2101,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F8b-E0-cRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2167" y="2293"/>
+            <point key="canvasLocation" x="2165.5999999999999" y="2292.5037481259374"/>
         </scene>
         <!--Item-->
         <scene sceneID="luJ-02-1pL">

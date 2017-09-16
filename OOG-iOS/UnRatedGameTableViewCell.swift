@@ -12,7 +12,7 @@ class UnRatedGameTableViewCell: UITableViewCell {
     @IBOutlet weak var courtImage: UIImageView!
     @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var startTimeLabel: UILabel!
+    @IBOutlet weak var endTimeLabel: UILabel!
     @IBOutlet weak var rateButton: UIButton!
     var game : Game?{
         didSet{
@@ -40,7 +40,7 @@ class UnRatedGameTableViewCell: UITableViewCell {
             }
         }
         courtNameLabel.text = game?.court.courtName
-        startTimeLabel.text = game?.started_at
+        endTimeLabel.text = game?.started_at
         locationLabel.text = game?.court.location
     }
 }

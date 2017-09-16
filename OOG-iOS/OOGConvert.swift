@@ -20,3 +20,14 @@ func convertNumberToDisplayedGameType(_ number : String) -> String{
     }
     return "Free"
 }
+
+func converNumberToDisplayedGameStatus(_ number : String) -> String{
+    if number == "1"{
+        return "未开始"
+    }else if number == "2"{
+        return "进行中"
+    }else if number == "3"{
+        return "未评价"
+    }
+    return "已结束"
+}
