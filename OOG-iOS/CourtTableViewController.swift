@@ -66,11 +66,6 @@ class CourtTableViewController: UITableViewController {
             self.loadCache()
         }
     }
-    
-    @IBAction func back(_ sender: Any) {
-        presentingViewController?.dismiss(animated: true)
-    }
-    
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {

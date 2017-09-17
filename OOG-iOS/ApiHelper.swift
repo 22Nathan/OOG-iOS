@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 class ApiHelper{
-    static let API_Root : String = "http://127.0.0.1:8000"
+    static let API_Root : String = "http://101.132.41.248:8000"
     static let mapKey : String = "0649b306751082e053265984131c6503"
     static let qiniu_Root : String = "http://ovx4pa4rs.bkt.clouddn.com/"
     
@@ -21,15 +21,6 @@ class ApiHelper{
         }
         set{
             Cache.currentUserCache.value = (newValue.toJSON().rawString()!)
-        }
-    }
-    
-    static var inGame : Game{
-        get{
-            return inGame
-        }
-        set{
-            inGame = newValue
         }
     }
     

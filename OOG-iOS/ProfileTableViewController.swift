@@ -40,6 +40,10 @@ class ProfileTableViewController: UITableViewController {
             }
             }, loadingView: loadingView)
         
+        let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        titleButton.setImage(#imageLiteral(resourceName: "number2.png"), for: UIControlState.normal)
+        self.navigationItem.titleView = titleButton
+        
         //动态设置用户Cache
         Cache.userMovementCache.setKeysuffix(userID)
 //        Cache.currentUserCache.value = ""
@@ -88,7 +92,7 @@ class ProfileTableViewController: UITableViewController {
         
         //parse TitleModel
         let username = json["username"].stringValue
-        self.navigationItem.title = username
+//        self.navigationItem.title = username
         let userID = json["userID"].stringValue
         let tel = json["tel"].stringValue
         let position = json["position"].stringValue
@@ -191,15 +195,18 @@ class ProfileTableViewController: UITableViewController {
         return profiles[section].count
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section != 0{
+            return 10
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let profile = profiles[indexPath.section][indexPath.row]
         switch profile{
         case .Title( _):
-            return 198
+            return 183
         case .Info( _):
             return 40
         case .MovementItem( _):
@@ -226,7 +233,7 @@ class ProfileTableViewController: UITableViewController {
             return cell
         case .Info(let text):
             let cell = tableView.dequeueReusableCell(withIdentifier: "Info Cell", for: indexPath) as! InfoTableViewCell
-            cell.infoLabel.text = text
+            cell.infoText = text
             return cell
         case .MovementItem(let movements):
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovementDisplay", for: indexPath) as! MovementDisplayTableViewCell

@@ -48,7 +48,7 @@ class MovementDisplayTableViewCell: UITableViewCell,UICollectionViewDelegate,UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (indexPath.row == movements.count) || (indexPath.row == 8){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ButtonCollection", for: indexPath) as! ButtonCollectionViewCell
-            cell.publishMovementButton.setTitle("超大加号", for: UIControlState(rawValue: 0))
+            cell.publishMovementButton.setImage(#imageLiteral(resourceName: "add.png"), for: UIControlState.normal)
             return cell
         }
         let movement = movements[indexPath.row]

@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 import SVProgressHUD
 
-class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDelegate,AMapLocationManagerDelegate,UIGestureRecognizerDelegate {
+class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDelegate,AMapLocationManagerDelegate,UIGestureRecognizerDelegate,UISearchBarDelegate {
     var mapView: MAMapView!
     var search: AMapSearchAPI!
     var courtList : [Court] = []
@@ -31,11 +31,8 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     var joinGameButton = UIButton()
     var moreButton = UIButton()
     
-    @IBOutlet weak var searchBar: UISearchBar!{
-        didSet{
-//            searchBar.addGestureRecognizer(<#T##gestureRecognizer: UIGestureRecognizer##UIGestureRecognizer#>)
-        }
-    }
+//    var searchBar : UISearchBar = UISearchBar(frame: CGRect(x: 30, y: 3, width: 370, height: 35))
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +43,13 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         item.tintColor = UIColor.black
         self.navigationItem.backBarButtonItem = item
+        //searchBar
+        searchBar.backgroundColor = UIColor.clear
+        searchBar.delegate = self
+        searchBar.placeholder = "搜索球员、球场"
+        let rightNavBarButton = UIBarButtonItem(customView:searchBar)
+        self.navigationItem.rightBarButtonItem = rightNavBarButton
+
         
         //初始化mapView
         mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
@@ -66,12 +70,12 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         
         //地图上控件
         let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
-        centerLogo.setImage(#imageLiteral(resourceName: "like.png"), for: UIControlState.normal)
+        centerLogo.setImage(#imageLiteral(resourceName: "tab_game_selected"), for: UIControlState.normal)
         mapView.addSubview(centerLogo)
         
         //回到user location
         let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 135, width: 20, height: 20))
-        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "message.png"), for: UIControlState.normal)
+        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "tab_home_selected"), for: UIControlState.normal)
         mapView.addSubview(backToWhereIAmButton)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapEvent(byReactingTo:)))
         tapRecognizer.numberOfTapsRequired = 1
@@ -84,6 +88,12 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         
         //发起初始定位
         requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        searchBar.resignFirstResponder()
+        
     }
     
     // 请求后台服务器最近5km的球场信息
@@ -211,7 +221,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             }
             annotationView!.canShowCallout = true
             annotationView?.isDraggable = false
-            annotationView!.image = #imageLiteral(resourceName: "like.png")
+            annotationView!.image = #imageLiteral(resourceName: "game_chosen.png").reSizeImage(reSize: CGSize(width: 32, height: 32))
             
             //设置中心点偏移，使得标注底部中间点成为经纬度对应点
             annotationView!.centerOffset = CGPoint(x: 0, y: -18);
@@ -374,6 +384,23 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         } else {
             return true
         }
+    }
+    
+    //Mark : - toSearch
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        print("dssadas")
+//        performSegue(withIdentifier: "toSearch", sender: self)
+////        searchBar.endEditing(false)
+//    }
+    
+//    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+//        print("dssadas")
+//        performSegue(withIdentifier: "toSearch", sender: self)
+//    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        performSegue(withIdentifier: "toSearch", sender: self)
+        return false
     }
     
     //

@@ -22,7 +22,7 @@ enum ApiConfig{
 }
 
 extension ApiConfig: TargetType{
-    var baseURL: URL { return URL(string: "http://127.0.0.1:8000")! }
+    var baseURL: URL { return URL(string: "http://101.132.41.248:8000")! }
     
     var path: String{
         switch self {

@@ -83,6 +83,12 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
 //        Cache.homeMovementsCache.value = ""
         loadCache()
+        //初始化颜色
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        
+        let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        titleButton.setImage(#imageLiteral(resourceName: "number2.png"), for: UIControlState.normal)
+        self.navigationItem.titleView = titleButton
     }
 
     @IBOutlet weak var scrollView: UIScrollView!{

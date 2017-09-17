@@ -195,7 +195,9 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
     private func updateUI(){
         //hook up avator 
         avatarImage.contentMode = UIViewContentMode.scaleToFill
+        avatarImage.layer.masksToBounds = true
         avatarImage.clipsToBounds = true
+        avatarImage.layer.cornerRadius = 23.0
         
         let profileImageKey = "ProfileImage" + (movement?.owner_userName)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
@@ -274,9 +276,9 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
         likesNumber.text = (movement?.likesNumber)! + "人喜欢"
         
         //hook up content
-        var para = movement?.owner_userName
-        let attributedContent = NSMutableAttributedString.init(string: para!)
-        let length = (para! as NSString).length
+        var para = (movement?.owner_userName)! + ":"
+        let attributedContent = NSMutableAttributedString.init(string: para)
+        let length = (para as NSString).length
         let userNameRange = NSRange(location: 0,length: length)
         let colorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
         let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14) ]
@@ -284,9 +286,9 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
         attributedContent.addAttributes(boldFontAttribute, range: userNameRange)
         
         para = " " +  (movement?.content)!
-        let secondlength = (para! as NSString).length
+        let secondlength = (para as NSString).length
         let contentRange = NSRange(location: 0,length: secondlength)
-        let attributedSuffix = NSMutableAttributedString(string: para!)
+        let attributedSuffix = NSMutableAttributedString(string: para)
         let fontAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: 13) ]
         attributedSuffix.addAttributes(fontAttribute, range: contentRange)
         attributedContent.append(attributedSuffix)

@@ -37,14 +37,14 @@ class ImageButtonCollectionViewCell: UICollectionViewCell {
                     self.delegate?.appendImage(displayedImage)
                     self.delegate?.appendAsset(photo.originalAsset!)
                 }
-                self.delegate?.appendImage(#imageLiteral(resourceName: "window.png"))
+                self.delegate?.appendImage(#imageLiteral(resourceName: "add.png"))
                 self.delegate?.reloadView()
             }
             self.delegate?.presentPickVC(pickerController)
         }else{
             self.delegate?.deleteFirst()
             self.delegate?.preview()
-            self.delegate?.appendImage(#imageLiteral(resourceName: "window.png"))
+            self.delegate?.appendImage(#imageLiteral(resourceName: "add.png"))
             self.delegate?.reloadView()
         }
     }

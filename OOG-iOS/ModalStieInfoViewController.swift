@@ -50,11 +50,11 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         
         self.view.addSubview(mapView!)
         let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
-        centerLogo.setImage(#imageLiteral(resourceName: "like.png"), for: UIControlState.normal)
+        centerLogo.setImage(#imageLiteral(resourceName: "tab_game_selected"), for: UIControlState.normal)
         mapView.addSubview(centerLogo)
         
         let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 40, width: 20, height: 20))
-        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "message.png"), for: UIControlState.normal)
+        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "tab_home_selected"), for: UIControlState.normal)
         mapView.addSubview(backToWhereIAmButton)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapEvent(byReactingTo:)))
         tapRecognizer.numberOfTapsRequired = 1
@@ -246,7 +246,7 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
             }
             annotationView!.canShowCallout = true
             annotationView?.isDraggable = false
-            annotationView!.image = #imageLiteral(resourceName: "like.png")
+            annotationView!.image = #imageLiteral(resourceName: "tab_game_selected")
             
             //设置中心点偏移，使得标注底部中间点成为经纬度对应点
             annotationView!.centerOffset = CGPoint(x: 0, y: -18);

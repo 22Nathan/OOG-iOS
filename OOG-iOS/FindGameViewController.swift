@@ -18,6 +18,8 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
     @IBOutlet weak var gameListTableView: UITableView!
     @IBOutlet weak var teamInfoButton: UIButton!
     @IBOutlet weak var siteButton: UIButton!
+    
+    var delegate : GameTabViewControllerProtocol?
 
     var courtName : String?
     var gameTypeIndex : Int = 0
@@ -58,7 +60,6 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         menu.datasource = self
         menu.delegate = self
         menu.arrowPostion = .Left
-        
         self.view.addSubview(menu)
     }
     
@@ -84,6 +85,7 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
                                     let result = json["result"].stringValue
                                     if result == "ok"{
                                         SVProgressHUD.showInfo(withStatus: "创建比赛成功")
+                                        self.delegate?.callToRefresh()
                                     }else{
                                         SVProgressHUD.showInfo(withStatus: "你没有权限，请联系队长")
                                     }

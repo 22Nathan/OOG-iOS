@@ -226,6 +226,10 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         pageControl.isHidden = false
 
         //hook up avator avatar image
+        ownerAvatarImgae.layer.masksToBounds = true
+        ownerAvatarImgae.clipsToBounds = true
+        ownerAvatarImgae.layer.cornerRadius = 23.0
+        
         ownerAvatarImgae.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "ProfileImage" + (movement?.owner_userName)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
@@ -252,9 +256,9 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         likesNumberLabel.text = (movement?.likesNumber)! + "人喜欢"
         
         //hook up content
-        var para = movement?.owner_userName
-        let attributedContent = NSMutableAttributedString.init(string: para!)
-        let length = (para! as NSString).length
+        var para = (movement?.owner_userName)! + ":"
+        let attributedContent = NSMutableAttributedString.init(string: para)
+        let length = (para as NSString).length
         let userNameRange = NSRange(location: 0,length: length)
         let colorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
         let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16) ]
@@ -262,9 +266,9 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         attributedContent.addAttributes(boldFontAttribute, range: userNameRange)
         
         para = " " +  (movement?.content)!
-        let secondlength = (para! as NSString).length
+        let secondlength = (para as NSString).length
         let contentRange = NSRange(location: 0,length: secondlength)
-        let attributedSuffix = NSMutableAttributedString(string: para!)
+        let attributedSuffix = NSMutableAttributedString(string: para)
         let fontAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: 14) ]
         attributedSuffix.addAttributes(fontAttribute, range: contentRange)
         attributedContent.append(attributedSuffix)

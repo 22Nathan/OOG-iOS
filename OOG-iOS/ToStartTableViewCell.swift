@@ -41,9 +41,10 @@ class ToStartTableViewCell: UITableViewCell {
         }
         
         courtNameLabel.text = game?.court.courtName
-        startTimeLabel.text = "预计" + (game?.started_at)! + "开始"
+//        (game?.started_at)!
+        startTimeLabel.text = "预计今天5点" + "开始"
         
-        gameTypeLabel.text = "赛制:" + convertNumberToDisplayedGameType((game?.game_type)!)
+        gameTypeLabel.text = convertNumberToDisplayedGameType((game?.game_type)!)
         courtLocationLabel.text = game?.court.location
 
     }

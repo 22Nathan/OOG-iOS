@@ -9,22 +9,29 @@
 import UIKit
 import SwiftyJSON
 import DZNEmptyDataSet
-
-class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MAMapViewDelegate,AMapSearchDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource {
-
+import Alamofire
+import SVProgressHUD
+import DGElasticPullToRefresh
+class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MAMapViewDelegate,AMapSearchDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,GameTabViewControllerProtocol {
+    let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
+    let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
+    let loadingView_3 = DGElasticPullToRefreshLoadingViewCircle()
     var mapView: MAMapView!
     var userID : String = ApiHelper.currentUser.id
     //Mark : - Model
     var toStartGames : [[Game]] = []
     var ingGame : Game?
-    var hasIngGame = false
     var unRatedGame : [[Game]] = []
     var finishedGame : [[Game]] = []
     
+    var ifHavingInGame = false
+    var inGameCourtFlag = false
+    var inGameVCDelegate : InGameUIViewControllerDelegate?
+    
+    var flags : [Bool] = []
     //Mark: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         item.tintColor = UIColor.black
         self.navigationItem.backBarButtonItem = item
@@ -37,6 +44,26 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         
+        //pull refresh
+        toStartTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            Cache.userGameCache.userGameRequest(userID: (self?.userID)!) {
+                self?.loadCache()
+                self?.toStartTableView.dg_stopLoading()
+            }
+            }, loadingView: loadingView_1)
+        unRatedGameTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            Cache.userGameCache.userGameRequest(userID: (self?.userID)!) {
+                self?.loadCache()
+                self?.toStartTableView.dg_stopLoading()
+            }
+            }, loadingView: loadingView_2)
+        toStartTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            Cache.userGameCache.userGameRequest(userID: (self?.userID)!) {
+                self?.loadCache()
+                self?.toStartTableView.dg_stopLoading()
+            }
+            }, loadingView: loadingView_3)
+        
         //设置delegate,dataSource
         toStartTableView.delegate = self
         unRatedGameTableView.delegate = self
@@ -48,14 +75,17 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         toStartTableView.emptyDataSetSource = self
         toStartTableView.emptyDataSetDelegate = self
         toStartTableView.tableFooterView = UIView()
+        toStartTableView.showsVerticalScrollIndicator = false
         
         unRatedGameTableView.emptyDataSetSource = self
         unRatedGameTableView.emptyDataSetDelegate = self
         unRatedGameTableView.tableFooterView = UIView()
+        unRatedGameTableView.showsVerticalScrollIndicator = false
         
         finishedGameTableView.emptyDataSetSource = self
         finishedGameTableView.emptyDataSetDelegate = self
         finishedGameTableView.tableFooterView = UIView()
+        finishedGameTableView.showsVerticalScrollIndicator = false
 
         // 设置左滑和右滑手势
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
@@ -70,7 +100,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         scrollView.addGestureRecognizer(swipeRight)
         
         Cache.userGameCache.setKeysuffix(userID)
-//        Cache.userGameCache.value = ""
+        Cache.userGameCache.value = ""
         loadCache()
     }
     
@@ -86,20 +116,21 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     @IBOutlet weak var segmented: UISegmentedControl!
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var containerView: UIView!
-
-    
+    @IBOutlet weak var containerView: UIView!{
+        didSet{
+        }
+    }
     //Mark: - Logic
     private func loadCache(){
         if Cache.userGameCache.isEmpty{
             refreshCache()
             return 
         }
-        
-        hasIngGame = false
+
         toStartGames.removeAll()
         unRatedGame.removeAll()
         finishedGame.removeAll()
+        flags.removeAll()
         
         var tempToStartGames : [Game] = []
         var tempUnRatedGames : [Game] = []
@@ -156,18 +187,17 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
                             game_rate
                             )
             if game_status == "1"{
+                flags.append(false)
                 tempToStartGames.append(game)
             }else if game_status == "2"{
-                hasIngGame = true
+                ifHavingInGame = true
                 ingGame = game
+                inGameVCDelegate?.initInGame(ingGame!)
             }else if game_status == "3"{
                 tempUnRatedGames.append(game)
             }else if game_status == "4"{
                 tempFinishedGames.append(game)
             }
-        }
-        if hasIngGame{
-            ApiHelper.inGame = ingGame!
         }
         toStartGames.append(tempToStartGames)
         unRatedGame.append(tempUnRatedGames)
@@ -185,7 +215,6 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
             self.loadCache()
         }
     }
-    
     
     //Mark: - Action
     @IBAction func tapChanged(_ sender: Any) {
@@ -222,18 +251,80 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     //Mark : -Deleagte
     
+    func callToRefresh() {
+        self.refreshCache()
+    }
+    
     //Mark: - AMapLocationManagerDelegate
     //更新用户位置
     func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
-        for game in toStartGames[0]{
-            let gameLocation = CLLocationCoordinate2DMake(Double(game.court.latitude)!, Double(game.court.longitude)!)
-            let userLocation = userLocation.coordinate
+        var count = 0
+        let userLocationCoordinate = userLocation.coordinate
+        let point_2 = MAMapPointForCoordinate(userLocationCoordinate)
+        if toStartGames.count != 0{
+            for game in toStartGames[0]{
+                print("有未开始的比赛")
+                let gameLocation = CLLocationCoordinate2DMake(Double(game.court.latitude)!, Double(game.court.longitude)!)
+                let point_1 = MAMapPointForCoordinate(gameLocation)
+                let distance = MAMetersBetweenMapPoints(point_1, point_2)
+                if distance < 1000 && flags[count] == false{
+                    let closureCount = count
+                    changeGameStatus(game.gameID, "1" ,completionHandler: {
+                        print("到达比赛场地")
+                        self.refreshCache()
+                        self.flags[closureCount] = true
+                    })
+                }
+                count += 1
+            }
+        }
+        if ifHavingInGame{
+            let gameLocation = CLLocationCoordinate2DMake(Double((ingGame?.court.latitude)!)!, Double((ingGame?.court.longitude)!)!)
             let point_1 = MAMapPointForCoordinate(gameLocation)
-            let point_2 = MAMapPointForCoordinate(userLocation)
             let distance = MAMetersBetweenMapPoints(point_1, point_2)
-//            print(distance)
+            if distance > 1000 && inGameCourtFlag == false{
+                print("有正进行的比赛")
+                changeGameStatus((ingGame?.gameID)!, "2" ,completionHandler: {
+                    print("离开比赛场地")
+                    self.refreshCache()
+                    self.inGameCourtFlag = true
+                })
+            }
         }
     }
+    
+    //Mark : -network
+    private func changeGameStatus(_ gameID : String, _ status : String,completionHandler: @escaping () -> ()){
+        var parameters = [String : String]()
+        parameters["adminID"] = ApiHelper.currentUser.id
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["arrivalStatus"] = status
+        Alamofire.request(ApiHelper.API_Root + "/games/" + gameID + "/status/",
+                          method: .put,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response game status ###################")
+                                    print(json)
+                                    let result = json["result"].stringValue
+                                    if result == "no"{
+                                        SVProgressHUD.showInfo(withStatus: "状态更新失败")
+                                    }
+                                    if result == "ok"{
+                                        SVProgressHUD.showInfo(withStatus: "您的状态已更新")
+                                        completionHandler()
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
     
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -286,7 +377,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        return #imageLiteral(resourceName: "like.png")
+        return #imageLiteral(resourceName: "tab_home_selected")
     }
     
     func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
@@ -334,28 +425,41 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         if segue.identifier == "1V1"{
             if let findGameVC = destinationViewController as? FindGameViewController {
                 findGameVC.gameTypeArray = ["1V1" , "2V2" , "3V3" , "5V5" , "Free"]
+                findGameVC.delegate = self
             }
         }
         if segue.identifier == "2V2"{
             if let findGameVC = destinationViewController as? FindGameViewController {
                 findGameVC.gameTypeArray = ["2V2" , "1V1" , "3V3" , "5V5" , "Free"]
+                findGameVC.delegate = self
             }
         }
         if segue.identifier == "Free"{
             if let findGameVC = destinationViewController as? FindGameViewController {
                 findGameVC.gameTypeArray = ["Free" , "1V1" , "2V2" , "3V3" , "5V5"]
+                findGameVC.delegate = self
             }
         }
         if segue.identifier == "3V3"{
             if let findGameVC = destinationViewController as? FindGameViewController {
                 findGameVC.gameTypeArray = ["3V3" , "1V1" , "2V2" , "5V5" , "Free"]
+                findGameVC.delegate = self
             }
         }
         if segue.identifier == "5V5"{
             if let findGameVC = destinationViewController as? FindGameViewController {
                 findGameVC.gameTypeArray = ["5V5" , "1V1" , "2V2" , "3V3" , "Free"]
+                findGameVC.delegate = self
+            }
+        }
+        if segue.identifier == "toInGame"{
+            if let inGameVC = destinationViewController as? InGameUIViewController{
+                self.inGameVCDelegate = inGameVC
             }
         }
     }
+}
 
+protocol GameTabViewControllerProtocol {
+    func callToRefresh()
 }

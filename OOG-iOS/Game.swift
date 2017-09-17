@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Game{
     var gameID : String
@@ -32,4 +33,5 @@ class Game{
         self.participantNumber = participantNumber
         self.game_rate = game_rate
     }
+    
 }
