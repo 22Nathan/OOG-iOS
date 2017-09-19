@@ -97,18 +97,17 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
     var userPositionIndex : Int = 0
     var userInfoIndex : Int = 0
     
-    var userInfoArray = ["身高最高","体重最高"]
+    var userInfoArray = ["不限","身高最高","体重最高"]
     var userOrderArray = ["智能排序" , "总评分最高" , "技术评分最高" , "身体评分最高" , "球商评分最高"]
-    var userPositionArray = ["控球后卫","得分后卫","小前锋","大前锋","中锋"]
+    var userPositionArray = ["不限","控球后卫","得分后卫","小前锋","大前锋","中锋"]
     
     var courtOrderIndex : Int = 0
     var courtWhatIndex : Int = 0
     var courtInfoIndex : Int = 0
     
-    var courtInfoArray = ["水泥地","塑胶地","木地板"]
+    var courtInfoArray = ["不限","水泥地","塑胶地","木地板"]
     var courtOrderArray = ["智能排序" , "总评分最高" , "价格评分最高" , "设施评分最高" , "球商分最高"]
-    var courtWhatArray = ["距离最近","价格最低","比赛最多"]
-    
+    var courtWhatArray = ["不限","距离最近","价格最低","比赛最多"]
     
     //Mark : - menu source
     func numberOfColumns(in menu: JNDropDownMenu) -> NSInteger {

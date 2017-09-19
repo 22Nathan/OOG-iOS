@@ -26,7 +26,7 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        uploadImages.append(#imageLiteral(resourceName: "add.png"))
+        uploadImages.append(#imageLiteral(resourceName: "myadd.png"))
     }
     
     @IBOutlet weak var collectionView: UICollectionView!{

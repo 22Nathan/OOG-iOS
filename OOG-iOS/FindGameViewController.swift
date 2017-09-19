@@ -16,7 +16,11 @@ import SwiftyJSON
 class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDownMenuDataSource,UIPopoverPresentationControllerDelegate,FindGameViewControllerProtocol{
     
     @IBOutlet weak var gameListTableView: UITableView!
-    @IBOutlet weak var teamInfoButton: UIButton!
+    @IBOutlet weak var teamInfoButton: UIButton!{
+        didSet{
+            print("dsadasd")
+        }
+    }
     @IBOutlet weak var siteButton: UIButton!
     
     var delegate : GameTabViewControllerProtocol?
@@ -25,7 +29,7 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
     var gameTypeIndex : Int = 0
     var gameTimeIndex : Int = 0
 
-    var gameTypeArray = ["1V1" , "2V2" , "3V3" , "5V5" , "Free"]
+    var gameTypeArray = ["1V1" , "2V2" , "3V3" , "5V5"]
     var gameTimeArray : [String]{
         get{
             var returnArray : [String] = []
@@ -55,12 +59,27 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let attach = NSTextAttachment.init()
+        attach.image = #imageLiteral(resourceName: "team_icon")
+        let attachString = NSAttributedString(attachment: attach)
+        let finalAttributeString = NSMutableAttributedString.init(attributedString: attachString)
+        let tempAttributeString = NSMutableAttributedString.init(string: "队伍信息")
+        finalAttributeString.append(tempAttributeString)
+        teamInfoButton.setAttributedTitle(finalAttributeString, for: UIControlState.normal)
         // initial menu
         let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 35, width: self.view.frame.size.width)
         menu.datasource = self
         menu.delegate = self
         menu.arrowPostion = .Left
         self.view.addSubview(menu)
+        
+        let underLine_1 = UIView(frame: CGRect(x: 0, y: 137, width: 375, height: 1))
+        underLine_1.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
+        let underLine_2 = UIView(frame: CGRect(x: 0, y: 183, width: 375, height: 1))
+        underLine_2.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
+        self.view.addSubview(underLine_1)
+        self.view.addSubview(underLine_2)
     }
     
     @IBAction func createGame(_ sender: Any) {

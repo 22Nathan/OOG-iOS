@@ -25,9 +25,9 @@ class InfoTableViewCell: UITableViewCell {
     
     private func updateUI(){
         if infoText == "我的组队"{
-            imageButton.setImage(#imageLiteral(resourceName: "tab_game_selected"), for: UIControlState.normal)
+            imageButton.setImage(#imageLiteral(resourceName: "team_icon"), for: UIControlState.normal)
         }else if infoText == "我的评分"{
-            imageButton.setImage(#imageLiteral(resourceName: "tab_chat_selected"), for: UIControlState.normal)
+            imageButton.setImage(#imageLiteral(resourceName: "rate_icon"), for: UIControlState.normal)
         }
         infoLabel.text = infoText
     }

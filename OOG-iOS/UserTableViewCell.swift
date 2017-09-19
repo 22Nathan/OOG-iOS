@@ -15,7 +15,11 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var relationshipButton: UIButton!
+    @IBOutlet weak var relationshipButton: UIButton!{
+        didSet{
+            relationshipButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
+        }
+    }
     @IBOutlet weak var followerButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var likesButton: UIButton!
@@ -111,6 +115,13 @@ class UserTableViewCell: UITableViewCell {
     }
     
     private func updateUI(){
+        let underLine = UIView(frame: CGRect(x: 0, y: 124, width: 375, height: 1))
+        underLine.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
+        self.contentView.addSubview(underLine)
+        
+        avatarImage.layer.masksToBounds = true
+        avatarImage.clipsToBounds = true
+        avatarImage.layer.cornerRadius = 36.0
         avatarImage.contentMode = .scaleAspectFill
         let profileImageKey = "ProfileImageKey" + (user?.username)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
@@ -131,20 +142,78 @@ class UserTableViewCell: UITableViewCell {
             }
         }
         
+        let blackColorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
+        let greyColorAttribute = [ NSForegroundColorAttributeName: UIColor.gray]
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 23) ]
+        let systemFontAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
+        
+        //followingButton
         followingButton.titleLabel?.numberOfLines = 0
         followingButton.titleLabel?.textAlignment = .center
-        followingButton.setTitle("关注\n" + (user?.followings)!, for: UIControlState(rawValue: 0))
         
+        var para = (user?.followings)! + "\n"
+        let attributedFollowingNumber = NSMutableAttributedString.init(string: para)
+        var length = (para as NSString).length
+        var numberRange = NSRange(location: 0,length: length)
+        attributedFollowingNumber.addAttributes(blackColorAttribute, range: numberRange)
+        attributedFollowingNumber.addAttributes(boldFontAttribute, range: numberRange)
+        
+        para = "关注"
+        let attributedFollowing = NSMutableAttributedString.init(string : para)
+        length = (para as NSString).length
+        numberRange = NSRange(location: 0,length: length)
+        attributedFollowing.addAttributes(greyColorAttribute, range: numberRange)
+        attributedFollowing.addAttributes(systemFontAttribute, range: numberRange)
+        
+        attributedFollowingNumber.append(attributedFollowing)
+        
+        followingButton.setAttributedTitle(attributedFollowingNumber, for: UIControlState.normal)
+        
+        
+        //followerButton
         followerButton.titleLabel?.numberOfLines = 0
         followerButton.titleLabel?.textAlignment = .center
-        followerButton.setTitle("粉丝\n" + (user?.followers)!, for: UIControlState(rawValue: 0))
         
+        para = (user?.followers)! + "\n"
+        let attributedFollowerNumber = NSMutableAttributedString.init(string: para)
+        length = (para as NSString).length
+        numberRange = NSRange(location: 0,length: length)
+        attributedFollowerNumber.addAttributes(blackColorAttribute, range: numberRange)
+        attributedFollowerNumber.addAttributes(boldFontAttribute, range: numberRange)
+        
+        para = "粉丝"
+        let attributedFollower = NSMutableAttributedString.init(string : para)
+        length = (para as NSString).length
+        numberRange = NSRange(location: 0,length: length)
+        attributedFollower.addAttributes(greyColorAttribute, range: numberRange)
+        attributedFollower.addAttributes(systemFontAttribute, range: numberRange)
+        
+        attributedFollowerNumber.append(attributedFollower)
+        
+        followerButton.setAttributedTitle(attributedFollowerNumber, for: UIControlState.normal)
+        
+        
+        //likesButton
         likesButton.titleLabel?.numberOfLines = 0
         likesButton.titleLabel?.textAlignment = .center
-        likesButton.setTitle("喜欢\n" + (user?.likes)!, for: UIControlState(rawValue: 0))
         
-        descriptionLabel.text = user?.description
-        usernameLabel.text = user?.username
+        para = (user?.likes)! + "\n"
+        let attributedLikeNumber = NSMutableAttributedString.init(string: para)
+        length = (para as NSString).length
+        numberRange = NSRange(location: 0,length: length)
+        attributedLikeNumber.addAttributes(blackColorAttribute, range: numberRange)
+        attributedLikeNumber.addAttributes(boldFontAttribute, range: numberRange)
+        
+        para = "喜欢"
+        let attributedLike = NSMutableAttributedString.init(string : para)
+        length = (para as NSString).length
+        numberRange = NSRange(location: 0,length: length)
+        attributedLike.addAttributes(greyColorAttribute, range: numberRange)
+        attributedLike.addAttributes(systemFontAttribute, range: numberRange)
+        
+        attributedLikeNumber.append(attributedLike)
+        
+        likesButton.setAttributedTitle(attributedLikeNumber, for: UIControlState.normal)
         
         if listType == "1"{
             isFollow = true
@@ -159,5 +228,8 @@ class UserTableViewCell: UITableViewCell {
         }else{
             relationshipButton.setTitle("未关注", for: UIControlState.normal)
         }
+        
+        usernameLabel.text = user?.username
+        descriptionLabel.text = user?.description
     }
 }

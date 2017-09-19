@@ -13,6 +13,22 @@
 		5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5310EEA91F4DCD0A00486589 /* LaunchScreen.storyboard */; };
 		53237F571F5A7F8B00B33AAA /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */; };
 		53237F591F5A7FE100B33AAA /* TitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53237F581F5A7FE100B33AAA /* TitleModel.swift */; };
+		53262A1A1F6FA15D00D83852 /* RateUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53262A191F6FA15D00D83852 /* RateUserTableViewCell.swift */; };
+		53262A1C1F6FBDE200D83852 /* LoginBG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 53262A1B1F6FBDE200D83852 /* LoginBG.jpg */; };
+		53262A1E1F6FDA4F00D83852 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A1D1F6FDA4F00D83852 /* logo.png */; };
+		53262A221F6FF29800D83852 /* lbj.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 53262A211F6FF29800D83852 /* lbj.jpg */; };
+		53262A241F70105000D83852 /* ExtUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53262A231F70105000D83852 /* ExtUIView.swift */; };
+		53262A271F7033DB00D83852 /* discover_chosen.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A261F7033DB00D83852 /* discover_chosen.png */; };
+		53262A291F7033E100D83852 /* chat_chosen.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A281F7033E100D83852 /* chat_chosen.png */; };
+		53262A2B1F7033E700D83852 /* chat_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A2A1F7033E700D83852 /* chat_default.png */; };
+		53262A2D1F7033F100D83852 /* discover_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A2C1F7033F100D83852 /* discover_default.png */; };
+		53262A2F1F70340400D83852 /* game_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A2E1F70340400D83852 /* game_default.png */; };
+		53262A311F70340B00D83852 /* home_chosen.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A301F70340B00D83852 /* home_chosen.png */; };
+		53262A331F70341200D83852 /* home_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A321F70341200D83852 /* home_default.png */; };
+		53262A351F70341700D83852 /* profile_chosen.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A341F70341700D83852 /* profile_chosen.png */; };
+		53262A371F70341B00D83852 /* profile_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A361F70341B00D83852 /* profile_default.png */; };
+		53262A391F70BFF000D83852 /* myadd.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A381F70BFF000D83852 /* myadd.png */; };
+		53262A3B1F70C5A200D83852 /* more.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A3A1F70C5A200D83852 /* more.png */; };
 		532652161F6C135600EE29CA /* ConvertPHAssetToUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */; };
 		532652181F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */; };
 		5326521A1F6CE63200EE29CA /* ChangeInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */; };
@@ -68,6 +84,11 @@
 		53D452F61F6EDB37002B3589 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D452F51F6EDB37002B3589 /* add.png */; };
 		53D452F81F6EDB41002B3589 /* default_picture.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D452F71F6EDB41002B3589 /* default_picture.png */; };
 		53D452FA1F6F0567002B3589 /* game_chosen.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D452F91F6F0567002B3589 /* game_chosen.png */; };
+		53D452FD1F6F5FAE002B3589 /* RateGameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D452FC1F6F5FAE002B3589 /* RateGameTableViewController.swift */; };
+		53D452FF1F6F6405002B3589 /* RateCourtTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D452FE1F6F6405002B3589 /* RateCourtTableViewCell.swift */; };
+		53D453011F6F6894002B3589 /* RatedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D453001F6F6894002B3589 /* RatedUser.swift */; };
+		53D453031F6F7320002B3589 /* RateCommitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D453021F6F7320002B3589 /* RateCommitTableViewCell.swift */; };
+		53D453051F6F8261002B3589 /* RateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D453041F6F8261002B3589 /* RateHelper.swift */; };
 		53EBD8271F6916CF00A96D8E /* Court.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EBD8261F6916CF00A96D8E /* Court.swift */; };
 		53EBD8291F6941BE00A96D8E /* CustomCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EBD8281F6941BE00A96D8E /* CustomCalloutView.swift */; };
 		53EBD82B1F6955E000A96D8E /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EBD82A1F6955E000A96D8E /* CustomAnnotationView.swift */; };
@@ -97,6 +118,22 @@
 		5310EEAC1F4DCD0A00486589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53237F561F5A7F8B00B33AAA /* TitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		53237F581F5A7FE100B33AAA /* TitleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleModel.swift; sourceTree = "<group>"; };
+		53262A191F6FA15D00D83852 /* RateUserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateUserTableViewCell.swift; sourceTree = "<group>"; };
+		53262A1B1F6FBDE200D83852 /* LoginBG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LoginBG.jpg; sourceTree = "<group>"; };
+		53262A1D1F6FDA4F00D83852 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		53262A211F6FF29800D83852 /* lbj.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lbj.jpg; sourceTree = "<group>"; };
+		53262A231F70105000D83852 /* ExtUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtUIView.swift; sourceTree = "<group>"; };
+		53262A261F7033DB00D83852 /* discover_chosen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discover_chosen.png; sourceTree = "<group>"; };
+		53262A281F7033E100D83852 /* chat_chosen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_chosen.png; sourceTree = "<group>"; };
+		53262A2A1F7033E700D83852 /* chat_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_default.png; sourceTree = "<group>"; };
+		53262A2C1F7033F100D83852 /* discover_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discover_default.png; sourceTree = "<group>"; };
+		53262A2E1F70340400D83852 /* game_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game_default.png; sourceTree = "<group>"; };
+		53262A301F70340B00D83852 /* home_chosen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_chosen.png; sourceTree = "<group>"; };
+		53262A321F70341200D83852 /* home_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_default.png; sourceTree = "<group>"; };
+		53262A341F70341700D83852 /* profile_chosen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_chosen.png; sourceTree = "<group>"; };
+		53262A361F70341B00D83852 /* profile_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_default.png; sourceTree = "<group>"; };
+		53262A381F70BFF000D83852 /* myadd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myadd.png; sourceTree = "<group>"; };
+		53262A3A1F70C5A200D83852 /* more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more.png; sourceTree = "<group>"; };
 		532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertPHAssetToUIImage.swift; sourceTree = "<group>"; };
 		532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageButtonCollectionViewCell.swift; sourceTree = "<group>"; };
 		532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeInfoTableViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +190,11 @@
 		53D452F51F6EDB37002B3589 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		53D452F71F6EDB41002B3589 /* default_picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_picture.png; sourceTree = "<group>"; };
 		53D452F91F6F0567002B3589 /* game_chosen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game_chosen.png; sourceTree = "<group>"; };
+		53D452FC1F6F5FAE002B3589 /* RateGameTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateGameTableViewController.swift; sourceTree = "<group>"; };
+		53D452FE1F6F6405002B3589 /* RateCourtTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateCourtTableViewCell.swift; sourceTree = "<group>"; };
+		53D453001F6F6894002B3589 /* RatedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatedUser.swift; sourceTree = "<group>"; };
+		53D453021F6F7320002B3589 /* RateCommitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateCommitTableViewCell.swift; sourceTree = "<group>"; };
+		53D453041F6F8261002B3589 /* RateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateHelper.swift; sourceTree = "<group>"; };
 		53EBD8261F6916CF00A96D8E /* Court.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Court.swift; sourceTree = "<group>"; };
 		53EBD8281F6941BE00A96D8E /* CustomCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCalloutView.swift; sourceTree = "<group>"; };
 		53EBD82A1F6955E000A96D8E /* CustomAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
@@ -215,6 +257,23 @@
 				53BC50BE1F572A7B00BE76B8 /* Supporting Files */,
 			);
 			path = "OOG-iOS";
+			sourceTree = "<group>";
+		};
+		53262A251F7033C500D83852 /* tab */ = {
+			isa = PBXGroup;
+			children = (
+				53262A2A1F7033E700D83852 /* chat_default.png */,
+				53262A281F7033E100D83852 /* chat_chosen.png */,
+				53262A321F70341200D83852 /* home_default.png */,
+				53262A2C1F7033F100D83852 /* discover_default.png */,
+				53262A341F70341700D83852 /* profile_chosen.png */,
+				53262A361F70341B00D83852 /* profile_default.png */,
+				53262A301F70340B00D83852 /* home_chosen.png */,
+				53D452F91F6F0567002B3589 /* game_chosen.png */,
+				53262A2E1F70340400D83852 /* game_default.png */,
+				53262A261F7033DB00D83852 /* discover_chosen.png */,
+			);
+			name = tab;
 			sourceTree = "<group>";
 		};
 		5326521B1F6CE84600EE29CA /* InfoViewCell */ = {
@@ -320,9 +379,14 @@
 		53BC50C31F572AE500BE76B8 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				53262A251F7033C500D83852 /* tab */,
+				53262A1B1F6FBDE200D83852 /* LoginBG.jpg */,
 				53D452ED1F6EBA3E002B3589 /* number1.png */,
+				53262A1D1F6FDA4F00D83852 /* logo.png */,
+				53262A381F70BFF000D83852 /* myadd.png */,
 				53D452EF1F6EBA50002B3589 /* number2.png */,
-				53D452F91F6F0567002B3589 /* game_chosen.png */,
+				53262A3A1F70C5A200D83852 /* more.png */,
+				53262A211F6FF29800D83852 /* lbj.jpg */,
 				53D452F71F6EDB41002B3589 /* default_picture.png */,
 				53D452F51F6EDB37002B3589 /* add.png */,
 				53D452F11F6EBA67002B3589 /* number3.png */,
@@ -404,6 +468,7 @@
 				53BC50D31F57904B00BE76B8 /* ApiConfig.swift */,
 				53BC50D51F57A13B00BE76B8 /* ExtString.swift */,
 				537B3EEE1F6D530900672A7E /* ExtUIImage.swift */,
+				53262A231F70105000D83852 /* ExtUIView.swift */,
 				53BC50E61F5843A900BE76B8 /* ExtViewController.swift */,
 				539BE58E1F60067000CB6E95 /* Synchronized.swift */,
 				53C94D231F622995007FD2B9 /* ConvertISOToDisplay.swift */,
@@ -416,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				53BC50DD1F57F61A00BE76B8 /* ApiHelper.swift */,
+				53D453041F6F8261002B3589 /* RateHelper.swift */,
 				53EBD8481F6B6FE600A96D8E /* OOGConvert.swift */,
 			);
 			name = Helper;
@@ -479,13 +545,25 @@
 			name = HomeModule;
 			sourceTree = "<group>";
 		};
+		53D452FB1F6F5F77002B3589 /* RateGameModule */ = {
+			isa = PBXGroup;
+			children = (
+				53D452FC1F6F5FAE002B3589 /* RateGameTableViewController.swift */,
+				53D452FE1F6F6405002B3589 /* RateCourtTableViewCell.swift */,
+				53262A191F6FA15D00D83852 /* RateUserTableViewCell.swift */,
+				53D453021F6F7320002B3589 /* RateCommitTableViewCell.swift */,
+				53D453001F6F6894002B3589 /* RatedUser.swift */,
+			);
+			name = RateGameModule;
+			sourceTree = "<group>";
+		};
 		53EBD82C1F698F6B00A96D8E /* CourtModule */ = {
 			isa = PBXGroup;
 			children = (
 				53EBD82D1F6A11C900A96D8E /* CourtTableViewController.swift */,
 				53EBD82F1F6A139800A96D8E /* CourtTitleTableViewCell.swift */,
-				53EBD8311F6A13B700A96D8E /* CourtGameTableViewCell.swift */,
 				537B3EF01F6D9E4A00672A7E /* CourtRateTableViewCell.swift */,
+				53EBD8311F6A13B700A96D8E /* CourtGameTableViewCell.swift */,
 			);
 			name = CourtModule;
 			sourceTree = "<group>";
@@ -540,6 +618,7 @@
 				53EBD8421F6AC82200A96D8E /* ToStartTableViewCell.swift */,
 				53EBD8441F6AD6C100A96D8E /* UnRatedGameTableViewCell.swift */,
 				53EBD8461F6AD6D800A96D8E /* FinishedTableViewCell.swift */,
+				53D452FB1F6F5F77002B3589 /* RateGameModule */,
 				53C94D301F63D525007FD2B9 /* FindGameModule */,
 			);
 			name = GameModule;
@@ -642,12 +721,26 @@
 			files = (
 				53D452F61F6EDB37002B3589 /* add.png in Resources */,
 				53D452FA1F6F0567002B3589 /* game_chosen.png in Resources */,
+				53262A2F1F70340400D83852 /* game_default.png in Resources */,
+				53262A1E1F6FDA4F00D83852 /* logo.png in Resources */,
+				53262A221F6FF29800D83852 /* lbj.jpg in Resources */,
+				53262A391F70BFF000D83852 /* myadd.png in Resources */,
+				53262A371F70341B00D83852 /* profile_default.png in Resources */,
 				53D452F01F6EBA50002B3589 /* number2.png in Resources */,
+				53262A271F7033DB00D83852 /* discover_chosen.png in Resources */,
 				53D452EE1F6EBA3E002B3589 /* number1.png in Resources */,
+				53262A331F70341200D83852 /* home_default.png in Resources */,
+				53262A311F70340B00D83852 /* home_chosen.png in Resources */,
 				53D452F21F6EBA67002B3589 /* number3.png in Resources */,
 				5310EEAB1F4DCD0A00486589 /* LaunchScreen.storyboard in Resources */,
+				53262A291F7033E100D83852 /* chat_chosen.png in Resources */,
+				53262A3B1F70C5A200D83852 /* more.png in Resources */,
+				53262A2D1F7033F100D83852 /* discover_default.png in Resources */,
 				5310EEA81F4DCD0A00486589 /* Assets.xcassets in Resources */,
 				53D452F81F6EDB41002B3589 /* default_picture.png in Resources */,
+				53262A2B1F7033E700D83852 /* chat_default.png in Resources */,
+				53262A351F70341700D83852 /* profile_chosen.png in Resources */,
+				53262A1C1F6FBDE200D83852 /* LoginBG.jpg in Resources */,
 				5310EEA61F4DCD0A00486589 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,11 +801,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */,
+				53D453051F6F8261002B3589 /* RateHelper.swift in Sources */,
 				532652271F6D1AB000EE29CA /* ChangeDescriptionViewController.swift in Sources */,
 				53C94D321F63D547007FD2B9 /* FindGameViewController.swift in Sources */,
 				53EBD8351F6A241200A96D8E /* TeamTableViewController.swift in Sources */,
 				539BE5931F60D23A00CB6E95 /* InfoTableViewCell.swift in Sources */,
+				53D452FF1F6F6405002B3589 /* RateCourtTableViewCell.swift in Sources */,
 				53608D2B1F5BD95B00B3442E /* Movement.swift in Sources */,
+				53D453031F6F7320002B3589 /* RateCommitTableViewCell.swift in Sources */,
 				53BC50D41F57904B00BE76B8 /* ApiConfig.swift in Sources */,
 				53EBD8271F6916CF00A96D8E /* Court.swift in Sources */,
 				53BC50E31F5821F200BE76B8 /* RegisterViewController.swift in Sources */,
@@ -728,6 +824,7 @@
 				53D2C8391F593A2200CD2CB1 /* ProfileTableViewController.swift in Sources */,
 				53EBD8451F6AD6C100A96D8E /* UnRatedGameTableViewCell.swift in Sources */,
 				53C94D341F641636007FD2B9 /* HomePopViewController.swift in Sources */,
+				53262A241F70105000D83852 /* ExtUIView.swift in Sources */,
 				532652251F6D0BD500EE29CA /* ChangeUsernameViewController.swift in Sources */,
 				537B3EEF1F6D530900672A7E /* ExtUIImage.swift in Sources */,
 				537A8BF81F6829A60091A232 /* UserMovementCollectionViewCell.swift in Sources */,
@@ -755,6 +852,7 @@
 				53BC50E71F5843A900BE76B8 /* ExtViewController.swift in Sources */,
 				53C94D201F6163EA007FD2B9 /* PublishMovementViewController.swift in Sources */,
 				53BC50DE1F57F61A00BE76B8 /* ApiHelper.swift in Sources */,
+				53D453011F6F6894002B3589 /* RatedUser.swift in Sources */,
 				53EBD83B1F6A3F5D00A96D8E /* TeamTitleTableViewCell.swift in Sources */,
 				537A8BF21F6808060091A232 /* UserTableViewController.swift in Sources */,
 				539BE58B1F5F8BAB00CB6E95 /* MovementDetailViewController.swift in Sources */,
@@ -762,9 +860,11 @@
 				53C94D3A1F65501D007FD2B9 /* ModalStieInfoViewController.swift in Sources */,
 				53BC50DA1F57A84200BE76B8 /* TelLoginViewController.swift in Sources */,
 				53BC50D61F57A13B00BE76B8 /* ExtString.swift in Sources */,
+				53D452FD1F6F5FAE002B3589 /* RateGameTableViewController.swift in Sources */,
 				537B3EF41F6DA8AA00672A7E /* SearchViewController.swift in Sources */,
 				53BC50CC1F572BF200BE76B8 /* User.swift in Sources */,
 				53608D111F5BB37500B3442E /* ChatListTableViewController.swift in Sources */,
+				53262A1A1F6FA15D00D83852 /* RateUserTableViewCell.swift in Sources */,
 				532652161F6C135600EE29CA /* ConvertPHAssetToUIImage.swift in Sources */,
 				53EBD83F1F6A58F900A96D8E /* TeamTitleModel.swift in Sources */,
 				53C94D261F6237B0007FD2B9 /* Comment.swift in Sources */,

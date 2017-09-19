@@ -69,13 +69,13 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         self.view.addSubview(mapView!)
         
         //地图上控件
-        let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
-        centerLogo.setImage(#imageLiteral(resourceName: "tab_game_selected"), for: UIControlState.normal)
+        let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 23, height: 32))
+        centerLogo.setImage(#imageLiteral(resourceName: "at_icon").reSizeImage(reSize: CGSize(width: 23, height: 46)), for: UIControlState.normal)
         mapView.addSubview(centerLogo)
         
         //回到user location
         let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 135, width: 20, height: 20))
-        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "tab_home_selected"), for: UIControlState.normal)
+        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "refresh_icon"), for: UIControlState.normal)
         mapView.addSubview(backToWhereIAmButton)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapEvent(byReactingTo:)))
         tapRecognizer.numberOfTapsRequired = 1
@@ -247,8 +247,8 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
         selectedAnnotation = annotation
         // 定义下弹视图的位置和大小
-        let originDropDownView = CGPoint(x: 0, y: -36)
-        let sizeDropDownView = CGSize(width: 375, height: 100)
+        let originDropDownView = CGPoint(x: 0, y: -56)
+        var sizeDropDownView = CGSize(width: 375, height: 120)
         
         // 定义手势动作并关联手势触发的行为
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissDropDownView(_:)))
@@ -290,15 +290,18 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         
         //加载控件与数据
         if !ifHaveDisplayedGame{
-            noGmaeLabel = UILabel(frame: CGRect(x: 0, y: 5, width: 375, height: 40))
+            sizeDropDownView.height = 85
+            noGmaeLabel = UILabel(frame: CGRect(x: 0, y: 10, width: 375, height: 40))
             noGmaeLabel.text = "当前球场没有比赛,去看看其他球场吧~"
             noGmaeLabel.textAlignment = .center
             noGmaeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            noGmaeLabel.textColor = UIColor(red: 211/255.0, green: 211/255.0, blue: 211/255.0, alpha: 1.0)
             
-            moreButton = UIButton(frame: CGRect(x: 0, y: 50, width: 375, height: 25))
-            moreButton.backgroundColor = UIColor.flatBlue
+            moreButton = UIButton(frame: CGRect(x: 20, y: 67, width: 335, height: 25))
+            moreButton.backgroundColor = UIColor(red: 255/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
             moreButton.titleLabel?.textAlignment = .center
-            moreButton.setTitle("查看更多", for: UIControlState.normal)
+            moreButton.setTitle("查看球场详情", for: UIControlState.normal)
+            moreButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
             moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
             
             dropDownView.addSubview(noGmaeLabel)
@@ -307,11 +310,11 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             gameTypeLabel = UILabel(frame: CGRect(x: 0, y: 5, width: 125, height: 40))
             gameTypeLabel.textAlignment = .center
             gameTypeLabel.numberOfLines = 0
-            gameTypeLabel.text = convertNumberToDisplayedGameType((displayedGame?.game_type)!) + "\n比赛类型"
+            gameTypeLabel.text = "比赛类型\n" + convertNumberToDisplayedGameType((displayedGame?.game_type)!)
             gameTypeLabel.font = UIFont.boldSystemFont(ofSize: 14)
             
             gameRateLabel = UILabel(frame: CGRect(x: 125, y: 5, width: 125, height: 40))
-            gameRateLabel.text = (displayedGame?.game_rate)! + "\n参赛者平均分"
+            gameRateLabel.text = "参赛者平均分\n" + (displayedGame?.game_rate)!
             gameRateLabel.textAlignment = .center
             gameRateLabel.numberOfLines = 0
             gameRateLabel.font = UIFont.boldSystemFont(ofSize: 14)
@@ -320,21 +323,31 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             let nsString = (displayedGame?.started_at)! as NSString
             let range = NSRange(location: 7, length: nsString.length)
             let displayedTime = (displayedGame?.started_at)!.substring(range)
-            gameTimeLabel.text = displayedTime + "\n比赛开始时间"
+            gameTimeLabel.text = "比赛开始时间\n" + displayedTime
             gameTimeLabel.textAlignment = .center
             gameTimeLabel.numberOfLines = 0
             gameTimeLabel.font = UIFont.boldSystemFont(ofSize: 14)
             
-            joinGameButton = UIButton(frame: CGRect(x: 0, y: 50, width: 375, height: 23))
-            joinGameButton.backgroundColor = UIColor.flatBlue
+            joinGameButton = UIButton(frame: CGRect(x: 20, y: 50, width: 335, height: 26))
+            joinGameButton.backgroundColor = UIColor(red: 255/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
             joinGameButton.titleLabel?.textAlignment = .center
+            joinGameButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
             joinGameButton.setTitle("加入比赛", for: UIControlState.normal)
+            joinGameButton.clipsToBounds = true
+            joinGameButton.layer.masksToBounds = true
+            joinGameButton.layer.borderWidth = 1
+            joinGameButton.layer.borderColor = UIColor.white.cgColor
             joinGameButton.addTarget(self, action: #selector(joinGame), for: UIControlEvents.touchDown)
             
-            moreButton = UIButton(frame: CGRect(x: 0, y: 75, width: 375, height: 23))
-            moreButton.backgroundColor = UIColor.flatBlue
+            moreButton = UIButton(frame: CGRect(x: 20, y: 83, width: 335, height: 26))
+            moreButton.backgroundColor = UIColor(red: 255/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
             moreButton.titleLabel?.textAlignment = .center
+            moreButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
             moreButton.setTitle("查看更多", for: UIControlState.normal)
+            moreButton.clipsToBounds = true
+            moreButton.layer.masksToBounds = true
+            moreButton.layer.borderWidth = 1
+            moreButton.layer.borderColor = UIColor.white.cgColor
             moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
             
             dropDownView.addSubview(gameTypeLabel)

@@ -190,7 +190,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request Court Game###########################")
-                //                print(json)
+//                                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):

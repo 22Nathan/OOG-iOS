@@ -22,6 +22,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     var toStartGames : [[Game]] = []
     var ingGame : Game?
     var unRatedGame : [[Game]] = []
+    var unRateUsers : [[RatedUser]] = []
     var finishedGame : [[Game]] = []
     
     var ifHavingInGame = false
@@ -131,10 +132,12 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         unRatedGame.removeAll()
         finishedGame.removeAll()
         flags.removeAll()
+        unRateUsers.removeAll()
         
         var tempToStartGames : [Game] = []
         var tempUnRatedGames : [Game] = []
         var tempFinishedGames : [Game] = []
+        var tempRatedUsers : [RatedUser] = []
         
         let value = Cache.userGameCache.value
         let json = JSON.parse(value)
@@ -172,6 +175,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
                               "",
                               "",
                               "")
+            let isEvaluated = gameJSON["isEvaluated"].intValue
             let game_id = gameJSON["id"].stringValue
             let game_type = gameJSON["game_type"].stringValue
             let game_status = gameJSON["game_status"].stringValue
@@ -194,11 +198,25 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
                 ingGame = game
                 inGameVCDelegate?.initInGame(ingGame!)
             }else if game_status == "3"{
-                tempUnRatedGames.append(game)
+                if isEvaluated == 0{
+                    let userArray = gameJSON["usersBeEvaluated"].arrayValue
+                    for userJSON in userArray{
+                        let username = userJSON["username"].stringValue
+                        let id = userJSON["id"].stringValue
+                        let avatar_url = userJSON["avatar_url"].stringValue
+                        let position = userJSON["position"].stringValue
+                        let user = RatedUser(username,id,avatar_url,position)
+                        tempRatedUsers.append(user)
+                    }
+                    tempUnRatedGames.append(game)
+                }else if isEvaluated == 1{
+                    tempFinishedGames.append(game)
+                }
             }else if game_status == "4"{
                 tempFinishedGames.append(game)
             }
         }
+        unRateUsers.append(tempRatedUsers)
         toStartGames.append(tempToStartGames)
         unRatedGame.append(tempUnRatedGames)
         finishedGame.append(tempFinishedGames)
@@ -217,6 +235,11 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     //Mark: - Action
+    @IBAction func refresh(_ sender: Any) {
+        refreshCache()
+    }
+    
+    
     @IBAction func tapChanged(_ sender: Any) {
         let index = (sender as! UISegmentedControl).selectedSegmentIndex
         offset = CGFloat(index) * self.view.frame.width
@@ -255,6 +278,10 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         self.refreshCache()
     }
     
+    func callToRate(sender cell: UITableViewCell) {
+        self.performSegue(withIdentifier: "toRate", sender: cell)
+    }
+    
     //Mark: - AMapLocationManagerDelegate
     //更新用户位置
     func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
@@ -263,7 +290,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         let point_2 = MAMapPointForCoordinate(userLocationCoordinate)
         if toStartGames.count != 0{
             for game in toStartGames[0]{
-                print("有未开始的比赛")
+//                print("有未开始的比赛")
                 let gameLocation = CLLocationCoordinate2DMake(Double(game.court.latitude)!, Double(game.court.longitude)!)
                 let point_1 = MAMapPointForCoordinate(gameLocation)
                 let distance = MAMetersBetweenMapPoints(point_1, point_2)
@@ -283,7 +310,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
             let point_1 = MAMapPointForCoordinate(gameLocation)
             let distance = MAMetersBetweenMapPoints(point_1, point_2)
             if distance > 1000 && inGameCourtFlag == false{
-                print("有正进行的比赛")
+//                print("有正进行的比赛")
                 changeGameStatus((ingGame?.gameID)!, "2" ,completionHandler: {
                     print("离开比赛场地")
                     self.refreshCache()
@@ -349,6 +376,10 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         return 0
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 95
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView.tag == 201 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "To Start", for: indexPath) as! ToStartTableViewCell
@@ -357,6 +388,8 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         }else if tableView.tag == 203{
             let cell = tableView.dequeueReusableCell(withIdentifier: "UnRated", for: indexPath) as! UnRatedGameTableViewCell
             cell.game = unRatedGame[indexPath.section][indexPath.row]
+            cell.unRatedUser = unRateUsers[indexPath.section]
+            cell.deleagte = self
             return cell
         }else if tableView.tag == 204{
             let cell = tableView.dequeueReusableCell(withIdentifier: "Finished", for: indexPath) as! FinishedTableViewCell
@@ -377,7 +410,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        return #imageLiteral(resourceName: "tab_home_selected")
+        return #imageLiteral(resourceName: "logo.png").reSizeImage(reSize: CGSize(width: 100, height: 100))
     }
     
     func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
@@ -389,7 +422,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
         var para = ""
         switch scrollView.tag {
         case 201:
-            para = "您还没有未开始的比赛呢，快去参加吧~"
+            para = "您没有未开始的比赛"
         case 203:
             para = "您没有未评价的比赛"
         case 204:
@@ -408,7 +441,7 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let para = "啦啦啦啦~"
+        let para = "快去参与比赛吧~"
         let attributedDescription = NSMutableAttributedString.init(string: para)
         let length = (para as NSString).length
         let titleRange = NSRange(location: 0,length: length)
@@ -422,33 +455,8 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var destinationViewController = segue.destination
-        if segue.identifier == "1V1"{
+        if segue.identifier == "addGame"{
             if let findGameVC = destinationViewController as? FindGameViewController {
-                findGameVC.gameTypeArray = ["1V1" , "2V2" , "3V3" , "5V5" , "Free"]
-                findGameVC.delegate = self
-            }
-        }
-        if segue.identifier == "2V2"{
-            if let findGameVC = destinationViewController as? FindGameViewController {
-                findGameVC.gameTypeArray = ["2V2" , "1V1" , "3V3" , "5V5" , "Free"]
-                findGameVC.delegate = self
-            }
-        }
-        if segue.identifier == "Free"{
-            if let findGameVC = destinationViewController as? FindGameViewController {
-                findGameVC.gameTypeArray = ["Free" , "1V1" , "2V2" , "3V3" , "5V5"]
-                findGameVC.delegate = self
-            }
-        }
-        if segue.identifier == "3V3"{
-            if let findGameVC = destinationViewController as? FindGameViewController {
-                findGameVC.gameTypeArray = ["3V3" , "1V1" , "2V2" , "5V5" , "Free"]
-                findGameVC.delegate = self
-            }
-        }
-        if segue.identifier == "5V5"{
-            if let findGameVC = destinationViewController as? FindGameViewController {
-                findGameVC.gameTypeArray = ["5V5" , "1V1" , "2V2" , "3V3" , "Free"]
                 findGameVC.delegate = self
             }
         }
@@ -457,9 +465,18 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
                 self.inGameVCDelegate = inGameVC
             }
         }
+        if segue.identifier == "toRate"{
+            if let rateGameVC = destinationViewController as? RateGameTableViewController{
+                if let cell = sender as? UnRatedGameTableViewCell{
+                    rateGameVC.game = cell.game
+                    rateGameVC.unRatedUser = cell.unRatedUser
+                }
+            }
+        }
     }
 }
 
 protocol GameTabViewControllerProtocol {
     func callToRefresh()
+    func callToRate(sender cell: UITableViewCell)
 }

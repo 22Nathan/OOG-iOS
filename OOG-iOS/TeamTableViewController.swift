@@ -67,6 +67,7 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
             let followers = memberJSON["followedNumber"].stringValue
             let likes = memberJSON["likes"].stringValue
             let description = memberJSON["description"].stringValue
+            let rate = memberJSON["userRate"].stringValue
             
             let user = teamItem.UserItem(User(username,
                                               tel,
@@ -82,7 +83,8 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
                                               description,
                                               "",
                                               "",
-                                              ""))
+                                              "",
+                                              rate))
             memberList.append(user)
         }
         teamItems.append(memberList)
@@ -154,12 +156,58 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
         return teamItems[section].count
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1{
+            return 25
+        }
+        return 0
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if section == 0{
+//            return "队伍基本信息"
+//        }else if section == 1{
+//            return "队伍队员信息"
+//        }
+//        return ""
+//    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let greyColorAttribute = [ NSForegroundColorAttributeName: UIColor.gray]
+        let systemFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)]
+        var header = UILabel(frame: CGRect(x: 6, y: 6, width: 100, height: 15))
+        var para = ""
+        switch section {
+        case 0:
+            para = "队伍基本信息"
+            let attributedText_1 = NSMutableAttributedString.init(string: para)
+            var length = (para as NSString).length
+            var numberRange = NSRange(location: 0,length: length)
+            attributedText_1.addAttributes(greyColorAttribute, range: numberRange)
+            attributedText_1.addAttributes(systemFontAttribute, range: numberRange)
+            header.attributedText = attributedText_1
+        case 1:
+            para = "队员基本信息"
+            let attributedText_2 = NSMutableAttributedString.init(string: para)
+            var length = (para as NSString).length
+            var numberRange = NSRange(location: 0,length: length)
+            attributedText_2.addAttributes(greyColorAttribute, range: numberRange)
+            attributedText_2.addAttributes(systemFontAttribute, range: numberRange)
+            header.attributedText = attributedText_2
+        default:
+            header.text = ""
+        }
+        view.addSubview(header)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let teamItem = teamItems[indexPath.section][indexPath.row]
+        switch teamItem {
+        case .Title( _):
+            return 71
+        case .UserItem( _):
+            return 71
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -176,7 +224,6 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
         }
     }
  
-
     /*
     // MARK: - Navigation
 

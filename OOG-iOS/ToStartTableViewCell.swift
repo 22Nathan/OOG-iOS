@@ -14,16 +14,25 @@ class ToStartTableViewCell: UITableViewCell {
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var gameTypeLabel: UILabel!
+    @IBOutlet weak var quitGameButton: UIButton!{
+        didSet{
+            quitGameButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
+        }
+    }
+    
     var game : Game?{
         didSet{
             updateUI()
         }
     }
     private func updateUI(){
+//        courtImage.layer.masksToBounds = true
+//        courtImage.clipsToBounds = true
+//        courtImage.layer.cornerRadius = 48.0
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "CourtImageKey" + (game?.court.id)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
-            courtImage.image = UIImage(data: imageData)
+            courtImage.image = UIImage(data: imageData)?.reSizeImage(reSize: CGSize(width: 90, height: 80))
         }else{
             if let imageUrl = URL(string: (game?.court.court_image_url[0])!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
@@ -31,7 +40,7 @@ class ToStartTableViewCell: UITableViewCell {
                     Cache.set(profileImageKey, urlContents)
                     if let imageData = urlContents{
                         DispatchQueue.main.async {
-                            self?.courtImage.image = UIImage(data: imageData)
+                            self?.courtImage.image = UIImage(data: imageData)?.reSizeImage(reSize: CGSize(width: 80, height: 80))
                         }
                     }
                 }
@@ -41,8 +50,13 @@ class ToStartTableViewCell: UITableViewCell {
         }
         
         courtNameLabel.text = game?.court.courtName
-//        (game?.started_at)!
-        startTimeLabel.text = "预计今天5点" + "开始"
+        
+        let NStime = ((game?.started_at)!) as NSString
+        let length = NStime.length
+        let range = NSRange(location: 5, length: length)
+        let displayedTime = ((game?.started_at)!).substring(range)
+        
+        startTimeLabel.text = "预计" + displayedTime + "开始"
         
         gameTypeLabel.text = convertNumberToDisplayedGameType((game?.game_type)!)
         courtLocationLabel.text = game?.court.location

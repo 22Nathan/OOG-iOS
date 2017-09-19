@@ -89,6 +89,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
         titleButton.setImage(#imageLiteral(resourceName: "number2.png"), for: UIControlState.normal)
         self.navigationItem.titleView = titleButton
+        
+        let changedSeconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
+        perform(#selector(self.timeChanged), with: nil, afterDelay: TimeInterval(changedSeconds))
     }
 
     @IBOutlet weak var scrollView: UIScrollView!{
@@ -96,7 +99,14 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //            scrollView.isPagingEnabled = true
         }
     }
-    @IBOutlet weak var segmented: UISegmentedControl!
+    @IBOutlet weak var segmented: UISegmentedControl!{
+        didSet{
+//            segmented.layer.borderColor = UIColor.white.cgColor
+//            segmented.layer.borderWidth = 2
+//            
+//            segmented.setTitleTextAttributes(<#T##attributes: [AnyHashable : Any]?##[AnyHashable : Any]?#>, for: UIControlState.normal)
+        }
+    }
     @IBOutlet weak var MovementsTableView: UITableView!
     @IBOutlet weak var HotTableView: UITableView!
     
@@ -107,6 +117,13 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 self.scrollView.contentOffset = CGPoint(x: self.offset, y: 0.0)
             }
         }
+    }
+    
+    func timeChanged() {
+        refreshCache()
+        // 到下一分钟的剩余秒数，这里虽然接近 60，但是不写死，防止误差累积
+        let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
+        perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
     }
     
     func swipe(gesture: UISwipeGestureRecognizer) {

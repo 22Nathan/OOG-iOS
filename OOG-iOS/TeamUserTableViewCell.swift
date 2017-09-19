@@ -7,16 +7,20 @@
 //
 
 import UIKit
+import SwiftyStarRatingView
 
 class TeamUserTableViewCell: UITableViewCell {
 
     @IBOutlet weak var avatarImage: UIImageView!
-
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var positionLabel: UILabel!
     
-    @IBOutlet weak var rateLabel: UILabel!
-    
+    @IBOutlet weak var relationshipButton: UIButton!{
+        didSet{
+            relationshipButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
+        }
+    }
+    @IBOutlet weak var rateView: SwiftyStarRatingView!
     var user : User?{
         didSet{
             updateUI()
@@ -24,6 +28,9 @@ class TeamUserTableViewCell: UITableViewCell {
     }
     
     private func updateUI(){
+        avatarImage.layer.masksToBounds = true
+        avatarImage.clipsToBounds = true
+        avatarImage.layer.cornerRadius = 33.0
         avatarImage.contentMode = .scaleAspectFit
         let profileImageKey = "ProfileImageKey" + (user?.username)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
@@ -48,5 +55,7 @@ class TeamUserTableViewCell: UITableViewCell {
         usernameLabel.text = user?.username
         positionLabel.text = user?.position
         
+        let value = Float((user?.userRate)!)
+        rateView.value = CGFloat(value!)
     }
 }

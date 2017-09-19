@@ -13,11 +13,19 @@ class UnRatedGameTableViewCell: UITableViewCell {
     @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
+    @IBOutlet weak var gameTypeLabel: UILabel!
     @IBOutlet weak var rateButton: UIButton!
     var game : Game?{
         didSet{
             updateUI()
         }
+    }
+    
+    var unRatedUser : [RatedUser] = []
+    var deleagte : GameTabViewControllerProtocol?
+    
+    @IBAction func toRate(_ sender: Any) {
+        deleagte?.callToRate(sender: self)
     }
     private func updateUI(){
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
@@ -40,7 +48,8 @@ class UnRatedGameTableViewCell: UITableViewCell {
             }
         }
         courtNameLabel.text = game?.court.courtName
-        endTimeLabel.text = game?.started_at
+        endTimeLabel.text = "比赛结束于昨天下午6点"
         locationLabel.text = game?.court.location
+        gameTypeLabel.text = convertNumberToDisplayedGameType((game?.game_type)!)
     }
 }

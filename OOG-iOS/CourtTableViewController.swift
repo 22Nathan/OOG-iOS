@@ -12,19 +12,23 @@ import SwiftyJSON
 class CourtTableViewController: UITableViewController {
     enum courtItem{
         case Title(Court)
+        case CourtRate(Court)
         case GameItem(Game)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        Cache.courtGameCache.setKeysuffix((court?.id)!)
+        Cache.courtGameCache.value = ""
+        loadCache()
     }
     
     var court : Court?{
         didSet{
             courtItems.append([courtItem.Title(court!)])
-            Cache.courtGameCache.setKeysuffix((court?.id)!)
-            loadCache()
+            courtItems.append([courtItem.CourtRate(court!)])
+//            Cache.courtGameCache.setKeysuffix((court?.id)!)
+//            loadCache()
         }
     }
     //Mark : - Model
@@ -76,18 +80,53 @@ class CourtTableViewController: UITableViewController {
         return courtItems[section].count
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1{
-            return "比赛信息"
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let greyColorAttribute = [ NSForegroundColorAttributeName: UIColor.gray]
+        let systemFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)]
+        var header = UILabel(frame: CGRect(x: 6, y: 6, width: 200, height: 15))
+        var para = ""
+        switch section {
+        case 0:
+            break
+        case 1:
+            para = "球场评分详细信息"
+            let attributedText_2 = NSMutableAttributedString.init(string: para)
+            var length = (para as NSString).length
+            var numberRange = NSRange(location: 0,length: length)
+            attributedText_2.addAttributes(greyColorAttribute, range: numberRange)
+            attributedText_2.addAttributes(systemFontAttribute, range: numberRange)
+            header.attributedText = attributedText_2
+        case 2:
+            para = "比赛信息"
+            let attributedText_2 = NSMutableAttributedString.init(string: para)
+            var length = (para as NSString).length
+            var numberRange = NSRange(location: 0,length: length)
+            attributedText_2.addAttributes(greyColorAttribute, range: numberRange)
+            attributedText_2.addAttributes(systemFontAttribute, range: numberRange)
+            header.attributedText = attributedText_2
+        default:
+            header.text = ""
         }
-        return ""
+        view.addSubview(header)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0{
             return 0
         }
-        return 30
+        return 25
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let courtItem = courtItems[indexPath.section][indexPath.row]
+        switch courtItem {
+        case .Title( _):
+            return 84
+        case .CourtRate(_):
+            return 90
+        case .GameItem( _):
+            return 87
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,6 +134,10 @@ class CourtTableViewController: UITableViewController {
         switch courtItem {
         case .Title(let court):
             let cell = tableView.dequeueReusableCell(withIdentifier: "courtTitle", for: indexPath) as! CourtTitleTableViewCell
+            cell.court = court
+            return cell
+        case .CourtRate(let court):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "courtRate", for: indexPath) as! CourtRateTableViewCell
             cell.court = court
             return cell
         case .GameItem(let game):

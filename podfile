@@ -18,4 +18,5 @@ target 'OOG-iOS' do
     pod 'DZNEmptyDataSet'
     pod 'DKImagePickerController'
     pod 'SwiftPhotoGallery'
+    pod 'SwiftyStarRatingView'
 end

@@ -21,6 +21,7 @@ class ImageButtonCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageButton: UIButton!{
         didSet{
             imageButton.contentMode = .scaleAspectFit
+            imageButton.tintColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         }
     }
     
@@ -37,14 +38,14 @@ class ImageButtonCollectionViewCell: UICollectionViewCell {
                     self.delegate?.appendImage(displayedImage)
                     self.delegate?.appendAsset(photo.originalAsset!)
                 }
-                self.delegate?.appendImage(#imageLiteral(resourceName: "add.png"))
+                self.delegate?.appendImage(#imageLiteral(resourceName: "myadd.png"))
                 self.delegate?.reloadView()
             }
             self.delegate?.presentPickVC(pickerController)
         }else{
             self.delegate?.deleteFirst()
             self.delegate?.preview()
-            self.delegate?.appendImage(#imageLiteral(resourceName: "add.png"))
+            self.delegate?.appendImage(#imageLiteral(resourceName: "myadd.png"))
             self.delegate?.reloadView()
         }
     }

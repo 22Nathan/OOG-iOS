@@ -48,7 +48,7 @@ class MovementDisplayTableViewCell: UITableViewCell,UICollectionViewDelegate,UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (indexPath.row == movements.count) || (indexPath.row == 8){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ButtonCollection", for: indexPath) as! ButtonCollectionViewCell
-            cell.publishMovementButton.setImage(#imageLiteral(resourceName: "add.png"), for: UIControlState.normal)
+            cell.publishMovementButton.setImage(#imageLiteral(resourceName: "myadd.png"), for: UIControlState.normal)
             return cell
         }
         let movement = movements[indexPath.row]

@@ -59,10 +59,12 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
             //发请求取消
             isLike = false
             likeButton.isEnabled = false
+            likeButton.setImage(#imageLiteral(resourceName: "like_icon"), for: UIControlState.normal)
             requestDisLike((movement?.movement_ID)!, completionHandler: completionHandler)
         }else{
             isLike = true
             likeButton.isEnabled = false
+            likeButton.setImage(#imageLiteral(resourceName: "like_icon_selected"), for: UIControlState.normal)
             requestLikes((movement?.movement_ID)!, completionHandler: completionHandler)
         }
     }
@@ -175,9 +177,7 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
 
     private func updateUI(){
         //hook up movement image
-        for subView in imageScrollView.subviews{
-            subView.removeFromSuperview()
-        }
+        imageScrollView.removeAllSubviews()
         
         imageScrollView.delegate = self
         let scrollViewFrame = imageScrollView.bounds
@@ -275,11 +275,13 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         
         contentTextView.attributedText = attributedContent
         
+        let commentFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14) ]
+        let commentContentFontAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: 13) ]
         //hook up comments
         commentsTextView.text = ""
         let finalAttributedString = NSMutableAttributedString.init(string: "")
         for comment in (movement?.comments)!{
-            let attributedUserName = NSMutableAttributedString.init(string: comment.username)
+            let attributedUserName = NSMutableAttributedString.init(string: comment.username + ":")
             let attributedComment = NSMutableAttributedString.init(string: " " + comment.content + "\n")
             
             let length_1 = (comment.username as NSString).length
@@ -287,8 +289,8 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
             let userNameRange = NSRange(location: 0,length: length_1)
             let contentRange = NSRange(location: 0,length: length_2)
             
-            attributedUserName.addAttributes(boldFontAttribute, range: userNameRange)
-            attributedComment.addAttributes(fontAttribute, range: contentRange)
+            attributedUserName.addAttributes(commentFontAttribute, range: userNameRange)
+            attributedComment.addAttributes(commentContentFontAttribute, range: contentRange)
             
             attributedUserName.append(attributedComment)
             finalAttributedString.append(attributedUserName)

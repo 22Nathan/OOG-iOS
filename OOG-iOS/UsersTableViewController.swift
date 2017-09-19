@@ -17,6 +17,10 @@ class UsersTableViewController: UITableViewController {
     //Mark : LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
+        
         Cache.userListCache.setKeysuffix(self.ownerUserID + self.listType)
         Cache.userListCache.value = ""
         loadCache()
@@ -50,6 +54,7 @@ class UsersTableViewController: UITableViewController {
             let likes = userJSON["likes"].stringValue
             let followType = userJSON["followType"].stringValue
             let description = userJSON["description"].stringValue
+            let rate = userJSON["userRate"].stringValue
             
             let user = User(username,
                             tel,
@@ -65,7 +70,8 @@ class UsersTableViewController: UITableViewController {
                             description,
                             "",
                             "",
-                            followType)
+                            followType,
+                            rate)
             userList.append(user)
         }
         usersModel.append(userList)
@@ -99,11 +105,13 @@ class UsersTableViewController: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationViewController = segue.destination
+        var destinationViewController = segue.destination
         if segue.identifier == "user detail"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
             if let userVC = destinationViewController as? UserTableViewController{
                 if let cell = sender as? UserListTableViewCell{
-                    print("what")
                     userVC.user = cell.user
                     userVC.navigationItem.title = cell.user?.username
                     userVC.followList = cell.listType!

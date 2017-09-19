@@ -10,15 +10,24 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SVProgressHUD
+import SwiftyStarRatingView
 
 class UserListTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var rateView: SwiftyStarRatingView!{
+        didSet{
+            rateView.isUserInteractionEnabled = false
+            rateView.value = 3
+        }
+    }
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var positionLabel: UILabel!
-    @IBOutlet weak var rateLabel: UILabel!
-    @IBOutlet weak var relationshipButton: UIButton!
-    
+    @IBOutlet weak var relationshipButton: UIButton!{
+        didSet{
+            relationshipButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
+        }
+    }
     var user : User?{
         didSet{
             initialIsFollow()
@@ -159,6 +168,9 @@ class UserListTableViewCell: UITableViewCell {
     
     private func updateUI(){
         //hook up image
+        avatarImage.layer.masksToBounds = true
+        avatarImage.clipsToBounds = true
+        avatarImage.layer.cornerRadius = 32.0
         avatarImage.contentMode = .scaleAspectFit
         let profileImageKey = "ProfileImageKey" + (user?.username)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
@@ -183,12 +195,15 @@ class UserListTableViewCell: UITableViewCell {
         usernameLabel.text = user?.username
         positionLabel.text = user?.position
         
+        let floatValue = Float((user?.userRate)!)
+        rateView.value = CGFloat(floatValue!)
+        
         //hook up button
         var word = "未关注"
         if isFollow{
             word = "已关注"
         }
-        relationshipButton.backgroundColor = UIColor.flatBlue
+        relationshipButton.backgroundColor = UIColor(red: 30/255.0, green: 144/255.0, blue: 255/255.0, alpha: 1.0)
         relationshipButton.setTitle(word, for: UIControlState.normal)
     }
 }

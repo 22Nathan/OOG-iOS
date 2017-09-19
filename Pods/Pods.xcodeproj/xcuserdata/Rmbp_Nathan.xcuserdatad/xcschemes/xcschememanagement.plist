@@ -89,15 +89,30 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftyStarRatingView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>01B6ADC695A964B827D20A3FF6DDE00A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1215771836B84E9F9899950098D2FF80</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>224005D11155B018F2E3652BD4850B37</key>
+		<key>3365EAF3F36F18F3BCC12F8F1B7FFCFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>44E2F7854D87E0F79B417549CA1BB9A9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +127,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6A6B29326A4BF014B1ACC2FA71F74AB6</key>
+		<key>58DFBB20CA5ADE58F03F2C56065E4889</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5A3895129260F9C89E0FA84EE9ECB4CE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6C21ED9EABAB39DB4EAC701724E4A1A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,7 +147,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>87ECF3EA4BA28F1584541D744634322C</key>
+		<key>7C3A5E9346DA1A578D03DC2B43ACBDF4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -137,27 +162,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A5B8D1D6D4FC713D2893373C87B9ACCB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C1A54FC0100DFA5394FE6BCAC6C721A6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C35B7EB4FBE5BBB6018579B2187C7D60</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>CF671F7E57B92905F1CC91D036D6B4A7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D18885158F8A1355D0A6D284403DDF78</key>
 		<dict>
 			<key>primary</key>
 			<true/>

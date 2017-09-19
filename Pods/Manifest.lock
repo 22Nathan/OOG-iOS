@@ -48,6 +48,7 @@ PODS:
   - SwiftDate (4.1.1)
   - SwiftPhotoGallery (3.1.0)
   - SwiftyJSON (3.1.4)
+  - SwiftyStarRatingView (1.0.4)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4.0)
@@ -66,6 +67,7 @@ DEPENDENCIES:
   - SwiftDate (~> 4.0)
   - SwiftPhotoGallery
   - SwiftyJSON
+  - SwiftyStarRatingView
 
 EXTERNAL SOURCES:
   ChameleonFramework:
@@ -107,7 +109,8 @@ SPEC CHECKSUMS:
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
   SwiftPhotoGallery: 85ff48f685dafc5e84639bee5c74ddb4f0f221d3
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftyStarRatingView: a2b0057700e0adeb8e7442c55d99cb53b531d2f4
 
-PODFILE CHECKSUM: 133911655985fdf713893e7ae734a01738936645
+PODFILE CHECKSUM: 4fde9e6e7b11172fcde54deeaab1ef05d70d9e2e
 
 COCOAPODS: 1.2.1

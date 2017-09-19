@@ -14,7 +14,7 @@ class PopTeamInfoViewController: UIViewController {
     var userID : String = ApiHelper.currentUser.id
     override func viewDidLoad() {
         super.viewDidLoad()
-        preferredContentSize = CGSize(width: 120, height: 120)
+        preferredContentSize = CGSize(width: 120, height: 80)
         Cache.userTeamCache.setKeysuffix(userID)
         loadCache()
     }

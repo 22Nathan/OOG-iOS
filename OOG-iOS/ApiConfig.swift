@@ -70,8 +70,8 @@ extension ApiConfig: TargetType{
             return ["followListType" : listType]
         case .userTeam(_):
             return nil
-        case .userGame(_):
-            return nil
+        case .userGame(let userID):
+            return ["id" : userID]
         case .courtGame(_):
             return nil
         case .changeUserInfo(_):

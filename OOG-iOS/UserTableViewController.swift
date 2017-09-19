@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import SwiftDate
 import SVProgressHUD
+import Alamofire
 
 class UserTableViewController: UITableViewController {
     
@@ -32,6 +33,19 @@ class UserTableViewController: UITableViewController {
         loadCache()
     }
     
+    @IBAction func actionSheet(_ sender: Any) {
+        var alert = UIAlertController()
+        alert.addAction(UIAlertAction(title: "邀请组队", style: UIAlertActionStyle.default, handler: { action in
+            self.requestTeam((self.user?.id)!)
+        }))
+        alert.addAction(UIAlertAction(title: "私信", style: UIAlertActionStyle.default, handler: { action in
+            print("功能尚未开放")
+        }))
+        present(alert, animated: true)
+    }
+    @IBAction func back(_ sender: Any) {
+        presentingViewController?.dismiss(animated: true)
+    }
     private func loadCache(){
         if Cache.userMovementCache.isEmpty{
             refreshCache()
@@ -115,6 +129,43 @@ class UserTableViewController: UITableViewController {
         }
     }
 
+    private func requestTeam(_ objectID : String){
+        var parameters = [String : String]()
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["id"] = objectID
+        print(ApiHelper.currentUser.uuid)
+        print(ApiHelper.currentUser.id)
+        Alamofire.request(ApiHelper.API_Root + "/users/" + ApiHelper.currentUser.id + "/team/",
+                          method: .post,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response teamAsk ###################")
+                                    print(json)
+                                    let result = json["result"].stringValue
+                                    if result == "ok"{
+                                        SVProgressHUD.showInfo(withStatus: "对方已同意请求")
+                                    }
+                                    if result == "failed"{
+                                        let reason = json["reason"].stringValue
+                                        if reason == "the team has already full"{
+                                            SVProgressHUD.showInfo(withStatus: "您的队伍人数已满")
+                                        }
+                                        else if reason == "the user has already joined one team"{
+                                            SVProgressHUD.showInfo(withStatus: "该用户已有组队")
+                                        }
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -133,7 +184,7 @@ class UserTableViewController: UITableViewController {
         let profile = profiles[indexPath.section][indexPath.row]
         switch profile{
         case .Title( _):
-            return 190
+            return 183
         case .MovementItem( _):
             var lines = CGFloat(movementProfilesList.count / 3)
             if movementProfilesList.count % 3 > 0{

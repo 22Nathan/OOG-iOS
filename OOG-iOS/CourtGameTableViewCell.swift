@@ -13,7 +13,11 @@ class CourtGameTableViewCell: UITableViewCell {
     @IBOutlet weak var gameStatusLabel: UILabel!
     @IBOutlet weak var gameTimeLabel: UILabel!
     
-    @IBOutlet weak var joinGameButton: UIButton!
+    @IBOutlet weak var joinGameButton: UIButton!{
+        didSet{
+            joinGameButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
+        }
+    }
     
     var game : Game?{
         didSet{
@@ -22,8 +26,13 @@ class CourtGameTableViewCell: UITableViewCell {
     }
     
     private func updateUI(){
-        gameTypeLabel.text = "比赛类型\n" + convertNumberToDisplayedGameType((game?.game_type)!)
-        gameStatusLabel.text = "比赛状态\n" + converNumberToDisplayedGameStatus((game?.game_status)!)
-        gameTimeLabel.text = "开始时间\n" + (game?.started_at)!
+        gameTypeLabel.text = "比赛类型:" + convertNumberToDisplayedGameType((game?.game_type)!)
+        gameStatusLabel.text = "比赛状态:" + converNumberToDisplayedGameStatus((game?.game_status)!)
+        
+        let NStime = ((game?.started_at)!) as NSString
+        let length = NStime.length
+        let range = NSRange(location: 5, length: length)
+        let displayedTime = ((game?.started_at)!).substring(range)
+        gameTimeLabel.text = "开始时间:" + displayedTime
     }
 }
