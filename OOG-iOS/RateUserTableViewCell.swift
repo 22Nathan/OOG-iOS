@@ -39,6 +39,10 @@ class RateUserTableViewCell: UITableViewCell {
     }
     
     private func updateUI(){
+        
+        avatar_image.layer.masksToBounds = true
+        avatar_image.clipsToBounds = true
+        avatar_image.layer.cornerRadius = 25
         let profileImageKey = "ProfileImageKey" + (rateUser?.id)!
         Cache.keySet.insert(profileImageKey)
         if let imageData = Cache.tempImageCache.data(forKey: profileImageKey){

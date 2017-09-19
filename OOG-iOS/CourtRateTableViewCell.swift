@@ -10,7 +10,6 @@ import UIKit
 import SwiftyStarRatingView
 
 class CourtRateTableViewCell: UITableViewCell {
-
     @IBOutlet weak var priceRateView: SwiftyStarRatingView!{
         didSet{
             priceRateView.isUserInteractionEnabled = false
@@ -26,7 +25,6 @@ class CourtRateTableViewCell: UITableViewCell {
             facilityRateView.isUserInteractionEnabled = false
         }
     }
-    
     var court : Court?{
         didSet{
             updateUI()
@@ -37,11 +35,12 @@ class CourtRateTableViewCell: UITableViewCell {
         let floatPriceValue = Float((court?.priceRate)!)
         priceRateView.value = CGFloat(floatPriceValue!)
         
+        print(court?.facilityRate)
         let floatFacilityValue = Float((court?.facilityRate)!)
-        priceRateView.value = CGFloat(floatFacilityValue!)
+        facilityRateView.value = CGFloat(floatFacilityValue!)
         
         let floatTransValue = Float((court?.transportRate)!)
-        priceRateView.value = CGFloat(floatTransValue!)
+        transportRateView.value = CGFloat(floatTransValue!)
     }
     
 }

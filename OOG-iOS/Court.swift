@@ -24,6 +24,7 @@ class Court{
     var priceRate : String
     var transportRate : String
     var facilityRate : String
+    var tel : String
     
     init(_ id : String,
          _ courtName : String,
@@ -38,7 +39,8 @@ class Court{
          _ latitude : String,
          _ priceRate : String = "",
          _ transportRate : String = "",
-         _ facilityRate : String = "") {
+         _ facilityRate : String = "",
+         _ tel : String = "") {
         self.id = id
         self.courtName = courtName
         self.courtType = courtType
@@ -53,5 +55,6 @@ class Court{
         self.priceRate = priceRate
         self.transportRate = transportRate
         self.facilityRate = facilityRate
+        self.tel = tel
     }
 }

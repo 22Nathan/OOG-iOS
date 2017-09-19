@@ -48,6 +48,10 @@ class RateCourtTableViewCell: UITableViewCell {
     var delegate : RateGameTableViewControllerProtocol?
     
     private func updateUI(){
+        courtImage.layer.masksToBounds = true
+        courtImage.clipsToBounds = true
+        courtImage.layer.cornerRadius = 25
+        
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "CourtImageKey" + (court?.id)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){

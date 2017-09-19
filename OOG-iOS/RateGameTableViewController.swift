@@ -130,11 +130,11 @@ class RateGameTableViewController: UITableViewController,RateGameTableViewContro
         let item = rateItems[indexPath.section][indexPath.row]
         switch item{
         case .RateCourt( _):
-            return 178
+            return 173
         case .RateUser( _):
-            return 178
+            return 174
         case .Commit( _):
-            return 43
+            return 41
         }
     }
     

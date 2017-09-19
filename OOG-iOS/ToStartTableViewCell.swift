@@ -17,9 +17,12 @@ class ToStartTableViewCell: UITableViewCell {
     @IBOutlet weak var quitGameButton: UIButton!{
         didSet{
             quitGameButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
+            quitGameButton.contentMode = UIViewContentMode.scaleAspectFit
+            quitGameButton.layer.masksToBounds = true
+            quitGameButton.clipsToBounds = true
+            quitGameButton.layer.cornerRadius = 6
         }
     }
-    
     var game : Game?{
         didSet{
             updateUI()

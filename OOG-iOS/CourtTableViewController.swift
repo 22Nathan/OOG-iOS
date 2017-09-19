@@ -109,14 +109,12 @@ class CourtTableViewController: UITableViewController {
         }
         view.addSubview(header)
     }
-    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0{
             return 0
         }
         return 25
     }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let courtItem = courtItems[indexPath.section][indexPath.row]
         switch courtItem {
@@ -128,7 +126,6 @@ class CourtTableViewController: UITableViewController {
             return 87
         }
     }
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let courtItem = courtItems[indexPath.section][indexPath.row]
         switch courtItem {
@@ -155,5 +152,4 @@ class CourtTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

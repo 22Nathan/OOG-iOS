@@ -70,7 +70,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         
         //地图上控件
         let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 23, height: 32))
-        centerLogo.setImage(#imageLiteral(resourceName: "at_icon").reSizeImage(reSize: CGSize(width: 23, height: 46)), for: UIControlState.normal)
+        centerLogo.setImage(#imageLiteral(resourceName: "at_icon").reSizeImage(reSize: CGSize(width: 23, height: 56)), for: UIControlState.normal)
         mapView.addSubview(centerLogo)
         
         //回到user location
@@ -146,6 +146,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
                                             let status = courtJson["status"].stringValue
                                             let longitude = courtJson["longitude"].stringValue
                                             let latitude = courtJson["latitude"].stringValue
+                                            let tel = courtJson["tel"].stringValue
                                             let court = Court(courtID,
                                                               courtName,
                                                               courtType,
@@ -156,7 +157,8 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
                                                               game_now_url,
                                                               status,
                                                               longitude,
-                                                              latitude)
+                                                              latitude,
+                                                              tel)
                                             self.courtList.append(court)
                                             completionHandler()
                                         }

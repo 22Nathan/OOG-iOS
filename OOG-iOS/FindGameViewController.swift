@@ -15,12 +15,18 @@ import SwiftyJSON
 
 class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDownMenuDataSource,UIPopoverPresentationControllerDelegate,FindGameViewControllerProtocol{
     
-    @IBOutlet weak var gameListTableView: UITableView!
-    @IBOutlet weak var teamInfoButton: UIButton!{
+    @IBOutlet weak var createGameButton: UIButton!{
         didSet{
-            print("dsadasd")
+            createGameButton.backgroundColor = UIColor(red: 250/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
         }
     }
+    @IBOutlet weak var findGameButton: UIButton!{
+        didSet{
+            findGameButton.backgroundColor = UIColor(red: 250/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
+        }
+    }
+    @IBOutlet weak var gameListTableView: UITableView!
+    @IBOutlet weak var teamInfoButton: UIButton!
     @IBOutlet weak var siteButton: UIButton!
     
     var delegate : GameTabViewControllerProtocol?
@@ -59,14 +65,33 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
         
+        let blackColorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15) ]
         let attach = NSTextAttachment.init()
-        attach.image = #imageLiteral(resourceName: "team_icon")
+        attach.image = #imageLiteral(resourceName: "team_icon").reSizeImage(reSize: CGSize(width: 18, height: 18))
         let attachString = NSAttributedString(attachment: attach)
         let finalAttributeString = NSMutableAttributedString.init(attributedString: attachString)
         let tempAttributeString = NSMutableAttributedString.init(string: "队伍信息")
+        var length = ("队伍信息" as NSString).length
+        var numberRange = NSRange(location: 0,length: length)
+        tempAttributeString.addAttributes(blackColorAttribute, range: numberRange)
+        tempAttributeString.addAttributes(boldFontAttribute, range: numberRange)
         finalAttributeString.append(tempAttributeString)
         teamInfoButton.setAttributedTitle(finalAttributeString, for: UIControlState.normal)
+        
+        createGameButton.contentMode = UIViewContentMode.scaleAspectFit
+        createGameButton.layer.masksToBounds = true
+        createGameButton.clipsToBounds = true
+        createGameButton.layer.cornerRadius = 8
+        findGameButton.contentMode = UIViewContentMode.scaleAspectFit
+        findGameButton.layer.masksToBounds = true
+        findGameButton.clipsToBounds = true
+        findGameButton.layer.cornerRadius = 8
+        
         // initial menu
         let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 35, width: self.view.frame.size.width)
         menu.datasource = self
@@ -76,10 +101,13 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         
         let underLine_1 = UIView(frame: CGRect(x: 0, y: 137, width: 375, height: 1))
         underLine_1.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
-        let underLine_2 = UIView(frame: CGRect(x: 0, y: 183, width: 375, height: 1))
+        let underLine_2 = UIView(frame: CGRect(x: 0, y: 172, width: 375, height: 1))
         underLine_2.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
+        let underLine_3 = UIView(frame: CGRect(x: 186, y: 0, width: 1, height: 137))
+        underLine_3.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
         self.view.addSubview(underLine_1)
         self.view.addSubview(underLine_2)
+        self.view.addSubview(underLine_3)
     }
     
     @IBAction func createGame(_ sender: Any) {

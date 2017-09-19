@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import SwiftyStarRatingView
 
 class CourtTitleTableViewCell: UITableViewCell {
     @IBOutlet weak var courtImage: UIImageView!
     @IBOutlet weak var courtLocationLabel: UILabel!
     @IBOutlet weak var contactLabel: UILabel!
     
+    @IBOutlet weak var rateView: SwiftyStarRatingView!{
+        didSet{
+            rateView.isUserInteractionEnabled = false
+        }
+    }
     var court : Court?{
         didSet{
             updateUI()
@@ -40,6 +46,14 @@ class CourtTitleTableViewCell: UITableViewCell {
             }
         }
         courtLocationLabel.text = court?.location
+        if court?.tel == ""{
+            contactLabel.text = "联系方式 : 暂无"
+        }else{
+            contactLabel.text = "联系方式 : " + (court?.tel)!
+        }
+        
+        let floatValue = Float((court?.rate)!)
+        rateView.value = CGFloat(floatValue!)
         
     }
 }
