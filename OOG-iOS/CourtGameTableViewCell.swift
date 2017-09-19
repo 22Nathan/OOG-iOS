@@ -25,6 +25,11 @@ class CourtGameTableViewCell: UITableViewCell {
         }
     }
     
+    @IBAction func joinGame(_ sender: Any) {
+        Cache.postCache.joinGame((game?.gameID)!)
+    }
+    
+    
     private func updateUI(){
         gameTypeLabel.text = convertNumberToDisplayedGameType((game?.game_type)!)
         gameStatusLabel.text = "比赛状态:" + converNumberToDisplayedGameStatus((game?.game_status)!)

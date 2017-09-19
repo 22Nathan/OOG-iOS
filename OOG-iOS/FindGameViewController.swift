@@ -13,7 +13,7 @@ import SwiftDate
 import Alamofire
 import SwiftyJSON
 
-class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDownMenuDataSource,UIPopoverPresentationControllerDelegate,FindGameViewControllerProtocol{
+class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDownMenuDataSource,UIPopoverPresentationControllerDelegate,FindGameViewControllerProtocol,UITableViewDataSource,UITableViewDelegate{
     
     @IBOutlet weak var createGameButton: UIButton!{
         didSet{
@@ -28,6 +28,9 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
     @IBOutlet weak var gameListTableView: UITableView!
     @IBOutlet weak var teamInfoButton: UIButton!
     @IBOutlet weak var siteButton: UIButton!
+    
+    //Mark : Model
+    var gameModels : [[Game]] = []
     
     var delegate : GameTabViewControllerProtocol?
 
@@ -65,6 +68,7 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // init button
         let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         item.tintColor = UIColor.black
         self.navigationItem.backBarButtonItem = item
@@ -92,6 +96,10 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         findGameButton.clipsToBounds = true
         findGameButton.layer.cornerRadius = 8
         
+        //init tableview
+        gameListTableView.delegate = self
+        gameListTableView.dataSource = self
+        
         // initial menu
         let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 35, width: self.view.frame.size.width)
         menu.datasource = self
@@ -108,6 +116,9 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         self.view.addSubview(underLine_1)
         self.view.addSubview(underLine_2)
         self.view.addSubview(underLine_3)
+        
+        //default
+        defaultDisplayRequest(completionHandler: completionHandler)
     }
     
     @IBAction func createGame(_ sender: Any) {
@@ -128,7 +139,7 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
                                     let json = SwiftyJSON.JSON(value)
                                     //Mark: - print
                                     print("################### Response Creation Game###################")
-                                    print(json)
+//                                    print(json)
                                     let result = json["result"].stringValue
                                     if result == "ok"{
                                         SVProgressHUD.showInfo(withStatus: "创建比赛成功")
@@ -143,9 +154,89 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         }
     }
     
+    //Mark : Logic 
+    func defaultDisplayRequest(completionHandler: @escaping (_ data : JSON) -> ()){
+        Alamofire.request(ApiHelper.API_Root + "/games/rateList/",
+                          method: .get,
+                          parameters: nil,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response defaultDisplayRequest ###################")
+//                                    print(json)
+                                    completionHandler(json)
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
+    func completionHandler(_ data : JSON){
+        self.gameModels.removeAll()
+        var games : [Game] = []
+        let gameArray = data["games"].arrayValue
+        for gameJSON in gameArray{
+            //parse court
+            let courtID = gameJSON["place"]["id"].stringValue
+            let courtName = gameJSON["place"]["courtName"].stringValue
+            let location = gameJSON["place"]["location"].stringValue
+            var imageNumber = 0
+            let imageUrlsJSON = gameJSON["place"]["court_image_url"].arrayValue
+            var imageUrls : [String] = []
+            for imageUrl in imageUrlsJSON{
+                imageUrls.append(imageUrl.stringValue)
+                imageNumber += 1
+            }
+            let court = Court(courtID,
+                              courtName,
+                              "",
+                              imageUrls,
+                              location)
+            let gameID = gameJSON["id"].stringValue
+            //                                        let gameRate = gameJSON["gameRate"].stringValue
+            let started_at = gameJSON["started_at"].stringValue
+            let game_type = gameJSON["game_type"].stringValue
+            let game_status = gameJSON["game_status"].stringValue
+            let participantNumber = gameJSON["participantNumber"].stringValue
+            
+            let game = Game(gameID,
+                            game_type,
+                            game_status,
+                            started_at,
+                            court,
+                            participantNumber)
+            games.append(game)
+        }
+        self.gameModels.append(games)
+        self.gameListTableView.reloadData()
+    }
+    
     //Mark : - Delegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+    
+    //Mark : - tableView dataSource and delegate
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return gameModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return gameModels[section].count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "To Match", for: indexPath) as! MatchTableViewCell
+        cell.game = gameModels[indexPath.section][indexPath.row]
+        return cell
     }
     
     //Mark : - menu source

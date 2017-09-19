@@ -91,4 +91,11 @@ class Cache{
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }
+    
+    //Mark: - postCache
+    static let postCacheKey = "post"
+    static let postCache = AppCache(postCacheKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
 }

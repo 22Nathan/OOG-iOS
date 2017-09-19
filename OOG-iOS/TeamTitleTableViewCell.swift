@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftyStarRatingView
+import SVProgressHUD
 
 class TeamTitleTableViewCell: UITableViewCell {
     
@@ -28,7 +29,35 @@ class TeamTitleTableViewCell: UITableViewCell {
     }
     
     @IBAction func quitTeamAction(_ sender: Any) {
-        
+        quitTeamRequest()
+    }
+    
+    func quitTeamRequest(){
+        var parameters = [String : String]()
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        Alamofire.request(ApiHelper.API_Root + "/users/" + ApiHelper.currentUser.id + "/team/",
+                          method: .delete,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response quit Team ###################")
+                                    print(json)
+                                    let result = json["result"].stringValue
+                                    if result == "no"{
+                                        SVProgressHUD.showInfo(withStatus: "退出组队失败")
+                                    }
+                                    if result == "ok"{
+                                        SVProgressHUD.showInfo(withStatus: "您已退出组队")
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
     }
     
     private func updateUI(){

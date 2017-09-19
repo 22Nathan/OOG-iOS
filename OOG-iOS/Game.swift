@@ -24,7 +24,7 @@ class Game{
          _ started_at : String,
          _ court : Court,
          _ participantNumber : String,
-         _ game_rate : String) {
+         _ game_rate : String = "") {
         self.gameID = gameID
         self.game_type = game_type
         self.game_status = game_status

@@ -420,7 +420,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
     
     //
     func joinGame(){
-//        print("funck")
+        Cache.postCache.joinGame((displayedGame?.gameID)!)
     }
     
     func seeMore(){

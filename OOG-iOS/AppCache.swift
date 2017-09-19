@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import Moya
+import SVProgressHUD
 
 class AppCache{
     static let myCache = UserDefaults.standard
@@ -202,7 +203,6 @@ class AppCache{
     
     //更改个人信息
     func changeUserInfo(_ userID : String, completionHandler: @escaping ()->() ){
-        print(ApiHelper.currentUser.username)
         provider.request(.changeUserInfo(userID: userID)) {result in
             switch result{
             case let .success(moyaResponse):
@@ -212,6 +212,28 @@ class AppCache{
                 //                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
+            case let .failure(error):
+                print("##################请求用户详情失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //加入比赛
+    func joinGame( _ gameID : String){
+        provider.request(.joinGame(gameID: gameID)) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Join Game###########################")
+                                print(json)
+                let result = json["result"].stringValue
+                if result == "ok"{
+                    SVProgressHUD.showInfo(withStatus: "您已加入比赛")
+                }else{
+                    SVProgressHUD.showInfo(withStatus: "操作失败")
+                }
             case let .failure(error):
                 print("##################请求用户详情失败###########################")
                 print(error)

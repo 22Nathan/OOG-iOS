@@ -29,6 +29,8 @@
 		53262A371F70341B00D83852 /* profile_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A361F70341B00D83852 /* profile_default.png */; };
 		53262A391F70BFF000D83852 /* myadd.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A381F70BFF000D83852 /* myadd.png */; };
 		53262A3B1F70C5A200D83852 /* more.png in Resources */ = {isa = PBXBuildFile; fileRef = 53262A3A1F70C5A200D83852 /* more.png */; };
+		53262A3D1F7146E800D83852 /* MatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53262A3C1F7146E800D83852 /* MatchTableViewCell.swift */; };
+		53262A451F71924200D83852 /* CourtListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53262A441F71924200D83852 /* CourtListTableViewCell.swift */; };
 		532652161F6C135600EE29CA /* ConvertPHAssetToUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */; };
 		532652181F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */; };
 		5326521A1F6CE63200EE29CA /* ChangeInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */; };
@@ -134,6 +136,8 @@
 		53262A361F70341B00D83852 /* profile_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_default.png; sourceTree = "<group>"; };
 		53262A381F70BFF000D83852 /* myadd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myadd.png; sourceTree = "<group>"; };
 		53262A3A1F70C5A200D83852 /* more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more.png; sourceTree = "<group>"; };
+		53262A3C1F7146E800D83852 /* MatchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchTableViewCell.swift; sourceTree = "<group>"; };
+		53262A441F71924200D83852 /* CourtListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourtListTableViewCell.swift; sourceTree = "<group>"; };
 		532652151F6C135600EE29CA /* ConvertPHAssetToUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertPHAssetToUIImage.swift; sourceTree = "<group>"; };
 		532652171F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageButtonCollectionViewCell.swift; sourceTree = "<group>"; };
 		532652191F6CE63200EE29CA /* ChangeInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeInfoTableViewController.swift; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				537B3EF31F6DA8AA00672A7E /* SearchViewController.swift */,
+				53262A441F71924200D83852 /* CourtListTableViewCell.swift */,
 			);
 			name = SearchModule;
 			sourceTree = "<group>";
@@ -520,6 +525,7 @@
 			isa = PBXGroup;
 			children = (
 				53C94D311F63D547007FD2B9 /* FindGameViewController.swift */,
+				53262A3C1F7146E800D83852 /* MatchTableViewCell.swift */,
 				53C94D351F654657007FD2B9 /* PopTeamInfoViewController.swift */,
 				53C94D391F65501D007FD2B9 /* ModalStieInfoViewController.swift */,
 			);
@@ -800,6 +806,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53262A3D1F7146E800D83852 /* MatchTableViewCell.swift in Sources */,
 				53C94D281F623D4F007FD2B9 /* UsersTableViewController.swift in Sources */,
 				53D453051F6F8261002B3589 /* RateHelper.swift in Sources */,
 				532652271F6D1AB000EE29CA /* ChangeDescriptionViewController.swift in Sources */,
@@ -818,6 +825,7 @@
 				5310EEA11F4DCD0A00486589 /* AppDelegate.swift in Sources */,
 				53EBD8291F6941BE00A96D8E /* CustomCalloutView.swift in Sources */,
 				53EBD8491F6B6FE600A96D8E /* OOGConvert.swift in Sources */,
+				53262A451F71924200D83852 /* CourtListTableViewCell.swift in Sources */,
 				532652181F6C37F600EE29CA /* ImageButtonCollectionViewCell.swift in Sources */,
 				537B3EF11F6D9E4A00672A7E /* CourtRateTableViewCell.swift in Sources */,
 				53BC50D11F57901900BE76B8 /* Cache.swift in Sources */,

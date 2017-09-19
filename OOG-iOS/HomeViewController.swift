@@ -179,6 +179,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         let json = JSON.parse(value)
         let movments = json["movements"].arrayValue
         for movementJSON in movments{
+            let movementsType = movementJSON["movementType"].intValue
+            if movementsType == 1{
             //parse basic info
             let movment_ID = movementJSON["id"].stringValue
             let content = movementJSON["content"].stringValue
@@ -245,6 +247,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                                          movementType,
                                          displayComments)
             movementList.append(movment_Model)
+            }
         }
         movements.append(movementList)
         MovementsTableView.reloadData()

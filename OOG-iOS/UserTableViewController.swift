@@ -41,6 +41,9 @@ class UserTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "私信", style: UIAlertActionStyle.default, handler: { action in
             print("功能尚未开放")
         }))
+        var cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
         present(alert, animated: true)
     }
     @IBAction func back(_ sender: Any) {
@@ -167,7 +170,6 @@ class UserTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return profiles.count
     }
@@ -197,7 +199,6 @@ class UserTableViewController: UITableViewController {
         }
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let profile = profiles[indexPath.section][indexPath.row]
         switch profile {
@@ -213,7 +214,6 @@ class UserTableViewController: UITableViewController {
         }
     }
     // MARK: - Navigation
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationViewController = segue.destination
         if segue.identifier == "otherFollowing"{

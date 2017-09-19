@@ -19,6 +19,7 @@ enum ApiConfig{
     case userGame(userID: String)
     case courtGame(courtID : String)
     case changeUserInfo(userID : String)
+    case joinGame(gameID : String)
 }
 
 extension ApiConfig: TargetType{
@@ -44,6 +45,8 @@ extension ApiConfig: TargetType{
             return "/courts/" + courtID + "/games/"
         case .changeUserInfo(let userID):
             return "/users/" + userID + "/"
+        case .joinGame(let gameID):
+            return "/games/" + gameID + "/participation/"
         }
     }
     
@@ -53,6 +56,8 @@ extension ApiConfig: TargetType{
             return .get
         case .changeUserInfo:
             return .put
+        case .joinGame:
+            return .post
         }
     }
     
@@ -86,12 +91,15 @@ extension ApiConfig: TargetType{
                     "atCity" : ApiHelper.currentUser.atCity,
                     "avatar_url" : ApiHelper.currentUser.avatar_url
             ]
+        case .joinGame(_):
+            return ["adminID" : ApiHelper.currentUser.id,
+                    "uuid" : ApiHelper.currentUser.uuid]
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam , .userGame , .courtGame, .changeUserInfo:
+        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam , .userGame , .courtGame, .changeUserInfo, .joinGame:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -112,12 +120,14 @@ extension ApiConfig: TargetType{
             return "{\"UserID\": \(courtID)}".utf8Encoded
         case .changeUserInfo(let userID):
             return "{\"UserID\": \(userID)}".utf8Encoded
+        case .joinGame(let gameID):
+            return "{\"gameID\": \(gameID)}".utf8Encoded
         }
     }
     
     var task: Task {
         switch self {
-        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam , .userGame , .courtGame ,.changeUserInfo :
+        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam , .userGame , .courtGame ,.changeUserInfo, .joinGame :
             return .request
         }
     }

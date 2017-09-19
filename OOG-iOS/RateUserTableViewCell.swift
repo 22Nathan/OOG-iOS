@@ -17,11 +17,7 @@ class RateUserTableViewCell: UITableViewCell {
     @IBOutlet weak var BQRatingView: SwiftyStarRatingView!
     
     var delegate : RateGameTableViewControllerProtocol?
-    var userNumber : Int?{
-        didSet{
-            print(userNumber)
-        }
-    }
+    var userNumber : Int?
     var rateUser : RatedUser?{
         didSet{
             updateUI()
