@@ -11,10 +11,14 @@ import SwiftyJSON
 import DGElasticPullToRefresh
 import SwiftDate
 
-class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate {
+class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate,HomeViewControllerProtocol,MAMapViewDelegate,AMapSearchDelegate {
     let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
     let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
-    var userID : String = ApiHelper.currentUser.userID
+    var userID : String = ApiHelper.currentUser.id
+    
+    var mapView: MAMapView!
+    var search: AMapSearchAPI!
+    var request = AMapReGeocodeSearchRequest()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +34,30 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         MovementsTableView.dataSource = self
         HotTableView.dataSource = self
         
+        //定位系统
+        AMapServices.shared().apiKey = ApiHelper.mapKey
+        AMapServices.shared().enableHTTPS = true
+//        let locationManager = AMapLocationManager()
+//        locationManager.distanceFilter = 200
+//        locationManager.delegate = self
+//        locationManager.pausesLocationUpdatesAutomatically = false
+//        locationManager.locatingWithReGeocode = true
+//        locationManager.startUpdatingLocation()
+        mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+        
+        search = AMapSearchAPI()
+        search.delegate = self
+        let seconds = 90
+        perform(#selector(self.startSearch), with: nil, afterDelay: TimeInterval(seconds))
         
         // Refresh stuff
         loadingView_1.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         loadingView_2.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         MovementsTableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             Cache.homeMovementsCache.homeMovementRequest(userID: (self?.userID)!) {
-                print(self?.userID)
                 self?.loadCache()
                 self?.MovementsTableView.dg_stopLoading()
             }
@@ -62,6 +83,18 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
 //        Cache.homeMovementsCache.value = ""
         loadCache()
+        //初始化颜色
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        
+        let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        titleButton.setImage(#imageLiteral(resourceName: "number2.png"), for: UIControlState.normal)
+        self.navigationItem.titleView = titleButton
+        
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15) ]
+        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(boldFontAttribute, for: UIControlState.normal)
+        
+        let changedSeconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
+        perform(#selector(self.timeChanged), with: nil, afterDelay: TimeInterval(changedSeconds))
     }
 
     @IBOutlet weak var scrollView: UIScrollView!{
@@ -69,7 +102,22 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //            scrollView.isPagingEnabled = true
         }
     }
-    @IBOutlet weak var segmented: UISegmentedControl!
+    
+    @IBOutlet weak var slider: UISlider!{
+        didSet{
+            slider.setThumbImage(#imageLiteral(resourceName: "empty.png"), for: UIControlState.normal)
+        }
+    }
+    
+    @IBOutlet weak var segmented: UISegmentedControl!{
+        didSet{
+            segmented.tintColor = UIColor.clear
+            let unselectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )];
+            segmented.setTitleTextAttributes(unselectedTextAttributes as [NSObject : AnyObject], for: UIControlState.normal)
+            let selectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.black]
+            segmented.setTitleTextAttributes(selectedTextAttributes as [NSObject : AnyObject], for: UIControlState.selected)
+        }
+    }
     @IBOutlet weak var MovementsTableView: UITableView!
     @IBOutlet weak var HotTableView: UITableView!
     
@@ -82,15 +130,26 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
     }
     
+    func timeChanged() {
+        refreshCache()
+        // 到下一分钟的剩余秒数，这里虽然接近 60，但是不写死，防止误差累积
+        let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
+        perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
+    }
+    
     func swipe(gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .left {
             // 向左滑时展示第二个tableview,同时设置选中的segmented item
             offset = self.view.frame.width
             segmented.selectedSegmentIndex = 1
+            slider.minimumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )//
+            slider.maximumTrackTintColor = UIColor.black
         }
         else {
             offset = 0.0
             segmented.selectedSegmentIndex = 0
+            slider.minimumTrackTintColor = UIColor.black
+            slider.maximumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )
         }
     }
     
@@ -115,8 +174,13 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         return .none
     }
     
+    func cellMessageButtonDidPress(sender cell: UITableViewCell) {
+        performSegue(withIdentifier: "movementDetail", sender: cell)
+    }
+    
     //Mark : -Model
     var movements : [[Movement]] = []
+    var hotMovements : [[Movement]] = []
     
     //Mark : -Logic
     private func loadCache(){
@@ -126,19 +190,26 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         
         var movementList : [Movement] = []
+        var hotMovementList : [Movement] = []
         movements.removeAll()
+        hotMovements.removeAll()
         let value = Cache.homeMovementsCache.value
         let json = JSON.parse(value)
         let movments = json["movements"].arrayValue
         for movementJSON in movments{
+            
+            let movementsType = movementJSON["movementType"].intValue
+            if movementsType == 3{
+                continue
+            }
             //parse basic info
-//            print(movementJSON)
-            let movment_ID = movementJSON["movement_ID"].stringValue
+            let movment_ID = movementJSON["id"].stringValue
             let content = movementJSON["content"].stringValue
             let likesNumber = movementJSON["likesNumber"].stringValue
             let repostsNumber = movementJSON["repostsNumber"].stringValue
             let commentsNumber = movementJSON["commentsNumber"].stringValue
             let movementType = movementJSON["movementType"].intValue
+            let likeStatus = movementJSON["likedStatus"].stringValue
             
             //parse Date
             var created_at = movementJSON["created_at"].stringValue
@@ -148,7 +219,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             let toIndex = created_at.index(subCreated_at.startIndex,offsetBy: 11)
             let range = fromIndex..<toIndex
             subCreated_at.replaceSubrange(range, with: " ")
-//            print(subCreated_at)
             let createdDate = DateInRegion(string: subCreated_at, format: .custom("yyyy-MM-dd HH:mm:ss"), fromRegion: Region.Local())
             
             //parse imageUrl
@@ -197,11 +267,17 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                                          repostsNumber,
                                          commentsNumber,
                                          movementType,
-                                         displayComments)
-            
-            movementList.append(movment_Model)
+                                         displayComments,
+                                         likeStatus)
+            if movementType == 1{
+                movementList.append(movment_Model)
+            }
+            if movementType == 2{
+                hotMovementList.append(movment_Model)
+            }
         }
         movements.append(movementList)
+        hotMovements.append(hotMovementList)
         MovementsTableView.reloadData()
         HotTableView.reloadData()
         hideProgressDialog()
@@ -214,14 +290,54 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
     }
     
+    //Mark: - AMapLocationManagerDelegate
+    //更新用户位置
+    func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
+        request = AMapReGeocodeSearchRequest()
+        request.location = AMapGeoPoint.location(withLatitude: CGFloat(userLocation.coordinate.latitude), longitude: CGFloat(userLocation.coordinate.longitude))
+//        search.aMapReGoecodeSearch(request)
+        
+    }
+    
+    //90秒确认一次地理位置
+    func startSearch(){
+        search.aMapReGoecodeSearch(request)
+        let seconds = 90
+        perform(#selector(self.startSearch), with: nil, afterDelay: TimeInterval(seconds))
+    }
+    
+    //搜索回调函数
+    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) {
+        if response.regeocode == nil {
+            return
+        }
+        var city = response.regeocode.addressComponent.city! as NSString
+        let range = NSMakeRange(0, city.length-1)
+        ApiHelper.currentUser.atCity = city.substring(with: range)
+        self.navigationItem.leftBarButtonItem?.title = ApiHelper.currentUser.atCity
+    }
     
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return movements.count
+        if tableView.tag == 101{
+            return movements.count
+        }else{
+            return hotMovements.count
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movements[section].count
+        if tableView.tag == 101{
+            return movements[section].count
+        }else{
+            return hotMovements[section].count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let movement = movements[indexPath.section][indexPath.row]
+        let commentHeight = CGFloat(movement.comments.count * 29)
+        return 520 + commentHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -230,16 +346,17 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             reusedID = "HomeMovement"
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath) as! HomeMovementTableViewCell
             cell.movement = movements[indexPath.section][indexPath.row]
+            cell.delegate = self
             return cell
         }
         else{
             reusedID = "HomeHot"
-            let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath)
-            cell.textLabel!.text = "第二个TableView"
+            let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath) as! HomeMovementTableViewCell
+            cell.movement = hotMovements[indexPath.section][indexPath.row]
+            cell.delegate = self
             return cell
         }
     }
-    
     
      // MARK: - Navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -268,4 +385,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             }
         }
     }
+}
+
+protocol HomeViewControllerProtocol {
+    func cellMessageButtonDidPress(sender cell: UITableViewCell)
 }

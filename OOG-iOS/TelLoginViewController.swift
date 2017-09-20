@@ -16,8 +16,18 @@ class TelLoginViewController: UIViewController,UITextFieldDelegate {
     //Mark: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginButton.backgroundColor = UIColor.flatBlue
+        loginButton.backgroundColor = UIColor(red: 0/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
         loginButton.addTarget(self, action: #selector(loginRequest), for: .touchDown)
+        
+//        let underLine_1 = UIView(frame: CGRect(x: 16, y: 237, width: 343, height: 1))
+//        underLine_1.backgroundColor = UIColor(red: 112/255.0, green: 128/255.0, blue: 144/255.0, alpha: 1.0)
+//        let underLine_2 = UIView(frame: CGRect(x: 16, y: 287, width: 343, height: 1))
+//        underLine_2.backgroundColor = UIColor(red: 112/255.0, green: 128/255.0, blue: 144/255.0, alpha: 1.0)
+//        self.view.addSubview(underLine_1)
+//        self.view.addSubview(underLine_2)
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
     }
     
     //Mark: - model
@@ -80,8 +90,9 @@ class TelLoginViewController: UIViewController,UITextFieldDelegate {
                         let followings = json["followings"].stringValue
                         let likes = json["likes"].stringValue
                         let position = json["position"].stringValue
-                        self.user.userID = userID
-                        ApiHelper.uuid = uuid
+                        
+                        self.user.id = userID
+                        self.user.uuid = uuid
                         self.user.followers = followers
                         self.user.followings = followings
                         self.user.likes = likes

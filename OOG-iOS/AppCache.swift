@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import Moya
+import SVProgressHUD
 
 class AppCache{
     static let myCache = UserDefaults.standard
@@ -52,12 +53,12 @@ class AppCache{
     //MARK: - Request
     
     //获取用户个人信息
-    func userInfoRequest(_ username : String, completionHandler: @escaping ()->() ){
-        provider.request(.userInfo(username: username)) {result in
+    func userInfoRequest(_ userID : String, completionHandler: @escaping ()->() ){
+        provider.request(.userInfo(userID: userID)) {result in
             switch result{
             case let .success(moyaResponse):
                 let data = moyaResponse.data
-                let json = JSON(data)
+                var json = JSON(data)
                 print("##################Request User Info###########################")
 //                print(json)
                 self.set(self.key, json.rawString()!)
@@ -77,7 +78,7 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request Home Movements###########################")
-                print(json)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
@@ -95,11 +96,29 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Movements###########################")
-                print(json)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
                 print("##################请求用户动态列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获取用户点赞的动态列表
+    func userLikeMovementsRequest(_ userID : String, completionHandler: @escaping ()->() ){
+        provider.request(.userMovement(userID: userID)) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Like Movements###########################")
+                //                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户点赞动态列表失败###########################")
                 print(error)
             }
         }
@@ -131,12 +150,110 @@ class AppCache{
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Followers OR Followings " + listType +  "###########################")
-//                                print(json)
-//                self.setKeysuffix(listType)
+//                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):
                 print("##################请求用户关注或粉丝列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获取用户组队信息
+    func userTeamInfo(_ userID : String , completionHandler: @escaping (_ ifEmpty : Bool)->()){
+        provider.request(.userTeam(userID: userID)){result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Team Info###########################")
+//                print(json)
+                self.set(self.key, json.rawString()!)
+                let result = json["result"].stringValue
+                if result == "failed"{
+                    completionHandler(true)
+                }else{
+                    completionHandler(false)
+                }
+            case let .failure(error):
+                print("##################请求用户组队信息失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获得用户比赛信息
+    func userGameRequest(userID : String , completionHandler: @escaping ()->()) {
+        provider.request(.userGame(userID: userID) ) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request User Game###########################")
+//                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户比赛列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //获取球馆比赛信息
+    func courtGameRequest(courtID : String, completionHandler: @escaping ()->()){
+        provider.request(.courtGame(courtID: courtID) ) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Request Court Game###########################")
+//                                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求球馆比赛列表失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //更改个人信息
+    func changeUserInfo(_ userID : String, completionHandler: @escaping ()->() ){
+        provider.request(.changeUserInfo(userID: userID)) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Change User Info###########################")
+                //                print(json)
+                self.set(self.key, json.rawString()!)
+                completionHandler()
+            case let .failure(error):
+                print("##################请求用户详情失败###########################")
+                print(error)
+            }
+        }
+    }
+    
+    //加入比赛
+    func joinGame( _ gameID : String){
+        provider.request(.joinGame(gameID: gameID)) {result in
+            switch result{
+            case let .success(moyaResponse):
+                let data = moyaResponse.data
+                let json = JSON(data)
+                print("##################Join Game###########################")
+                                print(json)
+                let result = json["result"].stringValue
+                if result == "ok"{
+                    SVProgressHUD.showInfo(withStatus: "您已加入比赛")
+                }else{
+                    SVProgressHUD.showInfo(withStatus: "操作失败")
+                }
+            case let .failure(error):
+                print("##################请求用户详情失败###########################")
                 print(error)
             }
         }

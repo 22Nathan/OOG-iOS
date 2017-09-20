@@ -16,15 +16,20 @@ class MovementDisplayTableViewCell: UITableViewCell,UICollectionViewDelegate,UIC
             self.collectionView.showsVerticalScrollIndicator = false
             self.collectionView.delegate = self
             self.collectionView.dataSource = self
-//            self.collectionView.register(MovementCollectionViewCell.self, forCellWithReuseIdentifier: "imageCollection")
         }
     }
-    
-//     private let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     var movements : [Movement] = []{
         didSet{
             self.collectionView.reloadData()
+            var lines = CGFloat(movements.count / 3)
+            if (movements.count % 3 > 0) || (movements.count == 3) || (movements.count == 6){
+                lines += 1
+            }
+            if lines == 0{
+                lines = 1
+            }
+            self.collectionView.frame = CGRect(origin: collectionView.frame.origin, size: CGSize(width: collectionView.frame.width, height: lines*125 - 3) )
         }
     }
     
@@ -32,22 +37,18 @@ class MovementDisplayTableViewCell: UITableViewCell,UICollectionViewDelegate,UIC
         return 1
     }
     
-//    func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize{
-//        return CGSize(width: 125, height: 125)
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        if movements.count > 9{
+            return 9
+        }else{
+            return (movements.count + 1)
+        }
     }
     
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == 8{
+        if (indexPath.row == movements.count) || (indexPath.row == 8){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ButtonCollection", for: indexPath) as! ButtonCollectionViewCell
-            cell.publishMovementButton.setTitle("超大加号", for: UIControlState(rawValue: 0))
+            cell.publishMovementButton.setImage(#imageLiteral(resourceName: "myadd.png"), for: UIControlState.normal)
             return cell
         }
         let movement = movements[indexPath.row]

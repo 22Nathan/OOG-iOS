@@ -16,6 +16,19 @@ class Cache{
         Cache.imageCache.set(value,forKey: key)
     }
     
+    //Mark: - updateImage
+    static let tempImageCache = UserDefaults.standard
+    static var keySet = Set<String>()
+    
+    static func tempImageSet(_ key : String, _ value : Any?){
+        Cache.tempImageCache.set(value, forKey: key)
+    }
+    static func clearTempImage(){
+        for key in keySet{
+            Cache.tempImageCache.removeObject(forKey: key)
+        }
+    }
+    
     //Mark: - currentUser
     static let currentUserKey = "currentUser"
     static let currentUserCache = AppCache(currentUserKey){
@@ -37,9 +50,58 @@ class Cache{
         return provider
     }
     
+    //Mark: - userLikeMovements
+    static let userLikeMovementsKey = "userLikeMovements"
+    static let userLikeMovementCache = AppCache(userLikeMovementsKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark : - movementComment
+    static let movementCommentKey = "movementComments"
+    static let movementCommentCache = AppCache(movementCommentKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
     //Mark: - userFollowers OR Follings list
     static let userListKey = "userList"
     static let userListCache = AppCache(userListKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark: - otherUsers
+    static let otherUsersKey = "otherUsers"
+    static let otherUsersCache = AppCache(otherUsersKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark: - userTeam
+    static let userTeamKey = "userTeam"
+    static let userTeamCache = AppCache(userTeamKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark: - userGame
+    static let userGameKey = "userGame"
+    static let userGameCache = AppCache(userGameKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark: - courtGame
+    static let courtGameKey = "courtGame"
+    static let courtGameCache = AppCache(courtGameKey){
+        var provider = MoyaProvider<ApiConfig>()
+        return provider
+    }
+    
+    //Mark: - postCache
+    static let postCacheKey = "post"
+    static let postCache = AppCache(postCacheKey){
         var provider = MoyaProvider<ApiConfig>()
         return provider
     }

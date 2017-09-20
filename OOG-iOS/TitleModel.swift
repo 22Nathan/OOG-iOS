@@ -18,6 +18,7 @@ class TitleModel{
     var followers : String     //粉丝分数
     var likes : String         //点赞的动态数量
     var description : String    //个人描述
+    var followType : String
     
     init(_ username : String = "",
          _ userID : String = "",
@@ -27,7 +28,8 @@ class TitleModel{
          _ followings : String = "",
          _ followers : String = "",
          _ likes : String = "",
-         _ description : String) {
+         _ description : String,
+         _ followType : String = "") {
         self.username = username
         self.userID = userID 
         self.tel = tel
@@ -37,5 +39,6 @@ class TitleModel{
         self.followers = followers
         self.likes = likes
         self.description = description
+        self.followType = followType
     }
 }

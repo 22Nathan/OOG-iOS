@@ -9,7 +9,11 @@
 import UIKit
 
 class ButtonCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var publishMovementButton: UIButton!
+    @IBOutlet weak var publishMovementButton: UIButton!{
+        didSet{
+            publishMovementButton.tintColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
+        }
+    }
     
     
 }

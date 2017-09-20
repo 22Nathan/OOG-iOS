@@ -10,6 +10,7 @@
 #define Map_Bridging_h
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 #import <MAMapKit/MAMapKit.h>
 //#import <AMapSearchKit/APIKey.h>
 

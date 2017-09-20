@@ -7,91 +7,537 @@
 //
 
 import UIKit
-class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDelegate {
+import Alamofire
+import SwiftyJSON
+import SVProgressHUD
 
+class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDelegate,AMapLocationManagerDelegate,UIGestureRecognizerDelegate,UISearchBarDelegate {
     var mapView: MAMapView!
     var search: AMapSearchAPI!
+    var courtList : [Court] = []
+    var annotationList : [MAAnnotation?] = []
+    var selectedAnnotation : MAAnnotation?
+    var selectedCourt : Court? //点击发请求后才获得
+    var displayedGame : Game?  //点击发请求后才获得
+    var ifHaveDisplayedGame = false
+    
+    var emptyView = UIView()
+    let dropDownView = UIView()
+    
+    var noGmaeLabel = UILabel()
+    var gameTimeLabel = UILabel()
+    var gameTypeLabel = UILabel()
+    var gameRateLabel = UILabel()
+    var joinGameButton = UIButton()
+    var moreButton = UIButton()
+    
+//    var searchBar : UISearchBar = UISearchBar(frame: CGRect(x: 30, y: 3, width: 370, height: 35))
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         AMapServices.shared().apiKey = ApiHelper.mapKey
         AMapServices.shared().enableHTTPS = true
         
+        //navigation Bar
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
+        //searchBar
+        searchBar.backgroundColor = UIColor.clear
+        searchBar.delegate = self
+        searchBar.placeholder = "搜索球员、球场"
+        let rightNavBarButton = UIBarButtonItem(customView:searchBar)
+        self.navigationItem.rightBarButtonItem = rightNavBarButton
+
+        
+        //初始化mapView
         mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height))
         mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.showsCompass = false
         mapView.showsScale = false
+//        mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
+        
+        //自定义蓝点
+        let r = MAUserLocationRepresentation()
+        mapView.customizeUserLocationAccuracyCircleRepresentation = true
+        r.showsHeadingIndicator = true
+        mapView.update(r)
+        
         self.view.addSubview(mapView!)
+        
+        //地图上控件
+        let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 23, height: 32))
+        centerLogo.setImage(#imageLiteral(resourceName: "at_icon").reSizeImage(reSize: CGSize(width: 23, height: 56)), for: UIControlState.normal)
+        mapView.addSubview(centerLogo)
+        
+        //回到user location
+        let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 135, width: 20, height: 20))
+        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "center.png"), for: UIControlState.normal)
+        mapView.addSubview(backToWhereIAmButton)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapEvent(byReactingTo:)))
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.numberOfTouchesRequired = 1
+        backToWhereIAmButton.addGestureRecognizer(tapRecognizer)
         
         //initSearch
         search = AMapSearchAPI()
         search.delegate = self
-        demoRequest()
-    }
-    
-    func demoRequest(){
-        let request = AMapPOIKeywordsSearchRequest()
-        request.keywords = "篮球场"
-        request.requireExtension = true
-        request.city = "南京"
-        request.cityLimit = true
-        request.requireSubPOIs = true
-        search.aMapPOIKeywordsSearch(request)
-    }
-    
-    func onPOISearchDone(_ request: AMapPOISearchBaseRequest!, response: AMapPOISearchResponse!) {
         
-        if response.count == 0 {
-            return
+        //发起初始定位
+        requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        searchBar.resignFirstResponder()
+        
+    }
+    
+    // 请求后台服务器最近5km的球场信息
+    func requestCourtsNearBy(coordinate: CLLocationCoordinate2D!,completionHandler: @escaping () -> ()){
+        var parameters = [String : String]()
+        let longitude = CGFloat(coordinate.longitude)
+        let latitude = CGFloat(coordinate.latitude)
+        parameters["longitude"] = String(describing: longitude)
+        parameters["latitude"] = String(describing: latitude)
+        parameters["atCity"] = "南京"
+        Alamofire.request(ApiHelper.API_Root + "/courts/nearby/",
+                          method: .get,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response courts ###################")
+//                                    print(json)
+                                    if json["result"].exists(){
+                                        if json["result"] == "No service in your city"{
+                                            SVProgressHUD.showInfo(withStatus: "您所在城市未开放服务")
+                                        }
+                                        self.courtList.removeAll()
+                                        completionHandler()
+                                    }else{
+                                        //清空之前记录
+                                        self.courtList.removeAll()
+                                        let courts = json["courts"].arrayValue
+                                        for courtJson in courts{
+                                            let courtID = courtJson["id"].stringValue
+                                            let courtName = courtJson["courtName"].stringValue
+                                            let courtType = courtJson["courtType"].stringValue
+                                            
+                                            var imageNumber = 0
+                                            let imageUrlsJSON = courtJson["court_image_url"].arrayValue
+                                            var imageUrls : [String] = []
+                                            for imageUrl in imageUrlsJSON{
+                                                imageUrls.append(imageUrl.stringValue)
+                                                imageNumber += 1
+                                            }
+                                            
+                                            let court_image_url = courtJson["court_image_url"].stringValue
+                                            let location = courtJson["location"].stringValue
+                                            let atCity = courtJson["atCity"].stringValue
+                                            let rate = courtJson["rate"].stringValue
+                                            let game_now_url = courtJson["game_now_url"].stringValue
+                                            let status = courtJson["status"].stringValue
+                                            let longitude = courtJson["longitude"].stringValue
+                                            let latitude = courtJson["latitude"].stringValue
+                                            let tel = courtJson["tel"].stringValue
+                                            let court = Court(courtID,
+                                                              courtName,
+                                                              courtType,
+                                                              imageUrls,
+                                                              location,
+                                                              atCity,
+                                                              rate,
+                                                              game_now_url,
+                                                              status,
+                                                              longitude,
+                                                              latitude,
+                                                              tel)
+                                            self.courtList.append(court)
+                                            completionHandler()
+                                        }
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
         }
-        for add in response.pois{
-            print(add.address)
-            let coordinate = CLLocationCoordinate2DMake(Double(add.location.latitude), Double(add.location.longitude))
-            
+
+    }
+    
+    // 回调函数 更新Annotation
+    func addAnnotationFromCourt(){
+        for annotation in self.annotationList{
+            self.mapView!.removeAnnotation(annotation)
+        }
+        annotationList.removeAll()
+        
+        for court in courtList{
             let annotation = MAPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = add.address
-            annotation.subtitle = add.city
+            annotationList.append(annotation)
+            annotation.coordinate = CLLocationCoordinate2DMake(Double(court.latitude)!, Double(court.longitude)!)
+            annotation.title = court.courtName
+            annotation.subtitle = court.location
             mapView!.addAnnotation(annotation)
         }
-
-        //解析response获取POI信息，具体解析见 Demo
-    }
-
-    // 发起逆地理编码请求
-    func searchReGeocodeWithCoordinate(coordinate: CLLocationCoordinate2D!) {
-        let regeo: AMapReGeocodeSearchRequest = AMapReGeocodeSearchRequest()
-        regeo.location = AMapGeoPoint.location(withLatitude: CGFloat(coordinate.latitude), longitude: CGFloat(coordinate.longitude))
-        self.search!.aMapReGoecodeSearch(regeo)
     }
     
-    //MARK:- MAMapViewDelegate
-    func mapView(_ mapView: MAMapView!, didLongPressedAt coordinate: CLLocationCoordinate2D) {
-        // 长按地图触发回调，在长按点进行逆地理编码查询
-        searchReGeocodeWithCoordinate(coordinate: coordinate)
+    //用户移动中心标时
+    func mapView(_ mapView: MAMapView!, mapDidMoveByUser wasUserAction: Bool) {
+        requestCourtsNearBy(coordinate: mapView.centerCoordinate, completionHandler: addAnnotationFromCourt)
     }
     
+//    func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
+//        
+//        if annotation.isKind(of: MAPointAnnotation.self) {
+//            let annotationReuseIndetifier = "annotationReuseIndetifier"
+//            var annotationView: CustomAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: annotationReuseIndetifier) as! CustomAnnotationView?
+//            
+//            if annotationView == nil {
+//                annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: annotationReuseIndetifier)
+//            }
+//            annotationView?.setSelected(true, animated: true)
+//            annotationView?.canShowCallout = false
+////            annotationView?.centerOffset = CGPoint(x: 0, y: -18)
+////            annotationView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure)
+//            return annotationView!
+//        }
+//        return nil
+//    }
+    
+    //弹出的callout
+    func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
+        
+        if annotation.isKind(of: MAPointAnnotation.self) {
+            let pointReuseIndetifier = "pointReuseIndetifier"
+            var annotationView: MAAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier)
+            
+            if annotationView == nil {
+                annotationView = MAAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
+            }
+            annotationView!.canShowCallout = true
+            annotationView?.isDraggable = false
+            annotationView!.image = #imageLiteral(resourceName: "game_chosen.png").reSizeImage(reSize: CGSize(width: 32, height: 32))
+            
+            //设置中心点偏移，使得标注底部中间点成为经纬度对应点
+            annotationView!.centerOffset = CGPoint(x: 0, y: -18);
+            return annotationView!
+        }
+        return nil
+    }
+    
+    //annotation点击事件
+    func mapView(_ mapView: MAMapView!, didSelect view: MAAnnotationView!) {
+        let annotation = view.annotation
+        var courtID = ""
+        for court in courtList{
+            if court.courtName == annotation?.title{
+                courtID = court.id
+            }
+        }
+        requestCourtInfo(courtID, annotation: annotation!, completionHandler: showDropDownView)
+    }
+    
+    // 下弹视图
+    func showDropDownView(_ annotation: MAAnnotation!) {
+        mapView.setZoomLevel(mapView.zoomLevel*1.1, animated: true)
+        selectedAnnotation = annotation
+        // 定义下弹视图的位置和大小
+        let originDropDownView = CGPoint(x: 0, y: -56)
+        var sizeDropDownView = CGSize(width: 375, height: 120)
+        
+        // 定义手势动作并关联手势触发的行为
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissDropDownView(_:)))
+
+        //滑动手势
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
+        swipeLeft.direction = .left
+        swipeLeft.numberOfTouchesRequired = 1
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
+        swipeRight.direction = .right
+        swipeRight.numberOfTouchesRequired = 1
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
+        swipeDown.direction = .down
+        swipeDown.numberOfTouchesRequired = 1
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
+        swipeUp.direction = .up
+        swipeUp.numberOfTouchesRequired = 1
+        
+        // 手势需要遵循的代理：UIGestureRecognizerDelegate
+        tapGestureRecognizer.delegate = self
+        
+        // 设置空视图的大小，打开交互，添加手势
+        emptyView.frame = self.view.frame
+        emptyView.isUserInteractionEnabled = true
+        emptyView.addGestureRecognizer(tapGestureRecognizer)
+        emptyView.addGestureRecognizer(swipeLeft)
+        emptyView.addGestureRecognizer(swipeRight)
+        emptyView.addGestureRecognizer(swipeDown)
+        emptyView.addGestureRecognizer(swipeUp)
+
+        dropDownView.backgroundColor = UIColor.white
+        dropDownView.frame = CGRect(origin: originDropDownView, size: sizeDropDownView)
+        dropDownView.alpha = 1
+        
+        // 转场动画
+        UIView.animate(withDuration: 0.3) { () -> Void in
+            self.dropDownView.frame.origin = CGPoint(x: 0, y: 64)
+        }
+        
+        //加载控件与数据
+        if !ifHaveDisplayedGame{
+            sizeDropDownView.height = 85
+            noGmaeLabel = UILabel(frame: CGRect(x: 0, y: 10, width: 375, height: 40))
+            noGmaeLabel.text = "当前球场没有比赛,去看看其他球场吧~"
+            noGmaeLabel.textAlignment = .center
+            noGmaeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            noGmaeLabel.textColor = UIColor(red: 211/255.0, green: 211/255.0, blue: 211/255.0, alpha: 1.0)
+            
+            moreButton = UIButton(frame: CGRect(x: 20, y: 67, width: 335, height: 25))
+            moreButton.backgroundColor = UIColor(red: 255/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
+            moreButton.titleLabel?.textAlignment = .center
+            moreButton.setTitle("查看球场详情", for: UIControlState.normal)
+            moreButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+            moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
+            
+            dropDownView.addSubview(noGmaeLabel)
+            dropDownView.addSubview(moreButton)
+        }else{
+            gameTypeLabel = UILabel(frame: CGRect(x: 0, y: 5, width: 125, height: 40))
+            gameTypeLabel.textAlignment = .center
+            gameTypeLabel.numberOfLines = 0
+            gameTypeLabel.text = "比赛类型\n" + convertNumberToDisplayedGameType((displayedGame?.game_type)!)
+            gameTypeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            gameRateLabel = UILabel(frame: CGRect(x: 125, y: 5, width: 125, height: 40))
+            gameRateLabel.text = "参赛者平均分\n" + (displayedGame?.game_rate)!
+            gameRateLabel.textAlignment = .center
+            gameRateLabel.numberOfLines = 0
+            gameRateLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            gameTimeLabel = UILabel(frame: CGRect(x: 250, y: 5, width: 125, height: 40))
+            let nsString = (displayedGame?.started_at)! as NSString
+            let range = NSRange(location: 7, length: nsString.length)
+            let displayedTime = (displayedGame?.started_at)!.substring(range)
+            gameTimeLabel.text = "比赛开始时间\n" + displayedTime
+            gameTimeLabel.textAlignment = .center
+            gameTimeLabel.numberOfLines = 0
+            gameTimeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            
+            joinGameButton = UIButton(frame: CGRect(x: 20, y: 50, width: 335, height: 26))
+            joinGameButton.backgroundColor = UIColor(red: 255/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
+            joinGameButton.titleLabel?.textAlignment = .center
+            joinGameButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+            joinGameButton.setTitle("加入比赛", for: UIControlState.normal)
+            joinGameButton.clipsToBounds = true
+            joinGameButton.layer.masksToBounds = true
+            joinGameButton.layer.borderWidth = 1
+            joinGameButton.layer.borderColor = UIColor.white.cgColor
+            joinGameButton.addTarget(self, action: #selector(joinGame), for: UIControlEvents.touchDown)
+            
+            moreButton = UIButton(frame: CGRect(x: 20, y: 83, width: 335, height: 26))
+            moreButton.backgroundColor = UIColor(red: 255/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
+            moreButton.titleLabel?.textAlignment = .center
+            moreButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+            moreButton.setTitle("查看更多", for: UIControlState.normal)
+            moreButton.clipsToBounds = true
+            moreButton.layer.masksToBounds = true
+            moreButton.layer.borderWidth = 1
+            moreButton.layer.borderColor = UIColor.white.cgColor
+            moreButton.addTarget(self, action: #selector(seeMore), for: UIControlEvents.touchDown)
+            
+            dropDownView.addSubview(gameTypeLabel)
+            dropDownView.addSubview(gameRateLabel)
+            dropDownView.addSubview(gameTimeLabel)
+            dropDownView.addSubview(joinGameButton)
+            dropDownView.addSubview(moreButton)
+        }
+        ifHaveDisplayedGame = false
+        
+        // 加载视图
+        emptyView.addSubview(dropDownView)
+        self.view.addSubview(emptyView)
+    }
+    
+    func dismissDropDownView(_ sender: UITapGestureRecognizer) {
+        popOffDropDownView()
+    }
+    
+    //下弹视图收回
+    private func popOffDropDownView(){
+        noGmaeLabel.removeFromSuperview()
+        gameTypeLabel.removeFromSuperview()
+        gameTimeLabel.removeFromSuperview()
+        gameRateLabel.removeFromSuperview()
+        moreButton.removeFromSuperview()
+        joinGameButton.removeFromSuperview()
+        UIView.animate(withDuration: 0.3) { () -> Void in
+            self.dropDownView.frame.origin = CGPoint(x: 0, y: -36)
+        }
+        mapView.setZoomLevel(mapView.zoomLevel/1.1, animated: true)
+        let seconds = 0.3
+        perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
+        mapView.deselectAnnotation(selectedAnnotation, animated: false)
+    }
+    
+    //延时操作，等待下弹视图转场动画结束
+    func timeChanged(){
+        emptyView.removeFromSuperview()
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let touchPoint = touch.location(in: emptyView)
+        // 如果touchPoint在播放列表的视图范围内，则不响应手势
+        if dropDownView.frame.contains(touchPoint) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    //Mark : - toSearch
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        print("dssadas")
+//        performSegue(withIdentifier: "toSearch", sender: self)
+////        searchBar.endEditing(false)
+//    }
+    
+//    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+//        print("dssadas")
+//        performSegue(withIdentifier: "toSearch", sender: self)
+//    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        performSegue(withIdentifier: "toSearch", sender: self)
+        return false
+    }
+    
+    //
+    func joinGame(){
+        Cache.postCache.joinGame((displayedGame?.gameID)!)
+    }
+    
+    func seeMore(){
+        performSegue(withIdentifier: "seeMore", sender: self)
+    }
+
+    //滑动手势
+    func swipe(gesture: UISwipeGestureRecognizer) {
+        popOffDropDownView()
+        if gesture.direction == .left{
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude+0.1), animated: true)
+        }else if gesture.direction == .right{
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude-0.1), animated: true)
+        }else if gesture.direction == .up{
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude-0.1, mapView.centerCoordinate.longitude), animated: true)
+        }else if gesture.direction == .down{
+            mapView.setCenter(CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude+0.1, mapView.centerCoordinate.longitude), animated: true)
+        }
+
+    }
+    
+    // tap手势
+    func tapEvent(byReactingTo tapRecognizer: UITapGestureRecognizer){
+        if tapRecognizer.state == .ended{
+            mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+        }
+    }
+    
+    //Mark : - RequestCourt
+    private func requestCourtInfo(_ courtID : String , annotation : MAAnnotation,completionHandler: @escaping (_ annotation: MAAnnotation) -> ()){
+        Alamofire.request(ApiHelper.API_Root + "/courts/" + courtID + "/",
+                          method: .get,
+                          parameters: nil,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response Court Info ###################")
+//                                    print(json)
+                                    let courtID = json["id"].stringValue
+                                    let courtName = json["courtName"].stringValue
+                                    let atCity = json["atCity"].stringValue
+                                    
+                                    var imageNumber = 0
+                                    let imageUrlsJSON = json["court_image_url"].arrayValue
+                                    var imageUrls : [String] = []
+                                    for imageUrl in imageUrlsJSON{
+                                        imageUrls.append(imageUrl.stringValue)
+                                        imageNumber += 1
+                                    }
+                                    let location = json["location"].stringValue
+                                    let longitude = json["longitude"].stringValue
+                                    let latitude = json["latitude"].stringValue
+                                    let courtRate = json["courtRate"].stringValue
+                                    let courtStatus = json["status"].stringValue
+                                    let priceRate = json["priceRate"].stringValue
+                                    let transportRate = json["transportRate"].stringValue
+                                    let facilityRate = json["facilityRate"].stringValue
+                                    let status = json["status"].stringValue
+                                    let court = Court(courtID,
+                                                      courtName,
+                                                      "",
+                                                      imageUrls,
+                                                      location,
+                                                      atCity,
+                                                      courtRate,
+                                                      "",
+                                                      courtStatus,
+                                                      longitude,
+                                                      latitude,
+                                                      priceRate,
+                                                      transportRate,
+                                                      facilityRate)
+                                    self.selectedCourt = court
+                                    if status != "1"{
+                                        //parse displayedGame
+                                        self.ifHaveDisplayedGame = true
+                                        let game_id = json["displayedGame"]["id"].stringValue
+                                        let game_rate = json["displayedGame"]["game_rate"].stringValue
+                                        let game_type = json["displayedGame"]["game_type"].stringValue
+                                        let game_status = json["displayedGame"]["game_status"].stringValue
+                                        let participantNumber = json["displayedGame"]["participantNumber"].stringValue
+                                        let started_at = json["displayedGame"]["started_at"].stringValue
+                                        let game = Game(game_id,
+                                                        game_type,
+                                                        game_status,
+                                                        started_at,
+                                                        court,
+                                                        participantNumber,
+                                                        game_rate)
+                                        self.displayedGame = game
+                                    }
+                                }
+                                completionHandler(annotation)
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
     
     //MARK:- AMapSearchDelegate
     func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {
         print("request :\(request), error: \(error)")
     }
     
-    // 逆地理查询回调
-    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest, response: AMapReGeocodeSearchResponse) {
-        
-        print("response :\(response.formattedDescription())")
-        
-        if (response.regeocode != nil) {
-            let coordinate = CLLocationCoordinate2DMake(Double(request.location.latitude), Double(request.location.longitude))
-            
-            let annotation = MAPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = response.regeocode.formattedAddress
-            annotation.subtitle = response.regeocode.addressComponent.province
-            mapView!.addAnnotation(annotation)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destinationViewController = segue.destination
+        if segue.identifier == "seeMore"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let courtVC = destinationViewController as? CourtTableViewController{
+                courtVC.court = selectedCourt
+                courtVC.navigationItem.title = selectedCourt?.courtName
+            }
         }
     }
     

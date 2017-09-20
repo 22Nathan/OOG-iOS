@@ -12,17 +12,28 @@ import Alamofire
 import SwiftyJSON
 import SwiftDate
 import SVProgressHUD
+import DKImagePickerController
+import Photos
+import SwiftPhotoGallery
 
-class PublishMovementViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate {
-
+class PublishMovementViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,PublishMovementViewControllerDelegate,SwiftPhotoGalleryDelegate,SwiftPhotoGalleryDataSource {
+    var uploadPHAssets : [PHAsset] = []
+    var uploadImages : [UIImage] = []
+    var previewImages : [UIImage] = []
+    var token : String = ""
+    var userID : String = ""
+    var imageUrls : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        uploadImages.append(#imageLiteral(resourceName: "myadd.png"))
     }
-
-    @IBOutlet weak var imageButton: UIButton!{
+    
+    @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
-            imageButton.imageView?.contentMode = .scaleAspectFit
-            imageButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+            collectionView.isScrollEnabled = false
+            collectionView.delegate = self
+            collectionView.dataSource = self
         }
     }
     
@@ -44,52 +55,115 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
         }
     }
     
-    @IBAction func postAction(_ sender: Any) {
-        requestToken() //三级回调
-        showProgressDialog()
+    //监听多张图片上传
+    var uploadImageCount = 0{
+        didSet{
+            if uploadImageCount == uploadPHAssets.count{
+                self.postOut()
+            }
+        }
     }
     
+    @IBAction func postAction(_ sender: Any) {
+        requestToken() //三级回调 先请求token
+        showProgressDialog()
+    }
     @IBOutlet weak var siteButton: UIButton!
     @IBOutlet weak var mentionButton: UIButton!
     
-    // variables
-    var uploadImages : [Data] = []
-    var token : String = ""
-    var userID : String = ""
-    var key : String = ""
-//    var keySuffix : String {
-//        return DateInRegion(absoluteDate: Date(), in: Region.Local()).string()
-//    }
-//    var key : String{
-//        return keyPrefix + keySuffix
-//    }
-    
-    @IBAction func pickImage(_ sender: Any) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }
+    //Mark : - PublishMovementViewControllerDelegate
+    func deleteFirst() {
+        self.uploadImages.popLast()
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        var uploadImage : UIImage? = nil
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            imageButton.setBackgroundImage(image, for: UIControlState.normal)
-            uploadImage = image
-        }
-        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imageButton.setBackgroundImage(image, for: UIControlState.normal)
-            uploadImage = image
-        } else{
-            print("Something went wrong")
-        }
-        let imageData = UIImagePNGRepresentation(uploadImage!)
-        uploadImages.append(imageData!)
-        self.dismiss(animated: true, completion: nil)
+    func appendImage(_ image: UIImage) {
+        self.uploadImages.append(image)
     }
+    
+    func appendPreviewImage(_ image: UIImage) {
+        self.previewImages.append(image)
+    }
+    
+    func appendAsset(_ assets: PHAsset) {
+        self.uploadPHAssets.append(assets)
+    }
+    
+    func presentPickVC(_ vc: DKImagePickerController) {
+        self.present(vc, animated: true)
+    }
+    
+    func reloadView() {
+        self.collectionView.reloadData()
+    }
+    
+    func preview() {
+        let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
+        gallery.backgroundColor = UIColor.black
+        gallery.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.5)
+        gallery.currentPageIndicatorTintColor = UIColor.white
+        gallery.hidePageControl = false
+        present(gallery, animated: true, completion: nil)
+    }
+    
+    // Gallery dataSource
+    func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
+        return previewImages.count
+    }
+    
+    func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
+        return previewImages[forIndex]
+    }
+    
+    func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // collection dataSource
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return uploadImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let image = uploadImages[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageButton", for: indexPath) as! ImageButtonCollectionViewCell
+        cell.image = image
+        cell.delegate = self
+        if ( (indexPath.row + 1) == uploadImages.count ){
+            cell.lastPlus = true
+        }else{
+            cell.lastPlus = false 
+        }
+        return cell
+    }
+    
+//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
+//            let imagePicker = UIImagePickerController()
+//            imagePicker.delegate = self
+//            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+//            imagePicker.allowsEditing = false
+//            self.present(imagePicker, animated: true, completion: nil)
+//        }
+    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        var uploadImage : UIImage? = nil
+//        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+//            imageButton.setBackgroundImage(image, for: UIControlState.normal)
+//            uploadImage = image
+//        }
+//        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            imageButton.setBackgroundImage(image, for: UIControlState.normal)
+//            uploadImage = image
+//        } else{
+//            print("Something went wrong")
+//        }
+//        let imageData = UIImagePNGRepresentation(uploadImage!)
+//        uploadImages.append(imageData!)
+//        self.dismiss(animated: true, completion: nil)
+//    }
     
     private func requestToken(){
         Alamofire.request(ApiHelper.API_Root + "/users/picture/authentication/",
@@ -111,23 +185,31 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     
     private func uploadData(){
         let upManager = QNUploadManager()
-        key = userID
-        upManager?.put(uploadImages[0], key: key, token: token, complete: { (responseInfo, key , dict) in
-            if (responseInfo?.isOK)!{
-                print("上传成功")
-                self.postOut()
-            }else{
-                SVProgressHUD.showInfo(withStatus: "图片上传失败")
-            }
-        }, option: nil)
+        for asset in uploadPHAssets{
+            let date = NSDate()
+            let timeInterval = date.timeIntervalSince1970 * 1000
+            let key = userID + String(timeInterval)
+            upManager?.put(asset, key: key, token: token, complete: { (responseInfo, key, dict) in
+                if (responseInfo?.isOK)!{
+                    if(self.uploadImageCount == 0){
+                        self.imageUrls += (ApiHelper.qiniu_Root + key!)
+                    }else{
+                        self.imageUrls += ("," + ApiHelper.qiniu_Root + key!)
+                    }
+                    self.uploadImageCount += 1
+                }else{
+                    SVProgressHUD.showInfo(withStatus: "图片上传失败")
+                }
+            }, option: nil)
+        }
     }
     
     private func postOut(){
         var parameters = [String : String]()
         parameters["id"] = userID
-        parameters["uuid"] = ApiHelper.uuid
+        parameters["uuid"] = ApiHelper.currentUser.uuid
         parameters["content"] = contentTextView.text
-        parameters["image_url"] = ApiHelper.qiniu_Root + key
+        parameters["image_url"] = imageUrls
         Alamofire.request(ApiHelper.API_Root + "/movements/publish/",
                           method: .post,
                           parameters: parameters,
@@ -164,4 +246,14 @@ class PublishMovementViewController: UIViewController,UINavigationControllerDele
     }
     */
 
+}
+
+protocol PublishMovementViewControllerDelegate {
+    func deleteFirst()
+    func appendImage(_ image : UIImage)
+    func appendPreviewImage(_ image : UIImage)
+    func appendAsset(_ assets : PHAsset)
+    func presentPickVC(_ vc : DKImagePickerController)
+    func reloadView()
+    func preview()
 }

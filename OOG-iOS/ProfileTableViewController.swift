@@ -32,8 +32,7 @@ class ProfileTableViewController: UITableViewController {
         self.tableView.showsVerticalScrollIndicator = false
         // pull refresh
         self.tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            print((self?.profileUserName)!)
-            Cache.currentUserCache.userInfoRequest((self?.profileUserName)!) {
+            Cache.currentUserCache.userInfoRequest((self?.userID)!) {
                 Cache.userMovementCache.userMovementsRequest((self?.userID)!) {
                     self?.loadCache()
                     self?.tableView.dg_stopLoading()
@@ -41,24 +40,29 @@ class ProfileTableViewController: UITableViewController {
             }
             }, loadingView: loadingView)
         
+        let titleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        titleButton.setImage(#imageLiteral(resourceName: "number2.png"), for: UIControlState.normal)
+        self.navigationItem.titleView = titleButton
+        
         //动态设置用户Cache
         Cache.userMovementCache.setKeysuffix(userID)
 //        Cache.currentUserCache.value = ""
 //        Cache.userMovementCache.value = ""
-        
         loadCache()
         let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
     }
     
     //MARK: - Model
     var profiles : [[profileItem]] = []
     var profileUserName : String = ApiHelper.currentUser.username
-    var userID : String = ApiHelper.currentUser.userID
+    var userID : String = ApiHelper.currentUser.id
+    
+    var movementProfilesList : [Movement] = []
     
     //MARK: - Logic
     func timeChanged() {
@@ -70,34 +74,35 @@ class ProfileTableViewController: UITableViewController {
     
     private func loadCache(){
         if(Cache.currentUserCache.isEmpty || Cache.userMovementCache.isEmpty){
-
             refreshCache()
             return
         }
         
         var titleProfiles : [profileItem] = []
         var infoProfiles : [profileItem] = []
-        var movementProfilesList : [Movement] = []
         var movemntProfiles : [profileItem] = []
         titleProfiles.removeAll()
         infoProfiles.removeAll()
         movemntProfiles.removeAll()
+        movementProfilesList.removeAll()
+        
         profiles.removeAll()
         let userValue = Cache.currentUserCache.value
         var json = JSON.parse(userValue)
         
         //parse TitleModel
-        let username = json["user"]["username"].stringValue
-        let userID = json["user"]["userID"].stringValue
-        let tel = json["user"]["tel"].stringValue
-        let position = json["user"]["position"].stringValue
-        let avatar_url = json["user"]["avatar_url"].stringValue
-        let followings = json["user"]["followingNumber"].intValue
+        let username = json["username"].stringValue
+//        self.navigationItem.title = username
+        let userID = json["userID"].stringValue
+        let tel = json["tel"].stringValue
+        let position = json["position"].stringValue
+        let avatar_url = json["avatar_url"].stringValue
+        let followings = json["followingNumber"].intValue
         let followingsString = String(followings)
-        let followers = json["user"]["followedNumber"].intValue
+        let followers = json["followedNumber"].intValue
         let followersString = String(followers)
-        let likes = json["user"]["likes"].stringValue
-        let description = json["user"]["description"].stringValue
+        let likes = json["likes"].stringValue
+        let description = json["description"].stringValue
         
         let title = profileItem.Title(TitleModel(username,userID,tel,position,avatar_url,followingsString,followersString,likes,description))
         titleProfiles.append(title)
@@ -115,7 +120,7 @@ class ProfileTableViewController: UITableViewController {
         for movementJSON in movements{
             //parse basic info
             //            print(movementJSON)
-            let movment_ID = movementJSON["movement_ID"].stringValue
+            let movment_ID = movementJSON["id"].stringValue
             let content = movementJSON["content"].stringValue
             let likesNumber = movementJSON["likesNumber"].stringValue
             let repostsNumber = movementJSON["repostsNumber"].stringValue
@@ -173,7 +178,8 @@ class ProfileTableViewController: UITableViewController {
     
     private func refreshCache(){
         showProgressDialog()
-        Cache.currentUserCache.userInfoRequest(profileUserName) { 
+        ApiHelper.uuid = ApiHelper.currentUser.uuid
+        Cache.currentUserCache.userInfoRequest(userID) {
             Cache.userMovementCache.userMovementsRequest(self.userID) {
                 self.loadCache()
             }
@@ -189,19 +195,32 @@ class ProfileTableViewController: UITableViewController {
         return profiles[section].count
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section != 0{
+            return 10
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let profile = profiles[indexPath.section][indexPath.row]
         switch profile{
         case .Title( _):
-            return 240
+            return 183
         case .Info( _):
-            return 50
+            return 40
         case .MovementItem( _):
-            return 375
+            var lines = CGFloat(movementProfilesList.count / 3)
+            if (movementProfilesList.count % 3 > 0) || (movementProfilesList.count == 3) || (movementProfilesList.count == 6){
+                lines += 1
+            }
+            if lines == 0 {
+                lines = 1
+            }
+            if movementProfilesList.count > 9{
+                lines = 3
+            }
+            return lines * 125 - 3
         }
     }
     
@@ -214,7 +233,7 @@ class ProfileTableViewController: UITableViewController {
             return cell
         case .Info(let text):
             let cell = tableView.dequeueReusableCell(withIdentifier: "Info Cell", for: indexPath) as! InfoTableViewCell
-            cell.infoLabel.text = text
+            cell.infoText = text
             return cell
         case .MovementItem(let movements):
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovementDisplay", for: indexPath) as! MovementDisplayTableViewCell
@@ -244,6 +263,23 @@ class ProfileTableViewController: UITableViewController {
         if segue.identifier == "publishMovement"{
             if let publishMovementVC = destinationViewController as? PublishMovementViewController{
                 publishMovementVC.userID = userID
+            }
+        }
+        if segue.identifier == "myTeam"{
+            if let teamVC = destinationViewController as? TeamTableViewController{
+                teamVC.userID = userID
+            }
+        }
+        if segue.identifier == "likesMovement"{
+            if let movementVC = destinationViewController as? MovementTableViewController{
+                movementVC.userID = ApiHelper.currentUser.id
+                movementVC.movementListType = "1"
+            }
+        }
+        if segue.identifier == "myMovementList"{
+            if let movementVC = destinationViewController as? MovementTableViewController{
+                movementVC.userID = ApiHelper.currentUser.id
+                movementVC.movementListType = "2"
             }
         }
     }

@@ -26,22 +26,32 @@ PODS:
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - DGElasticPullToRefresh (1.1)
+  - DKImagePickerController (3.5.1):
+    - DKImagePickerController/Camera (= 3.5.1)
+    - DKImagePickerController/ImageManager (= 3.5.1)
+  - DKImagePickerController/Camera (3.5.1)
+  - DKImagePickerController/ImageManager (3.5.1)
+  - DZNEmptyDataSet (1.8.1)
   - HappyDNS (0.3.10)
   - JNDropDownMenu (0.1.6)
-  - MessageKit (0.6.0)
+  - MessageKit (0.7.2)
   - Moya (8.0.3):
     - Moya/Core (= 8.0.3)
   - Moya/Core (8.0.3):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - PanelKit (1.0.0)
   - Qiniu (7.1.5):
     - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
   - Result (3.2.1)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
   - SVProgressHUD (2.1.2)
   - SwiftDate (4.1.1)
+  - SwiftPhotoGallery (3.1.0)
   - SwiftyJSON (3.1.4)
+  - SwiftyStarRatingView (1.0.4)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4.0)
@@ -50,14 +60,18 @@ DEPENDENCIES:
   - AMapSearch
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - DGElasticPullToRefresh
+  - DKImagePickerController
+  - DZNEmptyDataSet
   - JNDropDownMenu (from `https://github.com/javalnanda/JNDropDownMenu`)
   - MessageKit (from `https://github.com/MessageKit/MessageKit.git`)
   - Moya
-  - PanelKit
   - Qiniu (~> 7.1)
+  - SDWebImage (~> 4.0)
   - SVProgressHUD
   - SwiftDate (~> 4.0)
+  - SwiftPhotoGallery
   - SwiftyJSON
+  - SwiftyStarRatingView
 
 EXTERNAL SOURCES:
   ChameleonFramework:
@@ -75,7 +89,7 @@ CHECKOUT OPTIONS:
     :commit: faae8e83474c08e0aa8e09a8aa71557eed58c609
     :git: https://github.com/javalnanda/JNDropDownMenu
   MessageKit:
-    :commit: 03504934d5a61b98707124c2efa08fda9b0c5416
+    :commit: 97908fecc808bd024c268f092c0f3772241cf648
     :git: https://github.com/MessageKit/MessageKit.git
 
 SPEC CHECKSUMS:
@@ -87,17 +101,21 @@ SPEC CHECKSUMS:
   AMapSearch: cf7fd100d533995822d92c22586abfaf7cdf6eef
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
+  DKImagePickerController: 8db7e76a88a7a66a893ba30e935cc4c9bb7ed335
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   JNDropDownMenu: 1744134c23d97af7bd5afca53d17f5c80272c907
-  MessageKit: c6d6ac780731137ea9e2f24a4cc92f462ab192f7
+  MessageKit: c34ab84f81fa41728832977cc4f7ad66fc12c7d2
   Moya: d3721622e3cc0cc2f038d69a258686f0b66e7252
-  PanelKit: 92b092db31574fed837025dcf96375c1a4afb303
   Qiniu: 77a3dba411556a383d72d17e842345a9d4c83252
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftDate: ae615078806a322183e5f64e02e80ca8d939bf48
+  SwiftPhotoGallery: 85ff48f685dafc5e84639bee5c74ddb4f0f221d3
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftyStarRatingView: a2b0057700e0adeb8e7442c55d99cb53b531d2f4
 
-PODFILE CHECKSUM: 2435bff53980e5387e59152fab33cb4966053886
+PODFILE CHECKSUM: be4ba1e9df2bb58ebfae97f60f28559a56df4559
 
 COCOAPODS: 1.2.1

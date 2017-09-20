@@ -18,6 +18,11 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         requestAuthCodeButton.addTarget(self, action: #selector
             (getAutHCode), for: .touchDown)
+        nextButton.backgroundColor = UIColor(red: 0/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
+        requestAuthCodeButton.tintColor = UIColor(red: 0/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
+        let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        item.tintColor = UIColor.black
+        self.navigationItem.backBarButtonItem = item
     }
     
     //Mark: - model
@@ -65,7 +70,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
         var parameters = [String : String]()
         parameters["tel"] = tel
         Alamofire.request(ApiHelper.API_Root + "/users/register/validation/",
-                          method: .post,
+                          method: .get,
                           parameters: ["tel":tel],
                           encoding: URLEncoding.default).responseJSON {response in
             switch response.result.isSuccess {
@@ -96,6 +101,10 @@ class RegisterViewController: UIViewController,UITextFieldDelegate {
         if identifier == "next"{
             if authCodeTextField.text != user.authCode{
                 SVProgressHUD.showInfo(withStatus: "验证码错误")
+                return false
+            }
+            if authCodeTextField.text == ""{
+                SVProgressHUD.showInfo(withStatus: "不能为空")
                 return false
             }
         }
