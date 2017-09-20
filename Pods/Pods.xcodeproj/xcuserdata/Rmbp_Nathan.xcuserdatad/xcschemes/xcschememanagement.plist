@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MessageKit-MessageKitAssets.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MessageKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -65,6 +70,11 @@
 			<false/>
 		</dict>
 		<key>Result.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -97,7 +107,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>01B6ADC695A964B827D20A3FF6DDE00A</key>
+		<key>10609D7C452F67F465996FC0C5B502A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,12 +117,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3365EAF3F36F18F3BCC12F8F1B7FFCFB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>44E2F7854D87E0F79B417549CA1BB9A9</key>
+		<key>1FCA0FD9A8EBD441E2BE45D030F3B3E6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,17 +132,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>58DFBB20CA5ADE58F03F2C56065E4889</key>
+		<key>56D08F54FAED6A00F76EFC2B4290BE53</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5A3895129260F9C89E0FA84EE9ECB4CE</key>
+		<key>5EE22476763E2E8C222AAAE22421EC08</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6C21ED9EABAB39DB4EAC701724E4A1A7</key>
+		<key>6628BDA780F1B9765F7B451E7342F8B1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6ED3E07080D568A163C4382DD64459A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>71B5CB282D8596A1EF7B30DCEC879545</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,17 +162,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7C3A5E9346DA1A578D03DC2B43ACBDF4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A31B449E83D899B3658C05187BFF8B5D</key>
+		<key>9FEC7BAB26D5949D2DA1FD426D028BCC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -183,6 +193,16 @@
 			<true/>
 		</dict>
 		<key>D9B67181F5F2D959F5D0A8E4450683B1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E7F579CEACB38E38519B0D62C3D9E71B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FE79E6140B82AF7FCB095AD795ADD4F2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

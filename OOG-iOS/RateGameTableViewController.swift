@@ -63,6 +63,7 @@ class RateGameTableViewController: UITableViewController,RateGameTableViewContro
                                 print(response.result.error!)
                             }
         }
+        presentedViewController?.dismiss(animated: true)
     }
     
     enum rateItem{

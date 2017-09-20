@@ -10,12 +10,12 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SVProgressHUD
+import SDWebImage
 
 class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollViewDelegate {
 
     //Mark : initial
     @IBOutlet weak var imageScrollView: UIScrollView!
-
     @IBOutlet weak var pageControl: UIPageControl!{
         didSet{
             pageControl.currentPageIndicatorTintColor = UIColor.blue
@@ -49,7 +49,11 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
         }
     }
     //Mark: -  Model
-    var movement : Movement?{ didSet{updateUI()} }
+    var movement : Movement?{
+        didSet{
+            updateUI()
+        }
+    }
     var isLike = false
     var delegate : HomeViewControllerProtocol?
     
@@ -81,29 +85,6 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     }
     
     //Mark : - delegate
-    func textViewDidChange(_ textView: UITextView) {
-        let maxHeight : CGFloat = CGFloat(300)
-        let nowframe = textView.frame
-        let constraintSize = CGSize(width: nowframe.size.width, height: 300)
-        var size = textView.sizeThatFits(constraintSize)
-        if (size.height <= nowframe.size.height) {
-            size.height = nowframe.size.height
-        }else{
-            if (size.height >= maxHeight)
-            {
-                size.height = maxHeight
-                //                textView.isScrollEnabled = true   // 允许滚动
-            }
-            textView.isScrollEnabled = false
-            //            else
-            //            {
-            //                textView.isScrollEnabled = false   // 不允许滚动
-            ////                contentTextView.isScrollEnabled = false
-            //            }
-        }
-        textView.frame = CGRect(x: nowframe.origin.x, y: nowframe.origin.y, width: nowframe.size.width, height: size.height)
-    }
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = Int(imageScrollView.contentOffset.x / imageScrollView.frame.size.width)
         pageControl.currentPage = page
@@ -176,6 +157,13 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
     }
 
     private func updateUI(){
+        if movement?.likeStatus == "1"{
+            isLike = true
+            likeButton.setImage(#imageLiteral(resourceName: "like_icon_selected"), for: UIControlState.normal)
+        }else{
+            isLike = false
+            likeButton.setImage(#imageLiteral(resourceName: "like_icon"), for: UIControlState.normal)
+        }
         //hook up movement image
         imageScrollView.removeAllSubviews()
         
@@ -198,26 +186,7 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
             imageView.frame = CGRect(x: scrollViewFrame.size.width * CGFloat(index), y: 0, width: scrollViewFrame.size.width, height: scrollViewFrame.size.height)
             
             imageView.contentMode = UIViewContentMode.scaleAspectFill
-            let movementImageKey = "MovementImage" + (movement?.movement_ID)! + String(index)
-            if let imageData = Cache.imageCache.data(forKey: movementImageKey){
-                imageView.image = UIImage(data: imageData)
-            }else{
-                if let imageUrl = URL(string: (movement?.imageUrls[index])!){
-                    DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
-                        let urlContents = try? Data(contentsOf: imageUrl)
-                        let resizeImage = UIImage(data: urlContents!)?.reSizeImage(reSize: CGSize(width: 375, height: 375))
-                        let resizeData = UIImagePNGRepresentation(resizeImage!)
-                        Cache.set(movementImageKey, resizeData)
-                        if let imageData = resizeData{
-                            DispatchQueue.main.async {
-                                self?.imageView?.image = UIImage(data: imageData)
-                            }
-                        }
-                    }
-                }else{
-                    imageView.image = nil
-                }
-            }
+            imageView.sd_setImage(with: URL(string: (movement?.imageUrls[index])!), placeholderImage: #imageLiteral(resourceName: "default_picture.png"))
             imageScrollView.addSubview(imageView)
         }
         
@@ -299,3 +268,5 @@ class HomeMovementTableViewCell: UITableViewCell,UITextViewDelegate,UIScrollView
 //        commentsTextView.insertText(comment.username + " " + comment.content + "\n")
     }
 }
+
+

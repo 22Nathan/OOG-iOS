@@ -11,7 +11,7 @@ import JNDropDownMenu
 import Alamofire
 import SwiftyJSON
 
-class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenuDelegate,JNDropDownMenuDataSource,UITableViewDelegate,UITableViewDataSource{
+class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenuDelegate,JNDropDownMenuDataSource,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
 
     //Mark : - LifeCycle
     override func viewDidLoad() {
@@ -22,6 +22,7 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
         self.view.addSubview(underLine)
         
         searchBar.placeholder = "搜索球员、球场"
+        searchBar.delegate = self
         let rightNavBarButton = UIBarButtonItem(customView:searchBar)
         self.navigationItem.rightBarButtonItem = rightNavBarButton
         
@@ -103,7 +104,21 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
         scrollView.scrollRectToVisible(frame, animated: true)
     }
     
-    //Mark : - network
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        searchUserByName(searchBar.text!)
+//    }
+    
+    var flag = 0
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if flag == 0{
+//            flag = 1
+        print(searchBar.text!)
+            searchUserByName(searchBar.text!)
+//        }
+    }
+    
+    //Mark : - networ
     func searchUserRequest(){
         Alamofire.request(ApiHelper.API_Root + "/users/search/",
                           method: .get,
@@ -124,7 +139,54 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
                             }
         }
     }
-    func searchCourtRequest(completionHandler: @escaping (_ data : JSON) -> ()){
+    
+    func searchUserByName(_ username : String){
+        var parameters = [String : String]()
+        parameters["username"] = username
+        Alamofire.request(ApiHelper.API_Root + "/users/search/",
+                          method: .get,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response user serach ###################")
+                                    //                                    print(json)
+                                    self.usersValue = json
+                                    self.searchCourtByName(username)
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
+    func searchCourtByName(_ courtName : String){
+        var parameters = [String : String]()
+        parameters["courtName"] = courtName
+        Alamofire.request(ApiHelper.API_Root + "/courts/search/",
+                          method: .get,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response court serach ###################")
+                                    //                                                                        print(json)
+                                    self.courtsValue = json
+                                    self.completionHandler()
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
+    func searchCourtRequest(completionHandler: @escaping () -> ()){
         Alamofire.request(ApiHelper.API_Root + "/courts/search/",
                           method: .get,
                           parameters: nil,
@@ -137,14 +199,14 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
                                     print("################### Response court serach ###################")
 //                                                                        print(json)
                                     self.courtsValue = json
-                                    completionHandler(json)
+                                    completionHandler()
                                 }
                             case false:
                                 print(response.result.error!)
                             }
         }
     }
-    func completionHandler(_ data : JSON){
+    func completionHandler(){
         userModels.removeAll()
         courtModels.removeAll()
         var tempUserList : [User] = []
@@ -207,6 +269,9 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
             let longitude = courtJSON["longitude"].stringValue
             let latitude = courtJSON["latitude"].stringValue
             let tel = courtJSON["tel"].stringValue
+            let priceRate = courtJSON["priceRate"].stringValue
+            let transportRate = courtJSON["transportRate"].stringValue
+            let facilityRate = courtJSON["facilityRate"].stringValue
             let court = Court(courtID,
                               courtName,
                               courtType,
@@ -218,6 +283,9 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
                               status,
                               longitude,
                               latitude,
+                              priceRate,
+                              transportRate,
+                              facilityRate,
                               tel)
             tempCourtList.append(court)
         }
@@ -260,7 +328,6 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
         else{
             reusedID = "search court"
             let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath) as! CourtListTableViewCell
-            print(courtModels[indexPath.section][indexPath.row].rate)
             cell.court = courtModels[indexPath.section][indexPath.row]
             return cell
         }
@@ -369,13 +436,32 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
             }
         }
     }
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        var destinationViewController = segue.destination
+        if segue.identifier == "userDetailFromSearch"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let userVC = destinationViewController as? UserTableViewController{
+                if let cell = sender as? UserListTableViewCell{
+                    userVC.user = cell.user
+                    userVC.navigationItem.title = cell.user?.username
+//                    userVC.followList = cell.listType!
+                }
+            }
+        }
+        if segue.identifier == "courtDetailFromSearch"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let courtVC = destinationViewController as? CourtTableViewController{
+                if let cell = sender as? CourtListTableViewCell{
+                    courtVC.court = cell.court
+                    courtVC.navigationItem.title = cell.court?.courtName
+                }
+            }
+        }
     }
-    */
 }

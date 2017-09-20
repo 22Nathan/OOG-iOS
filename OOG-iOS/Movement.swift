@@ -25,6 +25,7 @@ class Movement{
                             // 热门动态为2
                             // 用户自己发的动态为0
     var comments : [Comment]
+    var likeStatus : String
     
     init(_ movement_ID : String,
          _ content : String,
@@ -38,7 +39,8 @@ class Movement{
          _ repostsNumber : String,
          _ commentsNumber : String,
          _ movementType : Int,
-         _ comments : [Comment] = []
+         _ comments : [Comment] = [],
+         _ likeStatus : String = ""
          ) {
         self.movement_ID = movement_ID
         self.content = content
@@ -53,5 +55,6 @@ class Movement{
         self.commentsNumber = commentsNumber
         self.movementType = movementType
         self.comments = comments
+        self.likeStatus = likeStatus
     }
 }

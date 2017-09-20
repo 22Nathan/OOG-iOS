@@ -13,6 +13,7 @@ enum ApiConfig{
     case userInfo(userID: String)
     case homeMovement(userID: String)
     case userMovement(userID: String)
+    case userLikeMovement(userID : String)
     case movementComment(movementID: String)
     case userFollowersOrFollowings(userID: String,listType : String)
     case userTeam(userID: String)
@@ -47,12 +48,14 @@ extension ApiConfig: TargetType{
             return "/users/" + userID + "/"
         case .joinGame(let gameID):
             return "/games/" + gameID + "/participation/"
+        case .userLikeMovement(let userID):
+            return "/users/" + userID + "/likeMovements/"
         }
     }
     
     var method: Moya.Method{
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings , .userTeam, .userGame, .courtGame:
+        case .userInfo, .homeMovement, .userMovement, .movementComment ,.userFollowersOrFollowings , .userTeam, .userGame, .courtGame, .userLikeMovement:
             return .get
         case .changeUserInfo:
             return .put
@@ -94,12 +97,14 @@ extension ApiConfig: TargetType{
         case .joinGame(_):
             return ["adminID" : ApiHelper.currentUser.id,
                     "uuid" : ApiHelper.currentUser.uuid]
+        case .userLikeMovement(_):
+            return nil
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam , .userGame , .courtGame, .changeUserInfo, .joinGame:
+        case .userInfo, .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings,.userTeam , .userGame , .courtGame, .changeUserInfo, .joinGame, .userLikeMovement:
             return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         }
     }
@@ -108,7 +113,7 @@ extension ApiConfig: TargetType{
         switch self {
         case .userInfo(let userID):
             return "{\"UserID\": \(userID)}".utf8Encoded
-        case .homeMovement, .movementComment , .userMovement :
+        case .homeMovement, .movementComment, .userLikeMovement , .userMovement :
             return "HomeMovements".utf8Encoded
         case .userFollowersOrFollowings(let userID, _):
             return "{\"UserID\": \(userID)}".utf8Encoded
@@ -127,7 +132,7 @@ extension ApiConfig: TargetType{
     
     var task: Task {
         switch self {
-        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam , .userGame , .courtGame ,.changeUserInfo, .joinGame :
+        case .userInfo , .homeMovement, .userMovement, .movementComment , .userFollowersOrFollowings , .userTeam , .userGame , .courtGame ,.changeUserInfo, .joinGame, .userLikeMovement :
             return .request
         }
     }

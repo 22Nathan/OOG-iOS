@@ -70,12 +70,12 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
         }
     }
     
-    @IBOutlet weak var searchBar: UISearchBar!{
+    @IBOutlet weak var commentTextField: UITextField!{
         didSet{
-//            searchBar.contentMode = .left
+            commentTextField.placeholder = "评论..."
+            commentTextField.contentMode = .left
         }
     }
-    
     //Mark : -Action
     func pageChanged(_ sender:UIPageControl){
         var frame = imageScrollView.frame
@@ -85,7 +85,7 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
     }
     
     @IBAction func sendAction(_ sender: Any) {
-        if searchBar.text == ""{
+        if commentTextField.text == ""{
             SVProgressHUD.showInfo(withStatus: "评论内容不能为空")
         }else{
             sendCommentRequest((movement?.movement_ID)!,completionHandler: completionHandler)
@@ -93,7 +93,7 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
     }
     
     func completionHandler(){
-        searchBar.text = ""
+        commentTextField.text = ""
         refreshCache()
         SVProgressHUD.showInfo(withStatus: "评论成功")
     }
@@ -139,7 +139,7 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
         var parameters = [String : String]()
         parameters["uuid"] = ApiHelper.currentUser.uuid
         parameters["id"] = ApiHelper.currentUser.id
-        parameters["comment_content"] = searchBar.text
+        parameters["comment_content"] = commentTextField.text
         Alamofire.request(ApiHelper.API_Root + "/movements/" + objectID + "/comments/",
                           method: .post,
                           parameters: parameters,

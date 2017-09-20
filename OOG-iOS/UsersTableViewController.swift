@@ -79,7 +79,7 @@ class UsersTableViewController: UITableViewController {
     }
     
     private func refreshCache(){
-        Cache.userListCache.userFollowersOrFollowings(ownerUserID, listType) { 
+        Cache.userListCache.userFollowersOrFollowings(ownerUserID, listType) {
             self.loadCache()
         }
     }

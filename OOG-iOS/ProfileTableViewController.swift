@@ -270,5 +270,17 @@ class ProfileTableViewController: UITableViewController {
                 teamVC.userID = userID
             }
         }
+        if segue.identifier == "likesMovement"{
+            if let movementVC = destinationViewController as? MovementTableViewController{
+                movementVC.userID = ApiHelper.currentUser.id
+                movementVC.movementListType = "1"
+            }
+        }
+        if segue.identifier == "myMovementList"{
+            if let movementVC = destinationViewController as? MovementTableViewController{
+                movementVC.userID = ApiHelper.currentUser.id
+                movementVC.movementListType = "2"
+            }
+        }
     }
 }

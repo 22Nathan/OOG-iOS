@@ -230,5 +230,17 @@ class UserTableViewController: UITableViewController {
                 userListVC.navigationItem.title = (user?.username)! + "的粉丝"
             }
         }
+        if segue.identifier == "otherLike"{
+            if let movementVC = destinationViewController as? MovementTableViewController{
+                movementVC.userID = (user?.id)!
+                movementVC.movementListType = "1"
+            }
+        }
+        if segue.identifier == "otherMovement"{
+            if let movementVC = destinationViewController as? MovementTableViewController{
+                movementVC.userID = (user?.id)!
+                movementVC.movementListType = "2"
+            }
+        }
     }
 }

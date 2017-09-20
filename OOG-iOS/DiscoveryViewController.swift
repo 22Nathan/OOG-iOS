@@ -75,7 +75,7 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
         
         //回到user location
         let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 135, width: 20, height: 20))
-        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "refresh_icon"), for: UIControlState.normal)
+        backToWhereIAmButton.setImage(#imageLiteral(resourceName: "center.png"), for: UIControlState.normal)
         mapView.addSubview(backToWhereIAmButton)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapEvent(byReactingTo:)))
         tapRecognizer.numberOfTapsRequired = 1

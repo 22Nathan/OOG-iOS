@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
+import SwiftyJSON
 
 class ToStartTableViewCell: UITableViewCell {
     @IBOutlet weak var courtImage: UIImageView!
@@ -28,6 +31,40 @@ class ToStartTableViewCell: UITableViewCell {
             updateUI()
         }
     }
+    
+    @IBAction func quitGameAcion(_ sender: Any) {
+        quitGameRequest((game?.gameID)!)
+    }
+    
+    func quitGameRequest(_ gameID : String){
+        var parameters = [String : String]()
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["adminID"] = ApiHelper.currentUser.id
+        Alamofire.request(ApiHelper.API_Root + "/games/" + gameID + "/quit/",
+                          method: .delete,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response quit Game ###################")
+                                    print(json)
+                                    let result = json["result"].stringValue
+                                    if result == "no"{
+                                        SVProgressHUD.showInfo(withStatus: "退出比赛失败")
+                                    }
+                                    if result == "ok"{
+                                        SVProgressHUD.showInfo(withStatus: "您已退出比赛")
+                                    }
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
     private func updateUI(){
 //        courtImage.layer.masksToBounds = true
 //        courtImage.clipsToBounds = true

@@ -223,15 +223,22 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
             return cell
         }
     }
- 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        var destinationViewController = segue.destination
+        if segue.identifier == "userDetailFromTeam"{
+            if let navigationController = destinationViewController as? UINavigationController{
+                destinationViewController = navigationController.visibleViewController ?? destinationViewController
+            }
+            if let userVC = destinationViewController as? UserTableViewController{
+                if let cell = sender as? TeamUserTableViewCell{
+                    userVC.user = cell.user
+                    userVC.navigationItem.title = cell.user?.username
+                    userVC.followList = ""
+                }
+            }
+        }
+
     }
-    */
 
 }

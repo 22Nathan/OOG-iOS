@@ -90,6 +90,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         titleButton.setImage(#imageLiteral(resourceName: "number2.png"), for: UIControlState.normal)
         self.navigationItem.titleView = titleButton
         
+        let boldFontAttribute = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15) ]
+        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(boldFontAttribute, for: UIControlState.normal)
+        
         let changedSeconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: TimeInterval(changedSeconds))
     }
@@ -99,12 +102,20 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //            scrollView.isPagingEnabled = true
         }
     }
+    
+    @IBOutlet weak var slider: UISlider!{
+        didSet{
+            slider.setThumbImage(#imageLiteral(resourceName: "empty.png"), for: UIControlState.normal)
+        }
+    }
+    
     @IBOutlet weak var segmented: UISegmentedControl!{
         didSet{
-//            segmented.layer.borderColor = UIColor.white.cgColor
-//            segmented.layer.borderWidth = 2
-//            
-//            segmented.setTitleTextAttributes(<#T##attributes: [AnyHashable : Any]?##[AnyHashable : Any]?#>, for: UIControlState.normal)
+            segmented.tintColor = UIColor.clear
+            let unselectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )];
+            segmented.setTitleTextAttributes(unselectedTextAttributes as [NSObject : AnyObject], for: UIControlState.normal)
+            let selectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.black]
+            segmented.setTitleTextAttributes(selectedTextAttributes as [NSObject : AnyObject], for: UIControlState.selected)
         }
     }
     @IBOutlet weak var MovementsTableView: UITableView!
@@ -131,10 +142,14 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             // 向左滑时展示第二个tableview,同时设置选中的segmented item
             offset = self.view.frame.width
             segmented.selectedSegmentIndex = 1
+            slider.minimumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )//
+            slider.maximumTrackTintColor = UIColor.black
         }
         else {
             offset = 0.0
             segmented.selectedSegmentIndex = 0
+            slider.minimumTrackTintColor = UIColor.black
+            slider.maximumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )
         }
     }
     
@@ -165,6 +180,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     //Mark : -Model
     var movements : [[Movement]] = []
+    var hotMovements : [[Movement]] = []
     
     //Mark : -Logic
     private func loadCache(){
@@ -174,13 +190,18 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         
         var movementList : [Movement] = []
+        var hotMovementList : [Movement] = []
         movements.removeAll()
+        hotMovements.removeAll()
         let value = Cache.homeMovementsCache.value
         let json = JSON.parse(value)
         let movments = json["movements"].arrayValue
         for movementJSON in movments{
+            
             let movementsType = movementJSON["movementType"].intValue
-            if movementsType == 1{
+            if movementsType == 3{
+                continue
+            }
             //parse basic info
             let movment_ID = movementJSON["id"].stringValue
             let content = movementJSON["content"].stringValue
@@ -188,6 +209,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             let repostsNumber = movementJSON["repostsNumber"].stringValue
             let commentsNumber = movementJSON["commentsNumber"].stringValue
             let movementType = movementJSON["movementType"].intValue
+            let likeStatus = movementJSON["likedStatus"].stringValue
             
             //parse Date
             var created_at = movementJSON["created_at"].stringValue
@@ -245,11 +267,17 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                                          repostsNumber,
                                          commentsNumber,
                                          movementType,
-                                         displayComments)
-            movementList.append(movment_Model)
+                                         displayComments,
+                                         likeStatus)
+            if movementType == 1{
+                movementList.append(movment_Model)
+            }
+            if movementType == 2{
+                hotMovementList.append(movment_Model)
             }
         }
         movements.append(movementList)
+        hotMovements.append(hotMovementList)
         MovementsTableView.reloadData()
         HotTableView.reloadData()
         hideProgressDialog()
@@ -291,17 +319,25 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     //Mark : - tableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return movements.count
+        if tableView.tag == 101{
+            return movements.count
+        }else{
+            return hotMovements.count
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movements[section].count
+        if tableView.tag == 101{
+            return movements[section].count
+        }else{
+            return hotMovements[section].count
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let movement = movements[indexPath.section][indexPath.row]
         let commentHeight = CGFloat(movement.comments.count * 29)
-        return 518 + commentHeight
+        return 520 + commentHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -315,8 +351,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         else{
             reusedID = "HomeHot"
-            let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath)
-            cell.textLabel!.text = "第二个TableView"
+            let cell = tableView.dequeueReusableCell(withIdentifier: reusedID, for: indexPath) as! HomeMovementTableViewCell
+            cell.movement = hotMovements[indexPath.section][indexPath.row]
+            cell.delegate = self
             return cell
         }
     }

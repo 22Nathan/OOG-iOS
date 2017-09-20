@@ -64,6 +64,10 @@ class CourtTableViewController: UITableViewController {
         courtItems.append(gameItems)
         tableView.reloadData()
     }
+
+    @IBAction func back(_ sender: Any) {
+        presentingViewController?.dismiss(animated: true)
+    }
     
     private func refreshCache(){
         Cache.courtGameCache.courtGameRequest(courtID: (self.court?.id)!) {
