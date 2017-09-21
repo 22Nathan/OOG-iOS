@@ -108,13 +108,13 @@ class AppCache{
     
     //获取用户点赞的动态列表
     func userLikeMovementsRequest(_ userID : String, completionHandler: @escaping ()->() ){
-        provider.request(.userMovement(userID: userID)) {result in
+        provider.request(.userLikeMovement(userID: userID)) {result in
             switch result{
             case let .success(moyaResponse):
                 let data = moyaResponse.data
                 let json = JSON(data)
                 print("##################Request User Like Movements###########################")
-                //                print(json)
+//                                print(json)
                 self.set(self.key, json.rawString()!)
                 completionHandler()
             case let .failure(error):

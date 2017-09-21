@@ -100,9 +100,11 @@ class ChangeInfoTableViewController: UITableViewController {
             let pickerController = DKImagePickerController()
             pickerController.maxSelectableCount = 1
             pickerController.didSelectAssets = { (assets: [DKAsset]) in
-                self.uploadImage = convertPHAssetToUIImage(asset: assets[0].originalAsset!,71)
-                self.uploadAsset = assets[0].originalAsset!
-                self.requestToken()
+                if assets.count > 0{
+                    self.uploadImage = convertPHAssetToUIImage(asset: assets[0].originalAsset!,71)
+                    self.uploadAsset = assets[0].originalAsset!
+                    self.requestToken()
+                }
             }
             self.present(pickerController, animated: true)
         default: break

@@ -24,7 +24,7 @@ enum ApiConfig{
 }
 
 extension ApiConfig: TargetType{
-    var baseURL: URL { return URL(string: "http://101.132.41.248:8000")! }
+    var baseURL: URL { return URL(string: "http://101.132.41.248:8000/v1")! }
     
     var path: String{
         switch self {
@@ -74,8 +74,9 @@ extension ApiConfig: TargetType{
             return nil
         case .movementComment( _):
             return nil
-        case .userFollowersOrFollowings( _,let listType):
-            return ["followListType" : listType]
+        case .userFollowersOrFollowings(let userID,let listType):
+            return ["followListType" : listType,
+                    "id" : userID]
         case .userTeam(_):
             return nil
         case .userGame(let userID):

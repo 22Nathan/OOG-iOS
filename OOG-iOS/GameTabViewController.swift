@@ -287,6 +287,8 @@ class GameTabViewController: UIViewController,UITableViewDataSource,UITableViewD
     func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
         var count = 0
         let userLocationCoordinate = userLocation.coordinate
+        ApiHelper.currentLongitude = userLocation.coordinate.longitude.description
+        ApiHelper.currentLatitude = userLocation.coordinate.latitude.description
         let point_2 = MAMapPointForCoordinate(userLocationCoordinate)
         if toStartGames.count != 0{
             for game in toStartGames[0]{

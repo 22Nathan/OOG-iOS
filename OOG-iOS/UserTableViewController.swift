@@ -11,8 +11,10 @@ import SwiftyJSON
 import SwiftDate
 import SVProgressHUD
 import Alamofire
+import DGElasticPullToRefresh
 
 class UserTableViewController: UITableViewController {
+    let loadingView = DGElasticPullToRefreshLoadingViewCircle()
     
     enum profileItem{
         case Title(User)
@@ -29,6 +31,11 @@ class UserTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.dg_addPullToRefreshWithActionHandler({
+            self.refreshCache()
+            self.tableView.dg_stopLoading()
+        }, loadingView: loadingView)
+        
         Cache.userMovementCache.setKeysuffix((user?.id)!)
         loadCache()
     }
@@ -60,6 +67,7 @@ class UserTableViewController: UITableViewController {
         
         
         profiles.removeAll()
+        movementProfilesList.removeAll()
         //parse TitleModel
         let userCell = profileItem.Title(user!)
         titleProfiles.append(userCell)
@@ -204,11 +212,12 @@ class UserTableViewController: UITableViewController {
         switch profile {
         case .Title(let user):
             let cell = tableView.dequeueReusableCell(withIdentifier: "User Basic", for: indexPath) as! UserTableViewCell
-            cell.user = user
             cell.listType = followList
+            cell.user = user
             return cell
         case .MovementItem(let movements):
             let cell = tableView.dequeueReusableCell(withIdentifier: "User Movement", for: indexPath) as! UserMovementTableViewCell
+            print(movements.count)
             cell.movements = movements
             return cell
         }

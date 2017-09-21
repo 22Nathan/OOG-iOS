@@ -154,6 +154,11 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         }
     }
     
+    @IBAction func matchAction(_ sender: Any) {
+        matchGameRequest(completionHandler: completionHandler)
+    }
+    
+    
     //Mark : Logic 
     func defaultDisplayRequest(completionHandler: @escaping (_ data : JSON) -> ()){
         Alamofire.request(ApiHelper.API_Root + "/games/rateList/",
@@ -167,6 +172,32 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
                                     //Mark: - print
                                     print("################### Response defaultDisplayRequest ###################")
 //                                    print(json)
+                                    completionHandler(json)
+                                }
+                            case false:
+                                print(response.result.error!)
+                            }
+        }
+    }
+    
+    func matchGameRequest(completionHandler: @escaping (_ data : JSON) -> ()){
+        var parameters = [String : String]()
+        parameters["adminID"] = ApiHelper.currentUser.id
+        parameters["uuid"] = ApiHelper.currentUser.uuid
+        parameters["game_type"] = convertDisplayedGameTypeToNumber(gameTypeArray[gameTypeIndex])
+        parameters["longitude"] = ApiHelper.currentLongitude
+        parameters["latitude"] = ApiHelper.currentLatitude
+        Alamofire.request(ApiHelper.API_Root + "/games/matching/",
+                          method: .get,
+                          parameters: parameters,
+                          encoding: URLEncoding.default).responseJSON {response in
+                            switch response.result.isSuccess {
+                            case true:
+                                if let value = response.result.value {
+                                    let json = SwiftyJSON.JSON(value)
+                                    //Mark: - print
+                                    print("################### Response match Request ###################")
+                                    //                                    print(json)
                                     completionHandler(json)
                                 }
                             case false:

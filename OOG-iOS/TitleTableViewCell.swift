@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TitleTableViewCell: UITableViewCell {
     @IBOutlet weak var avatorImage: UIImageView!
@@ -34,25 +35,28 @@ class TitleTableViewCell: UITableViewCell {
 //        avatorImage.layer.borderWidth = 2.0
 //        avatorImage.layer.borderColor = UIColor.white.cgColor
 
-        let profileImageKey = "ProfileImageKey" + (title?.userID)!
-        Cache.keySet.insert(profileImageKey)
-        if let imageData = Cache.tempImageCache.data(forKey: profileImageKey){
-            avatorImage.image = UIImage(data: imageData)
-        }else{
-            if let imageUrl = URL(string: (title?.avatar_url)!){
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
-                    let urlContents = try? Data(contentsOf: imageUrl)
-                    Cache.tempImageSet(profileImageKey, urlContents)
-                    if let imageData = urlContents{
-                        DispatchQueue.main.async {
-                            self?.avatorImage.image = UIImage(data: imageData)
-                        }
-                    }
-                }
-            }else{
-                avatorImage.image = nil
-            }
-        }
+//        let profileImageKey = "ProfileImageKey" + (title?.userID)!
+//        Cache.keySet.insert(profileImageKey)
+//        if let imageData = Cache.tempImageCache.data(forKey: profileImageKey){
+//            avatorImage.image = UIImage(data: imageData)
+//        }else{
+//            if let imageUrl = URL(string: (title?.avatar_url)!){
+//                DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
+//                    let urlContents = try? Data(contentsOf: imageUrl)
+//                    Cache.tempImageSet(profileImageKey, urlContents)
+//                    if let imageData = urlContents{
+//                        DispatchQueue.main.async {
+//                            self?.avatorImage.image = UIImage(data: imageData)
+//                        }
+//                    }
+//                }
+//            }else{
+//                avatorImage.image = nil
+//            }
+//        }
+        
+//        avatorImage.contentMode = UIViewContentMode.scaleAspectFill
+        avatorImage.sd_setImage(with: URL(string: (title?.avatar_url)!), placeholderImage: #imageLiteral(resourceName: "default_picture.png"))
         
         let blackColorAttribute = [ NSForegroundColorAttributeName: UIColor.black ]
         let greyColorAttribute = [ NSForegroundColorAttributeName: UIColor.gray]

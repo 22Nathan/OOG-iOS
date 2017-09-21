@@ -30,7 +30,6 @@ class UserListTableViewCell: UITableViewCell {
     }
     var user : User?{
         didSet{
-            initialIsFollow()
             updateUI()
         }
     }
@@ -197,6 +196,8 @@ class UserListTableViewCell: UITableViewCell {
         
         let floatValue = Float((user?.userRate)!)
         rateView.value = CGFloat(floatValue!)
+        
+        initialIsFollow()
         
         //hook up button
         var word = "未关注"

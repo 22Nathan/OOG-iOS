@@ -617,21 +617,12 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="continuous" value="NO"/>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqK-J6-OaV">
-                                            <rect key="frame" x="287" y="23" width="80" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                            <state key="normal" title="Button">
-                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                        </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImage" destination="P7J-7L-nwO" id="aaw-h5-r2r"/>
                                     <outlet property="positionLabel" destination="yf9-9k-qQh" id="gPC-uh-btq"/>
                                     <outlet property="rateView" destination="C3P-gO-pPf" id="YOM-eC-5Om"/>
-                                    <outlet property="relationshipButton" destination="aqK-J6-OaV" id="acI-P8-Gls"/>
                                     <outlet property="usernameLabel" destination="fnc-bM-poj" id="3RN-sF-psb"/>
                                     <segue destination="TmL-uN-9pJ" kind="show" identifier="userDetailFromTeam" id="Ieg-or-bjX"/>
                                 </connections>
@@ -890,7 +881,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J2i-vU-nDt" id="2yv-PH-V17">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bgZ-BQ-9h9">
@@ -898,7 +889,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="球场名字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8SY-47-FZs">
-                                                            <rect key="frame" x="99" y="8" width="160" height="21"/>
+                                                            <rect key="frame" x="99" y="8" width="260" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                             <nil key="textColor"/>
@@ -1014,7 +1005,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="95"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C8U-B5-cEX" id="tDP-Kx-5Lr">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="94.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="球场地点" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcW-35-BD4">
@@ -1379,7 +1370,7 @@
                                                             <state key="normal" title="Button" image="locate_icon"/>
                                                         </button>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="内容" translatesAutoresizingMaskIntoConstraints="NO" id="KZT-eE-9J2">
-                                                            <rect key="frame" x="8" y="468" width="359" height="25"/>
+                                                            <rect key="frame" x="8" y="466" width="359" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1754,6 +1745,9 @@
                                 <state key="normal" title="匹配比赛">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="matchAction:" destination="kUF-K4-7JD" eventType="touchUpInside" id="MCS-rI-Sji"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t1-sn-dWb">
                                 <rect key="frame" x="0.0" y="102" width="175" height="35"/>
@@ -2833,7 +2827,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kfi-eM-Mtr">
-                                                            <rect key="frame" x="100" y="8" width="130" height="21"/>
+                                                            <rect key="frame" x="100" y="8" width="170" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                             <nil key="textColor"/>
@@ -3100,11 +3094,11 @@
         <image name="tab_game" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="uYG-2x-hiu"/>
         <segue reference="xyu-Oi-6yq"/>
+        <segue reference="jNH-Fw-9fE"/>
         <segue reference="ILX-mx-eGO"/>
         <segue reference="b0K-zx-jx2"/>
         <segue reference="teq-qR-JV8"/>
-        <segue reference="uYG-2x-hiu"/>
-        <segue reference="WC7-g9-YWl"/>
     </inferredMetricsTieBreakers>
 </document>

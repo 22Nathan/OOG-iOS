@@ -20,7 +20,7 @@ class ChangeBasicTableViewCell: UITableViewCell {
             }else if info == "2"{
                 titleLabel.text = "性别"
                 infoLabel.text = "女"
-            }else if (info == "控球后卫" || info == "PG"){
+            }else if (info == "控球后卫" || info == "得分后卫" || info == "小前锋" || info == "大前锋" || info == "中锋" ){
                 titleLabel.text = "位置"
                 infoLabel.text = info
             }else{

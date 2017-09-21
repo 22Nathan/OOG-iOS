@@ -21,6 +21,19 @@ func convertNumberToDisplayedGameType(_ number : String) -> String{
     return "Free"
 }
 
+func convertDisplayedGameTypeToNumber(_ number : String) -> String{
+    if number == "1V1"{
+        return "1"
+    }else if number == "2V2"{
+        return "2"
+    }else if number == "3V3"{
+        return "3"
+    }else if number == "5V5"{
+        return "5"
+    }
+    return "6"
+}
+
 func converNumberToDisplayedGameStatus(_ number : String) -> String{
     if number == "1"{
         return "未开始"

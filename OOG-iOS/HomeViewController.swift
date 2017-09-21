@@ -81,8 +81,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         scrollView.addGestureRecognizer(swipeLeft)
         scrollView.addGestureRecognizer(swipeRight)
         
-//        Cache.homeMovementsCache.value = ""
-        loadCache()
         //初始化颜色
         self.navigationController?.navigationBar.tintColor = UIColor.black
         
@@ -95,6 +93,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         let changedSeconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: TimeInterval(changedSeconds))
+        Cache.homeMovementsCache.value = ""
+        loadCache()
     }
 
     @IBOutlet weak var scrollView: UIScrollView!{

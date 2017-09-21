@@ -59,6 +59,7 @@ class MovementTableViewController: UITableViewController,HomeViewControllerProto
         if movementListType == "1"{
             value = Cache.userMovementCache.value
         }else{
+            print("dasds")
             value = Cache.userLikeMovementCache.value
         }
         let json = JSON.parse(value)
@@ -148,6 +149,7 @@ class MovementTableViewController: UITableViewController,HomeViewControllerProto
                 self.loadCache()
             }
         }else{
+            print("123")
             Cache.userLikeMovementCache.userLikeMovementsRequest(userID) {
                 self.loadCache()
             }

@@ -32,7 +32,7 @@ class TeamTableViewController: UITableViewController,DZNEmptyDataSetDelegate,DZN
         
         //Cache后缀
         Cache.userTeamCache.setKeysuffix(userID)
-//        Cache.userTeamCache.value = ""
+        Cache.userTeamCache.value = ""
         loadCache()
     }
     

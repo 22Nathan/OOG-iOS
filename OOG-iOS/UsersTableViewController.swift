@@ -97,8 +97,8 @@ class UsersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "User List", for: indexPath) as! UserListTableViewCell
-        cell.user = usersModel[indexPath.section][indexPath.row]
         cell.listType = listType
+        cell.user = usersModel[indexPath.section][indexPath.row]
         return cell
     }
 
