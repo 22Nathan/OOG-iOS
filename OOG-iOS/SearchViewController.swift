@@ -60,7 +60,6 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
     @IBOutlet weak var userTableView: UITableView!
     @IBOutlet weak var courtTableView: UITableView!
     
-    
     lazy var searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 30, y: 0, width: 330, height: 30))
     var palyerMenuOrigin = CGPoint(x: 0, y: 0)
     
@@ -69,7 +68,6 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
             pageControl.addTarget(self, action: #selector(pageChanged), for: UIControlEvents.valueChanged)
         }
     }
-    
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
             scrollView.delegate = self
@@ -82,15 +80,6 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
             scrollView.bounces = false
         }
     }
-    
-    //Mark : - action
-//    func panWhere(byReactingTo panRecgnizer: UIPanGestureRecognizer)
-//    {
-//        let point : CGPoint = panRecgnizer.translation(in: nil)
-//        scrollView.contentOffset = point
-//        
-//    }
-    
     //Mark : -delegate
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
@@ -104,10 +93,6 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
         scrollView.scrollRectToVisible(frame, animated: true)
     }
     
-//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        searchUserByName(searchBar.text!)
-//    }
-    
     var flag = 0
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -118,7 +103,7 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
 //        }
     }
     
-    //Mark : - networ
+    //Mark : - network
     func searchUserRequest(){
         Alamofire.request(ApiHelper.API_Root + "/users/search/",
                           method: .get,

@@ -1201,15 +1201,13 @@
                                     <segment title="热门"/>
                                 </segments>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="tabChanged:" destination="pZy-Zx-K46" eventType="valueChanged" id="UNP-dg-rJO"/>
-                                </connections>
                             </segmentedControl>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4RV-QI-QVN">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4RV-QI-QVN">
                                 <rect key="frame" x="0.0" y="94" width="375" height="573"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" tag="102" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VDj-OL-6rL">
+                                    <tableView clipsSubviews="YES" tag="102" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VDj-OL-6rL">
                                         <rect key="frame" x="375" y="0.0" width="375" height="573"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HomeHot" rowHeight="596" id="IB5-yD-NVE" customClass="HomeMovementTableViewCell" customModule="OOG_iOS" customModuleProvider="target">
@@ -1314,8 +1312,9 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <tableView clipsSubviews="YES" tag="101" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="596" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CWr-kH-2lh">
+                                    <tableView clipsSubviews="YES" tag="101" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="596" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CWr-kH-2lh">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="573"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HomeMovement" rowHeight="596" id="1Xe-PH-Vub" customClass="HomeMovementTableViewCell" customModule="OOG_iOS" customModuleProvider="target">
@@ -1422,18 +1421,6 @@
                                         </prototypes>
                                     </tableView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="CWr-kH-2lh" secondAttribute="bottom" id="34b-cY-o1l"/>
-                                    <constraint firstItem="CWr-kH-2lh" firstAttribute="centerX" secondItem="4RV-QI-QVN" secondAttribute="centerX" id="3Iz-fX-f6a"/>
-                                    <constraint firstItem="CWr-kH-2lh" firstAttribute="leading" secondItem="4RV-QI-QVN" secondAttribute="leading" id="5NM-vF-HbS"/>
-                                    <constraint firstItem="VDj-OL-6rL" firstAttribute="top" secondItem="4RV-QI-QVN" secondAttribute="top" id="Agt-qf-UNQ"/>
-                                    <constraint firstItem="VDj-OL-6rL" firstAttribute="width" secondItem="CWr-kH-2lh" secondAttribute="width" id="YHk-zT-7SC"/>
-                                    <constraint firstAttribute="trailing" secondItem="CWr-kH-2lh" secondAttribute="trailing" id="Zvr-1w-bqk"/>
-                                    <constraint firstAttribute="bottom" secondItem="VDj-OL-6rL" secondAttribute="bottom" id="cgV-xY-MVg"/>
-                                    <constraint firstItem="CWr-kH-2lh" firstAttribute="top" secondItem="4RV-QI-QVN" secondAttribute="top" id="kEr-A4-w2n"/>
-                                    <constraint firstItem="VDj-OL-6rL" firstAttribute="leading" secondItem="CWr-kH-2lh" secondAttribute="trailing" id="veq-U3-J0z"/>
-                                    <constraint firstItem="CWr-kH-2lh" firstAttribute="centerY" secondItem="4RV-QI-QVN" secondAttribute="centerY" id="xru-TX-e3S"/>
-                                </constraints>
                             </scrollView>
                             <slider opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="akz-Xh-2Ps">
                                 <rect key="frame" x="-2" y="76" width="379" height="31"/>

@@ -10,27 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/HomeViewController.swift"
-            timestampString = "528546654.685977"
+            timestampString = "528550291.813714"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "swipe(gesture:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OOG-iOS/HomeViewController.swift"
-            timestampString = "528546654.686523"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "HomeViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -42,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/DiscoveryViewController.swift"
-            timestampString = "528546654.686934"
+            timestampString = "528550291.814236"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
@@ -90,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/DiscoveryViewController.swift"
-            timestampString = "528546654.687026"
+            timestampString = "528550291.814332"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
@@ -202,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/DiscoveryViewController.swift"
-            timestampString = "528546654.687149"
+            timestampString = "528550291.814459"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -218,7 +202,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/DiscoveryViewController.swift"
-            timestampString = "528546654.687196"
+            timestampString = "528550291.814505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "90"
@@ -234,7 +218,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/DiscoveryViewController.swift"
-            timestampString = "528546654.687239"
+            timestampString = "528550291.814549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "203"
@@ -250,7 +234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/DiscoveryViewController.swift"
-            timestampString = "528546654.687281"
+            timestampString = "528550291.814591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "242"
@@ -266,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/SearchViewController.swift"
-            timestampString = "528546654.687328"
+            timestampString = "528550291.814695"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "scrollView"
             landmarkType = "24">
          </BreakpointContent>
@@ -282,7 +266,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/HomeViewController.swift"
-            timestampString = "528546654.687367"
+            timestampString = "528550291.815236"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
@@ -314,7 +298,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/SearchViewController.swift"
-            timestampString = "528546654.687783"
+            timestampString = "528550291.815794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
@@ -346,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OOG-iOS/HomeViewController.swift"
-            timestampString = "528546654.687914"
+            timestampString = "528550291.816248"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
             landmarkName = "loadCache()"
             landmarkType = "7">
          </BreakpointContent>
@@ -369,84 +353,6 @@
             endingLineNumber = "166"
             landmarkName = "loadCache()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OOG-iOS/HomeViewController.swift"
-            timestampString = "528546654.688375"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "segmented"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "OOG_iOS.HomeViewController.MovementsTableView.getter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UITableView&gt;"
-                  moduleName = "OOG-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Rmbp_Nathan/Documents/Github/OOG-iOS/OOG-iOS/HomeViewController.swift"
-                  timestampString = "527599809.680344"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "27">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "OOG_iOS.HomeViewController.MovementsTableView.setter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UITableView&gt;"
-                  moduleName = "OOG-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Rmbp_Nathan/Documents/Github/OOG-iOS/OOG-iOS/HomeViewController.swift"
-                  timestampString = "527599809.683461"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "42">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "OOG_iOS.HomeViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; OOG_iOS.HomeViewController"
-                  moduleName = "OOG-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Rmbp_Nathan/Documents/Github/OOG-iOS/OOG-iOS/HomeViewController.swift"
-                  timestampString = "527599809.685107"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "475">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "OOG_iOS.HomeViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;OOG_iOS.HomeViewController&gt;"
-                  moduleName = "OOG-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Rmbp_Nathan/Documents/Github/OOG-iOS/OOG-iOS/HomeViewController.swift"
-                  timestampString = "527599809.686636"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "370">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

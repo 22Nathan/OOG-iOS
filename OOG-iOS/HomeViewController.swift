@@ -11,7 +11,7 @@ import SwiftyJSON
 import DGElasticPullToRefresh
 import SwiftDate
 
-class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate,HomeViewControllerProtocol,MAMapViewDelegate,AMapSearchDelegate {
+class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIPopoverPresentationControllerDelegate,HomeViewControllerProtocol,MAMapViewDelegate,AMapSearchDelegate,UIScrollViewDelegate {
     let loadingView_1 = DGElasticPullToRefreshLoadingViewCircle()
     let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
     var userID : String = ApiHelper.currentUser.id
@@ -70,18 +70,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             }
             }, loadingView: loadingView_2)
         
-        // 设置左滑和右滑手势
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
-        swipeLeft.direction = .left
-        swipeLeft.numberOfTouchesRequired = 1
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipe(gesture:)))
-        swipeRight.direction = .right
-        swipeRight.numberOfTouchesRequired = 1
-        
-        scrollView.addGestureRecognizer(swipeLeft)
-        scrollView.addGestureRecognizer(swipeRight)
-        
         //初始化颜色
         self.navigationController?.navigationBar.tintColor = UIColor.black
         
@@ -95,75 +83,66 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         let changedSeconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: TimeInterval(changedSeconds))
         
+        //初始化Segmented
+        segmented.tintColor = UIColor.clear
+        let unselectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )];
+        segmented.setTitleTextAttributes(unselectedTextAttributes as [NSObject : AnyObject], for: UIControlState.normal)
+        let selectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.black]
+        segmented.setTitleTextAttributes(selectedTextAttributes as [NSObject : AnyObject], for: UIControlState.selected)
+        
+        //初始化scrollView
+        scrollView.delegate = self
+        scrollView.isPagingEnabled = true
+        let scrollViewFrame = scrollView.bounds
+        scrollView.contentSize = CGSize(width: scrollViewFrame.size.width * CGFloat(segmented.numberOfSegments), height: scrollViewFrame.size.height)
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.scrollsToTop = false
+        scrollView.bounces = false
+        
         //load Cache
         Cache.homeMovementsCache.value = ""
         loadCache()
     }
-
-    @IBOutlet weak var scrollView: UIScrollView!{
+    @IBOutlet weak var segmented: UISegmentedControl!{
         didSet{
-//            scrollView.isPagingEnabled = true
+            segmented.addTarget(self, action: #selector(segmentChanged), for: UIControlEvents.valueChanged)
         }
     }
-    
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var slider: UISlider!{
         didSet{
             slider.setThumbImage(#imageLiteral(resourceName: "empty.png"), for: UIControlState.normal)
         }
     }
-    
-    @IBOutlet weak var segmented: UISegmentedControl!{
-        didSet{
-            segmented.tintColor = UIColor.clear
-            let unselectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )];
-            segmented.setTitleTextAttributes(unselectedTextAttributes as [NSObject : AnyObject], for: UIControlState.normal)
-            let selectedTextAttributes: NSDictionary = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.black]
-            segmented.setTitleTextAttributes(selectedTextAttributes as [NSObject : AnyObject], for: UIControlState.selected)
-        }
-    }
     @IBOutlet weak var MovementsTableView: UITableView!
     @IBOutlet weak var HotTableView: UITableView!
     
-    //Mark: - Action
-    var offset: CGFloat = 0.0 {
-        didSet {
-            UIView.animate(withDuration: 0.3) { () -> Void in
-                self.scrollView.contentOffset = CGPoint(x: self.offset, y: 0.0)
-            }
-        }
+    //Mark : -delegate
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let segments = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        segmented.selectedSegmentIndex = segments
+        segmentChanged(segmented)
     }
-    
+    //Mark : -Action
     func timeChanged() {
         refreshCache()
         // 到下一分钟的剩余秒数，这里虽然接近 60，但是不写死，防止误差累积
         let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)
     }
-    
-    func swipe(gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .left {
-            // 向左滑时展示第二个tableview,同时设置选中的segmented item
-            offset = self.view.frame.width
-            segmented.selectedSegmentIndex = 1
-            slider.minimumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )//
-            slider.maximumTrackTintColor = UIColor.black
-        }
-        else {
-            offset = 0.0
-            segmented.selectedSegmentIndex = 0
-            slider.minimumTrackTintColor = UIColor.black
-            slider.maximumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )
-        }
-    }
-    
-    @IBAction func tabChanged(_ sender: Any) {
-        let index = (sender as! UISegmentedControl).selectedSegmentIndex
-        offset = CGFloat(index) * self.view.frame.width
-        if offset == 0.0{
+
+    func segmentChanged(_ sender : UISegmentedControl){
+        let index = sender.selectedSegmentIndex
+        var frame = scrollView.frame
+        frame.origin.x = frame.size.width * CGFloat(index)
+        frame.origin.y = 0
+        scrollView.scrollRectToVisible(frame, animated: true)
+        if index == 0{
             slider.minimumTrackTintColor = UIColor.black
             slider.maximumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )
         }else{
-            slider.minimumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )//
+            slider.minimumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )
             slider.maximumTrackTintColor = UIColor.black
         }
     }
