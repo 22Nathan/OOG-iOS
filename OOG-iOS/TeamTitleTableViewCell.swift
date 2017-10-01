@@ -20,7 +20,11 @@ class TeamTitleTableViewCell: UITableViewCell {
             outTeamButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
         }
     }
-    @IBOutlet weak var teamRateView: SwiftyStarRatingView!
+    @IBOutlet weak var teamRateView: SwiftyStarRatingView!{
+        didSet{
+            teamRateView.isUserInteractionEnabled = false
+        }
+    }
     
     var teamTitle : TeamTitleModel?{
         didSet{

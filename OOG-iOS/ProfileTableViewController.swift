@@ -46,8 +46,8 @@ class ProfileTableViewController: UITableViewController {
         
         //动态设置用户Cache
         Cache.userMovementCache.setKeysuffix(userID)
-//        Cache.currentUserCache.value = ""
-//        Cache.userMovementCache.value = ""
+        Cache.currentUserCache.value = ""
+        Cache.userMovementCache.value = ""
         loadCache()
         let seconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: seconds)

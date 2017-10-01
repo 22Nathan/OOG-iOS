@@ -20,7 +20,11 @@ class TeamUserTableViewCell: UITableViewCell {
             relationshipButton.backgroundColor = UIColor(red: 56/255.0, green: 151/255.0, blue: 239/255.0, alpha: 1.0)
         }
     }
-    @IBOutlet weak var rateView: SwiftyStarRatingView!
+    @IBOutlet weak var rateView: SwiftyStarRatingView!{
+        didSet{
+            rateView.isUserInteractionEnabled = false
+        }
+    }
     var user : User?{
         didSet{
             updateUI()

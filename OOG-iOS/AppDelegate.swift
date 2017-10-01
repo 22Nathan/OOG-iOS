@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //要测试注册登录则取消这一行的注释
-        Cache.currentUserCache.value = ""
+//        Cache.currentUserCache.value = ""
         if(Cache.currentUserCache.isEmpty){
             let sb = UIStoryboard(name: "Main", bundle: nil)
             let loginController = sb.instantiateViewController(withIdentifier: "loginNavigation")

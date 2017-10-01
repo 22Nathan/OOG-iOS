@@ -16,6 +16,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     let loadingView_2 = DGElasticPullToRefreshLoadingViewCircle()
     var userID : String = ApiHelper.currentUser.id
     
+    //Mark : - map stuff
     var mapView: MAMapView!
     var search: AMapSearchAPI!
     var request = AMapReGeocodeSearchRequest()
@@ -93,6 +94,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         let changedSeconds = 100 - Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 100)
         perform(#selector(self.timeChanged), with: nil, afterDelay: TimeInterval(changedSeconds))
+        
+        //load Cache
         Cache.homeMovementsCache.value = ""
         loadCache()
     }
@@ -156,6 +159,13 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     @IBAction func tabChanged(_ sender: Any) {
         let index = (sender as! UISegmentedControl).selectedSegmentIndex
         offset = CGFloat(index) * self.view.frame.width
+        if offset == 0.0{
+            slider.minimumTrackTintColor = UIColor.black
+            slider.maximumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )
+        }else{
+            slider.minimumTrackTintColor = UIColor ( red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0 )//
+            slider.maximumTrackTintColor = UIColor.black
+        }
     }
     
     @IBAction func postMovement(from segue : UIStoryboardSegue){
@@ -335,9 +345,15 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let movement = movements[indexPath.section][indexPath.row]
-        let commentHeight = CGFloat(movement.comments.count * 29)
-        return 520 + commentHeight
+        if tableView.tag == 101{
+            let movement = movements[indexPath.section][indexPath.row]
+            let commentHeight = CGFloat(movement.comments.count * 29)
+            return 520 + commentHeight
+        }else{
+            let movement = hotMovements[indexPath.section][indexPath.row]
+            let commentHeight = CGFloat(movement.comments.count * 29)
+            return 520 + commentHeight
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -15,10 +15,16 @@ class MatchTableViewCell: UITableViewCell {
             joinGameButton.backgroundColor = UIColor(red: 250/255.0, green: 140/255.0, blue: 0/255.0, alpha: 1.0)
         }
     }
-    @IBOutlet weak var rateView: SwiftyStarRatingView!
+    @IBOutlet weak var rateView: SwiftyStarRatingView!{
+        didSet{
+            rateView.isUserInteractionEnabled = false
+        }
+    }
     @IBOutlet weak var courtNameLabel: UILabel!
     @IBOutlet weak var courtImage: UIImageView!
     
+    @IBOutlet weak var peopleNumberLabel: UILabel!
+    @IBOutlet weak var gameTypeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     var game : Game?{
         didSet{
@@ -57,5 +63,8 @@ class MatchTableViewCell: UITableViewCell {
         let displayedTime = ((game?.started_at)!).substring(range)
         
         timeLabel.text = "预计" + displayedTime + "开始"
+        
+        gameTypeLabel.text = convertNumberToDisplayedGameType((game?.game_type)!)
+        peopleNumberLabel.text = "现人数: " + (game?.participantNumber)!
     }
 }

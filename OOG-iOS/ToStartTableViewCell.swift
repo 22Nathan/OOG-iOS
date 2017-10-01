@@ -66,9 +66,6 @@ class ToStartTableViewCell: UITableViewCell {
     }
     
     private func updateUI(){
-//        courtImage.layer.masksToBounds = true
-//        courtImage.clipsToBounds = true
-//        courtImage.layer.cornerRadius = 48.0
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "CourtImageKey" + (game?.court.id)!
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
@@ -77,10 +74,12 @@ class ToStartTableViewCell: UITableViewCell {
             if let imageUrl = URL(string: (game?.court.court_image_url[0])!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
-                    Cache.set(profileImageKey, urlContents)
+                    let resizeImage = UIImage(data: urlContents!)?.reSizeImage(reSize: CGSize(width: 90, height: 80))
+                    let resizeData = UIImagePNGRepresentation(resizeImage!)
+                    Cache.set(profileImageKey, resizeData)
                     if let imageData = urlContents{
                         DispatchQueue.main.async {
-                            self?.courtImage.image = UIImage(data: imageData)?.reSizeImage(reSize: CGSize(width: 80, height: 80))
+                            self?.courtImage.image = UIImage(data: imageData)?.reSizeImage(reSize: CGSize(width: 90, height: 80))
                         }
                     }
                 }

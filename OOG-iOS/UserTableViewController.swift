@@ -35,7 +35,7 @@ class UserTableViewController: UITableViewController {
             self.refreshCache()
             self.tableView.dg_stopLoading()
         }, loadingView: loadingView)
-        
+        Cache.userMovementCache.value = ""
         Cache.userMovementCache.setKeysuffix((user?.id)!)
         loadCache()
     }

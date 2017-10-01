@@ -50,7 +50,7 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         
         self.view.addSubview(mapView!)
         let centerLogo = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height/2 - 10, width: 20, height: 20))
-        centerLogo.setImage(#imageLiteral(resourceName: "at_icon").reSizeImage(reSize: CGSize(width: 23, height: 56)), for: UIControlState.normal)
+        centerLogo.setImage(#imageLiteral(resourceName: "at_icon").reSizeImage(reSize: CGSize(width: 23, height: 70)), for: UIControlState.normal)
         mapView.addSubview(centerLogo)
         
         let backToWhereIAmButton = UIButton(frame: CGRect(x: mapView.frame.width/2 - 10, y: mapView.frame.height - 40, width: 20, height: 20))

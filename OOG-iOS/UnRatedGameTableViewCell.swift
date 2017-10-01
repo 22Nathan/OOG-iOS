@@ -38,16 +38,19 @@ class UnRatedGameTableViewCell: UITableViewCell {
     private func updateUI(){
         courtImage.contentMode = UIViewContentMode.scaleAspectFit
         let profileImageKey = "CourtImageKey" + (game?.court.id)!
+        Cache.imageCache.set("", forKey: profileImageKey)
         if let imageData = Cache.imageCache.data(forKey: profileImageKey){
-            courtImage.image = UIImage(data: imageData)
+            courtImage.image = UIImage(data: imageData)?.reSizeImage(reSize: CGSize(width: 90, height: 90))
         }else{
             if let imageUrl = URL(string: (game?.court.court_image_url[0])!){
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                     let urlContents = try? Data(contentsOf: imageUrl)
-                    Cache.set(profileImageKey, urlContents)
+                    let resizeImage = UIImage(data: urlContents!)?.reSizeImage(reSize: CGSize(width: 90, height: 90))
+                    let resizeData = UIImagePNGRepresentation(resizeImage!)
+                    Cache.set(profileImageKey, resizeData)
                     if let imageData = urlContents{
                         DispatchQueue.main.async {
-                            self?.courtImage.image = UIImage(data: imageData)
+                            self?.courtImage.image = UIImage(data: imageData)?.reSizeImage(reSize: CGSize(width: 90, height: 80))
                         }
                     }
                 }

@@ -157,7 +157,6 @@ class ChangeInfoTableViewController: UITableViewController {
                     let user = ApiHelper.currentUser
                     user.avatar_url = ApiHelper.qiniu_Root + key!
                     ApiHelper.currentUser = user
-                    print(ApiHelper.currentUser.avatar_url)
                     Cache.currentUserCache.changeUserInfo(ApiHelper.currentUser.id, completionHandler: self.completionHandler)
                 }else{
                     SVProgressHUD.showInfo(withStatus: "头像上传失败")

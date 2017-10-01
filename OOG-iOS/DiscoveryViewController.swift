@@ -316,7 +316,15 @@ class DiscoveryViewController: UIViewController,MAMapViewDelegate,AMapSearchDele
             gameTypeLabel.font = UIFont.boldSystemFont(ofSize: 14)
             
             gameRateLabel = UILabel(frame: CGRect(x: 125, y: 5, width: 125, height: 40))
-            gameRateLabel.text = "参赛者平均分\n" + (displayedGame?.game_rate)!
+            let nsGameRateString = displayedGame?.game_rate as! NSString
+            let length = nsGameRateString.length
+            if length >= 4{
+                let range = NSRange(location: 0, length: 4)
+                let gameRateDisplayed = (displayedGame?.game_rate)!.substring(range)
+                gameRateLabel.text = "参赛者平均分\n" + gameRateDisplayed
+            }else{
+                gameRateLabel.text = "参赛者平均分\n" + (displayedGame?.game_rate)!
+            }
             gameRateLabel.textAlignment = .center
             gameRateLabel.numberOfLines = 0
             gameRateLabel.font = UIFont.boldSystemFont(ofSize: 14)
