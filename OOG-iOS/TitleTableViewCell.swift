@@ -22,7 +22,7 @@ class TitleTableViewCell: UITableViewCell {
     var title : TitleModel?{ didSet{ updateUI() } }
     
     private func updateUI(){
-        let underLine = UIView(frame: CGRect(x: 0, y: 124, width: 375, height: 1))
+        let underLine = UIView(frame: CGRect(x: 0, y: 124, width: self.contentView.frame.width, height: 1))
         underLine.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         self.contentView.addSubview(underLine)
         

@@ -17,7 +17,7 @@ class SearchViewController: UIViewController,UIScrollViewDelegate,JNDropDownMenu
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let underLine = UIView(frame: CGRect(x: 0, y: 94, width: 375, height: 1))
+        let underLine = UIView(frame: CGRect(x: 0, y: 94, width: self.view.frame.width, height: 1))
         underLine.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
         self.view.addSubview(underLine)
         

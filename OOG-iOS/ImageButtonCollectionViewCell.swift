@@ -33,7 +33,7 @@ class ImageButtonCollectionViewCell: UICollectionViewCell {
                 self.delegate?.deleteFirst()
                 for photo in assets{
                     let displayedImage = convertPHAssetToUIImage(asset: photo.originalAsset!,88)
-                    let previewImage = convertPHAssetToUIImage(asset: photo.originalAsset!,375)
+                    let previewImage = convertPHAssetToUIImage(asset: photo.originalAsset!,self.contentView.frame.width)
                     self.delegate?.appendPreviewImage(previewImage)
                     self.delegate?.appendImage(displayedImage)
                     self.delegate?.appendAsset(photo.originalAsset!)

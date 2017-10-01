@@ -273,7 +273,7 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         selectedAnnotation = annotation
         // 定义下弹视图的位置和大小
         let originDropDownView = CGPoint(x: 0, y: -56)
-        var sizeDropDownView = CGSize(width: 375, height: 120)
+        var sizeDropDownView = CGSize(width: self.view.frame.width, height: 120)
         
         // 定义手势动作并关联手势触发的行为
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissDropDownView(_:)))
@@ -316,7 +316,7 @@ class ModalStieInfoViewController: UIViewController,MAMapViewDelegate,AMapSearch
         //加载控件与数据
         if !ifHaveDisplayedGame{
             sizeDropDownView.height = 85
-            noGmaeLabel = UILabel(frame: CGRect(x: 0, y: 10, width: 375, height: 40))
+            noGmaeLabel = UILabel(frame: CGRect(x: 0, y: 10, width: self.view.frame.width, height: 40))
             noGmaeLabel.text = "当前球场没有比赛,去看看其他球场吧~"
             noGmaeLabel.textAlignment = .center
             noGmaeLabel.font = UIFont.boldSystemFont(ofSize: 14)

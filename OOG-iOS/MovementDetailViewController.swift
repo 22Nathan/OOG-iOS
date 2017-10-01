@@ -18,7 +18,7 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
     var commentList : [Comment] = []{
         didSet{
             let commentHeight = CGFloat((commentList.count) * 17)
-            scrollView.contentSize = CGSize(width: 375, height: 529 + commentHeight)
+            scrollView.contentSize = CGSize(width: self.view.frame.width, height: 529 + commentHeight)
 //            commentsTextView.frame = CGRect(origin: commentsTextView.frame.origin, size: CGSize(width: 375, height: commentHeight))
         }
     }
@@ -47,7 +47,7 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
     }
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
-            scrollView.contentSize = CGSize(width: 375, height: 1000)
+            scrollView.contentSize = CGSize(width: self.view.frame.width, height: 1000)
             scrollView.delegate = self
         }
     }
@@ -249,7 +249,7 @@ class MovementDetailViewController: UIViewController,UIScrollViewDelegate,UIText
                 if let imageUrl = URL(string: (movement?.imageUrls[index])!){
                     DispatchQueue.global(qos: .userInitiated).async { [weak self] in //reference to image，self may be nil
                         let urlContents = try? Data(contentsOf: imageUrl)
-                        let resizeImage = UIImage(data: urlContents!)?.reSizeImage(reSize: CGSize(width: 375, height: 375))
+                        let resizeImage = UIImage(data: urlContents!)?.reSizeImage(reSize: CGSize(width: (self?.view.frame.width)!, height: (self?.view.frame.width)!))
                         let resizeData = UIImagePNGRepresentation(resizeImage!)
                         Cache.set(movementImageKey, resizeData)
                         if let imageData = resizeData{

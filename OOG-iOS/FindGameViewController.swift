@@ -107,9 +107,9 @@ class FindGameViewController: UIViewController,JNDropDownMenuDelegate, JNDropDow
         menu.arrowPostion = .Left
         self.view.addSubview(menu)
         
-        let underLine_1 = UIView(frame: CGRect(x: 0, y: 137, width: 375, height: 1))
+        let underLine_1 = UIView(frame: CGRect(x: 0, y: 137, width: self.view.frame.width, height: 1))
         underLine_1.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
-        let underLine_2 = UIView(frame: CGRect(x: 0, y: 172, width: 375, height: 1))
+        let underLine_2 = UIView(frame: CGRect(x: 0, y: 172, width: self.view.frame.width, height: 1))
         underLine_2.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
         let underLine_3 = UIView(frame: CGRect(x: 186, y: 0, width: 1, height: 137))
         underLine_3.backgroundColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
